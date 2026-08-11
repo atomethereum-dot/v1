@@ -1,0 +1,226 @@
+/* ---- Sectora DEX cover / landing page ----
+   Same hero-band visual language as the Dashboard's, but the equalizer
+   bars are colored like a candlestick chart (green = up, red = down)
+   instead of a single color, to read as "market", not "network". ---- */
+
+.dcov { min-height: 100dvh; }
+
+/* ---- base hero-band classes (mirrors dashboard.css so this page doesn't
+   need to load the whole dashboard stylesheet) ---- */
+.dash-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dx-text-dim);
+  margin: 0 0 24px;
+}
+.dash-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dx-green);
+  box-shadow: 0 0 8px rgba(20, 224, 160, 0.9);
+  animation: dcovPulseDot 1.8s ease-in-out infinite;
+}
+@keyframes dcovPulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.75); }
+}
+.dash-title {
+  font-family: "Sora Light", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 200;
+  font-size: clamp(44px, 6vw, 84px);
+  letter-spacing: 0;
+  margin: 0;
+  line-height: 1.18;
+}
+.dash-title-sub {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  line-height: 1.6;
+  margin: 28px 0 0;
+  max-width: 46ch;
+}
+.dash-sim-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--black);
+  background: var(--white);
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: none;
+  white-space: nowrap;
+  transition: background 0.15s ease;
+}
+.dash-sim-note:hover { background: rgba(255, 255, 255, 0.9); }
+.dash-hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.dcov-topbar .dx-topbar-row { justify-content: space-between; }
+
+.dcov-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--black);
+  min-height: calc(100dvh - var(--dx-topbar-h, 64px));
+  border-bottom: 1px solid var(--dx-border);
+}
+
+.dcov-hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 38px 38px;
+  -webkit-mask-image: radial-gradient(ellipse 75% 85% at 72% 40%, black 40%, transparent 92%);
+  mask-image: radial-gradient(ellipse 75% 85% at 72% 40%, black 40%, transparent 92%);
+}
+
+.dcov-hero-bars {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  padding: 0 4px;
+}
+
+.dcov-bar {
+  position: relative;
+  flex: 1;
+  min-width: 2px;
+  height: 4%;
+  border-radius: 1px;
+  transition: height 0.4s ease;
+}
+/* Flat, solid fills like a real candlestick body — no gradient fade, no
+   glow — plus a thin "wick" above the body, like the high/low tail on a
+   real OHLC candle. */
+.dcov-bar.is-up { background: var(--dx-green); }
+.dcov-bar.is-down { background: var(--dx-red); }
+.dcov-bar::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  width: 1.5px;
+  height: 7px;
+}
+.dcov-bar.is-up::after { background: var(--dx-green); }
+.dcov-bar.is-down::after { background: var(--dx-red); }
+
+.dcov-hero-fade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.97) 0%, rgba(0, 0, 0, 0.85) 42%, rgba(0, 0, 0, 0.3) 62%, transparent 80%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.35) 34%, transparent 62%);
+  pointer-events: none;
+}
+
+.dcov-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1360px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 56px 32px 64px 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* "Exchange" sits next to "Decentralized" on desktop instead of its own
+   line. Mobile keeps that split (plenty of vertical room there already). */
+.dcov-title-mobile-break { display: none; }
+
+.dcov-hero .dash-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 26px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dx-text-dim);
+}
+
+.dcov-title {
+  text-wrap: balance;
+  color: var(--dx-text);
+}
+
+.dcov-sub {
+  margin: 26px 0 0;
+  color: rgba(210, 224, 245, 0.75);
+  max-width: 46ch;
+}
+
+.dcov-hero .dash-hero-actions {
+  align-self: flex-start;
+  margin-top: 40px;
+}
+
+.dcov-cta {
+  text-decoration: none;
+  gap: 10px;
+}
+.dcov-cta svg { width: 16px; height: 16px; }
+
+.dcov-store-badges { margin-top: 28px; }
+
+.dcov-note {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--dx-text-dim);
+}
+
+/* .dx-footer's shared margin-top + top padding leaves ~30px of dead
+   black space, barely noticeable below the dense trading screen but very
+   visible right under the bars here — tighten it down. */
+.dcov-footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 0;
+  padding-top: 14px;
+}
+
+@media (max-width: 900px) {
+  /* This page has no tabs/Connect Wallet crowding the header like the
+     trading screen does, so there's room to keep the full wordmark. */
+  .dcov .dx-logo-word { display: inline; }
+}
+
+@media (max-width: 640px) {
+  .dcov-hero { min-height: calc(100dvh - 56px); }
+  .dcov-hero-inner { margin: 0; width: 100%; max-width: none; padding: 40px 18px 32px 18px; justify-content: flex-start; }
+  .dcov-title { font-size: clamp(37px, 10.8vw, 47px); line-height: 1.22; }
+  .dcov-title-mobile-break { display: inline; }
+  .dcov-sub { font-size: 12.5px; }
+  .dcov-hero .dash-hero-actions { margin-top: 30px; flex-direction: column; align-items: flex-start; }
+  /* At mobile widths a 150-bar row shrinks each body to its 2px floor,
+     leaving no width difference for the wick to taper against — it just
+     reads as "the same line, a bit taller". Widen the body and the wick
+     so the tip is visibly narrower than the candle again. */
+  .dcov-bar { min-width: 4px; }
+  .dcov-bar::after { width: 2px; height: 6px; }
+}

@@ -1,0 +1,1125 @@
+/* ---------- Whitepaper: reading progress ---------- */
+
+.wp-body {
+  background: #ffffff;
+}
+
+.wp-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  background: rgba(9, 9, 11, 0.08);
+}
+
+.wp-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: #468ce6;
+  box-shadow: 0 0 8px rgba(70, 140, 230, 0.6);
+  transition: width 0.1s linear;
+}
+
+/* ---------- Top bar ---------- */
+
+.wp-topbar {
+  position: sticky;
+  top: 2px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  padding: 0 28px;
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(9, 9, 11, 0.1);
+}
+
+.wp-topbar-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wp-topbar-word {
+  font-size: 14px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  color: #09090b;
+}
+
+.wp-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.wp-topbar-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(9, 9, 11, 0.4);
+}
+
+.wp-print-btn,
+.wp-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: rgba(9, 9, 11, 0.75);
+  background: none;
+  border: 1px solid rgba(9, 9, 11, 0.18);
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.wp-lang-switch-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.wp-lang-switch-wrap .lang-switch {
+  background-color: transparent;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(9,9,11,0.55)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  border-color: rgba(9, 9, 11, 0.18);
+  color: rgba(9, 9, 11, 0.75);
+  font-family: var(--font-mono);
+}
+
+.wp-lang-switch-wrap .lang-switch:hover {
+  border-color: rgba(9, 9, 11, 0.5);
+  color: #09090b;
+}
+
+.wp-lang-switch-wrap .lang-switch:focus-visible {
+  outline-color: rgba(9, 9, 11, 0.5);
+}
+
+.wp-lang-switch-wrap .lang-switch option {
+  color: #09090b;
+  background: #ffffff;
+}
+
+[dir="rtl"] .wp-lang-switch-wrap .lang-switch {
+  background-position: left 12px center;
+  padding: 8px 14px 8px 30px;
+}
+
+@media (max-width: 480px) {
+  .wp-lang-switch-wrap .lang-switch {
+    padding: 8px 26px 8px 10px;
+    font-size: 11px;
+  }
+}
+
+/* styles.css hides .lang-switch-wrap (without --mobile) below 720px for the
+   main site's nav, which has a dedicated mobile menu slot for it; the
+   whitepaper topbar has no such menu, so keep it visible here. */
+@media (max-width: 720px) {
+  .wp-topbar .wp-lang-switch-wrap {
+    display: flex;
+  }
+}
+
+/* ---------- RTL support ---------- */
+
+/* Purely numeric fields stay left-to-right and isolated from surrounding
+   RTL text so digits and punctuation never get bidi-reordered. Fields that
+   mix numbers with translated prose (legal table values, the topbar tag)
+   are left to the default bidi algorithm so the translated words keep
+   their own reading direction. */
+[dir="rtl"] .wp-stat-value,
+[dir="rtl"] .wp-timeline-date {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.wp-print-btn svg,
+.wp-back svg {
+  width: 14px;
+  height: 14px;
+}
+
+.wp-print-btn:hover,
+.wp-back:hover {
+  border-color: rgba(9, 9, 11, 0.5);
+  color: #09090b;
+}
+
+@media (max-width: 640px) {
+  .wp-topbar-tag { display: none; }
+  .wp-print-btn span { display: none; }
+  .wp-back span { display: none; }
+  .wp-print-btn, .wp-back { padding: 8px; }
+}
+
+/* ---------- Cover ---------- */
+
+.wp-cover {
+  position: relative;
+  min-height: calc(100lvh - 66px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  padding: 80px 24px;
+}
+
+.wp-cover-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(9, 9, 11, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(9, 9, 11, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 85%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 85%);
+}
+
+.wp-cover-glow {
+  position: absolute;
+  left: 50%;
+  bottom: -20%;
+  width: 60vw;
+  height: 60vw;
+  max-width: 720px;
+  max-height: 720px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(70, 140, 230, 0.16) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.wp-cover-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 780px;
+}
+
+.wp-cover-mark {
+  margin-bottom: 24px;
+}
+
+.wp-cover-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(9, 9, 11, 0.55);
+  margin-bottom: 20px;
+}
+
+.wp-cover-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #468ce6;
+  box-shadow: 0 0 8px rgba(70, 140, 230, 0.9);
+}
+
+.wp-cover-label {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: clamp(22px, 4vw, 34px);
+  font-weight: 500;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #09090b;
+}
+
+.wp-cover-sub {
+  margin-top: 28px;
+  max-width: 560px;
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.65;
+  color: rgba(9, 9, 11, 0.6);
+}
+
+.wp-cover-meta {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(9, 9, 11, 0.45);
+}
+
+.wp-cover-meta-sep {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(9, 9, 11, 0.3);
+}
+
+.wp-cover-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 40px;
+  transform: translateX(-50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(9, 9, 11, 0.62);
+  transition: color 0.2s ease;
+}
+
+.wp-cover-scroll:hover {
+  color: #09090b;
+}
+
+.wp-cover-scroll-line {
+  width: 2px;
+  height: 36px;
+  background: linear-gradient(to bottom, #468ce6, transparent);
+  animation: wp-scroll-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes wp-scroll-pulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ---------- Body layout: TOC + content ---------- */
+
+.wp-body-wrap {
+  display: flex;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.wp-toc {
+  position: sticky;
+  top: 90px;
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 40px 0;
+  margin-right: 40px;
+}
+
+.wp-toc a {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 12px;
+  border-left: 2px solid transparent;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.3px;
+  color: rgba(9, 9, 11, 0.42);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.wp-toc-num {
+  font-size: 11px;
+  color: rgba(9, 9, 11, 0.3);
+  transition: color 0.2s ease;
+}
+
+.wp-toc a:hover {
+  color: rgba(9, 9, 11, 0.75);
+}
+
+.wp-toc a.is-active {
+  color: #09090b;
+  border-left-color: #468ce6;
+  background: rgba(70, 140, 230, 0.06);
+}
+
+.wp-toc a.is-active .wp-toc-num {
+  color: #468ce6;
+}
+
+.wp-content {
+  flex: 1;
+  min-width: 0;
+  max-width: 700px;
+  padding: 40px 0 100px;
+}
+
+/* ---------- Sections ---------- */
+
+.wp-section {
+  padding: 56px 0;
+  border-top: 1px solid rgba(9, 9, 11, 0.08);
+  scroll-margin-top: 90px;
+}
+
+.wp-section:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.wp-kicker {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #468ce6;
+  margin-bottom: 14px;
+}
+
+.wp-h2 {
+  font-size: clamp(26px, 3.4vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  line-height: 1.15;
+  color: #09090b;
+  margin-bottom: 22px;
+}
+
+.wp-body-text {
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(9, 9, 11, 0.62);
+  max-width: 640px;
+}
+
+.wp-body-text + .wp-body-text {
+  margin-top: 18px;
+}
+
+.wp-body-text strong {
+  color: rgba(9, 9, 11, 0.92);
+  font-weight: 600;
+}
+
+.wp-inline-link {
+  color: #468ce6;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+
+.wp-inline-link:hover {
+  color: #1a5fd6;
+}
+
+.wp-quote {
+  margin-top: 28px;
+  padding: 4px 0 4px 24px;
+  border-left: 2px solid #468ce6;
+  font-size: clamp(18px, 2.2vw, 22px);
+  line-height: 1.5;
+  font-weight: 500;
+  color: rgba(9, 9, 11, 0.88);
+  max-width: 560px;
+}
+
+/* ---------- Tokenomics stat grid ---------- */
+
+.wp-stats {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(9, 9, 11, 0.14);
+  border-left: 1px solid rgba(9, 9, 11, 0.14);
+}
+
+.wp-stat {
+  background: #ffffff;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid rgba(9, 9, 11, 0.14);
+  border-bottom: 1px solid rgba(9, 9, 11, 0.14);
+}
+
+.wp-stat-value {
+  font-family: var(--font-mono);
+  font-size: clamp(17px, 1.8vw, 20px);
+  font-weight: 500;
+  color: #09090b;
+  letter-spacing: -0.5px;
+}
+
+.wp-stat-value--accent {
+  color: #468ce6;
+}
+
+.wp-stat-label {
+  font-size: 12.5px;
+  color: rgba(9, 9, 11, 0.45);
+  line-height: 1.4;
+}
+
+/* ---------- Buyback flow ---------- */
+
+.wp-flow {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.wp-flow-node {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: rgba(9, 9, 11, 0.75);
+  border: 1px solid rgba(9, 9, 11, 0.16);
+  border-radius: 999px;
+  padding: 10px 18px;
+}
+
+.wp-flow-node--accent {
+  color: #ffffff;
+  background: #468ce6;
+  border-color: #468ce6;
+}
+
+.wp-flow-arrow {
+  width: 22px;
+  height: 1px;
+  background: rgba(9, 9, 11, 0.3);
+  position: relative;
+}
+
+.wp-flow-arrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -3px;
+  width: 6px;
+  height: 6px;
+  border-top: 1px solid rgba(9, 9, 11, 0.5);
+  border-right: 1px solid rgba(9, 9, 11, 0.5);
+  transform: rotate(45deg);
+}
+
+/* ---------- Infrastructure cards ---------- */
+
+.wp-cards {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(9, 9, 11, 0.14);
+  border-left: 1px solid rgba(9, 9, 11, 0.14);
+}
+
+.wp-card {
+  background: #ffffff;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-right: 1px solid rgba(9, 9, 11, 0.14);
+  border-bottom: 1px solid rgba(9, 9, 11, 0.14);
+  transition: background 0.2s ease;
+}
+
+.wp-card:hover {
+  background: #fafafa;
+}
+
+.wp-card-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #468ce6;
+}
+
+.wp-card p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(9, 9, 11, 0.55);
+}
+
+/* ---------- Roadmap timeline ---------- */
+
+.wp-timeline {
+  margin-top: 32px;
+  position: relative;
+  padding-left: 26px;
+}
+
+.wp-timeline::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: rgba(9, 9, 11, 0.14);
+}
+
+.wp-timeline-item {
+  position: relative;
+  padding-bottom: 30px;
+}
+
+.wp-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.wp-timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -26px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #f7f7f5;
+  border: 2px solid #468ce6;
+}
+
+.wp-timeline-date {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #468ce6;
+  margin-bottom: 6px;
+}
+
+.wp-timeline-title {
+  display: block;
+  font-size: 16.5px;
+  font-weight: 600;
+  color: #09090b;
+  margin-bottom: 6px;
+}
+
+.wp-timeline-item p {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: rgba(9, 9, 11, 0.55);
+  max-width: 560px;
+}
+
+/* ---------- Location & legal documents ---------- */
+
+.wp-legal-table {
+  margin-top: 28px;
+  border-top: 1px solid rgba(9, 9, 11, 0.14);
+  max-width: 640px;
+}
+
+.wp-legal-row {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(9, 9, 11, 0.14);
+}
+
+.wp-legal-label {
+  flex: 0 0 220px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+  color: rgba(9, 9, 11, 0.5);
+}
+
+.wp-legal-value {
+  flex: 1;
+  font-size: 14.5px;
+  color: #09090b;
+}
+
+.wp-legal-value--blank {
+  display: inline-block;
+  align-self: stretch;
+  min-height: 1px;
+  border-bottom: 1px dashed rgba(9, 9, 11, 0.3);
+}
+
+.wp-legal-note {
+  margin-top: 16px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: rgba(9, 9, 11, 0.42);
+  max-width: 560px;
+}
+
+@media (max-width: 560px) {
+  .wp-legal-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .wp-legal-label {
+    flex: none;
+  }
+}
+
+/* ---------- Risk disclaimer box ---------- */
+
+.wp-disclaimer {
+  margin-top: 28px;
+  padding: 22px 24px;
+  background: rgba(9, 9, 11, 0.03);
+  border: 1px solid rgba(9, 9, 11, 0.1);
+}
+
+.wp-disclaimer-title {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(9, 9, 11, 0.55);
+  margin-bottom: 10px;
+}
+
+.wp-disclaimer p {
+  font-size: 13px;
+  line-height: 1.75;
+  color: rgba(9, 9, 11, 0.42);
+}
+
+.wp-disclaimer p + p {
+  margin-top: 10px;
+}
+
+/* ---------- Conclusion CTAs ---------- */
+
+.wp-cta-row {
+  margin-top: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wp-cta {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: rgba(9, 9, 11, 0.75);
+  border: 1px solid rgba(9, 9, 11, 0.2);
+  border-radius: 999px;
+  padding: 12px 22px;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.wp-cta:hover {
+  border-color: rgba(9, 9, 11, 0.55);
+  color: #09090b;
+}
+
+.wp-cta--solid {
+  background: #468ce6;
+  border-color: #468ce6;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.wp-cta--solid:hover {
+  background: #1a5fd6;
+  border-color: #1a5fd6;
+  color: #ffffff;
+}
+
+/* ---------- Doc footer ---------- */
+
+.wp-doc-footer {
+  margin-top: 64px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(9, 9, 11, 0.08);
+}
+
+.wp-doc-footer-copy {
+  font-size: 12.5px;
+  color: rgba(9, 9, 11, 0.35);
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+/* ---------- Mobile: TOC becomes a sticky horizontal strip ---------- */
+
+@media (max-width: 960px) {
+  .wp-body-wrap {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .wp-toc {
+    position: sticky;
+    top: 65px;
+    z-index: 20;
+    flex: none;
+    flex-direction: row;
+    width: 100%;
+    margin-right: 0;
+    padding: 12px 16px;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(9, 9, 11, 0.1);
+    scrollbar-width: none;
+  }
+
+  .wp-toc::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wp-toc a {
+    flex: none;
+    white-space: nowrap;
+    border-left: none;
+    border-radius: 999px;
+    border: 1px solid rgba(9, 9, 11, 0.14);
+    padding: 7px 12px;
+  }
+
+  .wp-toc a.is-active {
+    border-color: #468ce6;
+    background: rgba(70, 140, 230, 0.1);
+  }
+
+  .wp-toc a span:not(.wp-toc-num) {
+    display: none;
+  }
+
+  .wp-content {
+    max-width: none;
+    padding: 32px 20px 80px;
+  }
+
+  .wp-stats,
+  .wp-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .wp-cover {
+    padding: 60px 20px;
+  }
+
+  .wp-cover-label {
+    letter-spacing: 4px;
+  }
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .wp-scroll-pulse,
+  .wp-cover-scroll-line {
+    animation: none;
+  }
+
+  .wp-progress-fill {
+    transition: none;
+  }
+}
+
+/* ---------- Print ---------- */
+
+@media print {
+  .wp-progress,
+  .wp-topbar,
+  .wp-toc,
+  .wp-cover-scroll,
+  .wp-cover-glow {
+    display: none !important;
+  }
+
+  .wp-cover {
+    min-height: auto;
+    padding: 40px 0;
+  }
+
+  .wp-body-wrap {
+    display: block;
+    max-width: none;
+    padding: 0;
+  }
+
+  .wp-content {
+    max-width: none;
+    padding: 0;
+  }
+
+  .wp-section {
+    break-inside: avoid;
+  }
+}
+
+/* ---------- Section scene banners (dark divider with faceted-diamond icon) ---------- */
+
+.wp-scene {
+  position: relative;
+  margin: 0 0 32px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0 44px 30px;
+}
+
+.wp-scene-glow {
+  display: none;
+}
+
+.wp-scene-dots {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.32;
+}
+
+.wp-scene::before {
+  content: "\25C6\0020SECTORA";
+  position: absolute;
+  left: 44px;
+  bottom: 16px;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.32);
+}
+
+.wp-scene::after {
+  content: "VERIFICATION & CUSTODY FOR TOKENIZED ASSETS";
+  position: absolute;
+  right: 44px;
+  bottom: 16px;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.26);
+}
+
+.wp-scene-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 32px;
+  max-width: 100%;
+}
+
+.wp-scene-icon {
+  flex: none;
+  order: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.8));
+}
+
+.wp-scene-icon svg {
+  display: block;
+  height: 152px;
+  width: auto;
+  max-width: 260px;
+  overflow: visible;
+}
+
+.wp-scene-text {
+  flex: none;
+  order: 1;
+  text-align: left;
+}
+
+.wp-scene-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 14px;
+}
+
+.wp-scene-eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex: none;
+  background: #468ce6;
+  box-shadow: 0 0 8px rgba(70, 140, 230, 0.85);
+}
+
+.wp-scene-title {
+  font-family: "Sora Light", var(--font-sans);
+  font-weight: 200;
+  font-size: clamp(24px, 3vw, 34px);
+  letter-spacing: -0.2px;
+  text-transform: none;
+  color: #ffffff;
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .wp-scene {
+    height: auto;
+    padding: 30px 26px 52px;
+  }
+
+  .wp-scene-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .wp-scene-icon,
+  .wp-scene-text {
+    order: 0;
+  }
+
+  .wp-scene-icon svg {
+    height: 84px;
+    max-width: 170px;
+  }
+
+  .wp-scene-title {
+    font-size: 21px;
+  }
+
+  .wp-scene::before,
+  .wp-scene::after {
+    font-size: 8.5px;
+    letter-spacing: 1px;
+  }
+
+  .wp-scene::after {
+    right: 26px;
+    max-width: 46%;
+    text-align: right;
+  }
+
+  .wp-scene::before {
+    left: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wp-scene-icon svg {
+    height: 64px;
+    max-width: 130px;
+  }
+
+  .wp-scene::after {
+    content: none;
+  }
+}
+
+@media print {
+  .wp-scene {
+    display: none !important;
+  }
+}
+
+/* ---------- Supply & Market Cap: recolor shared component to whitepaper blue ---------- */
+
+#marketcap .supply-heading strong,
+#marketcap .supply-implied,
+#marketcap .supply-mobile-implied-value,
+#marketcap .supply-calc-result--accent .supply-calc-result-value {
+  color: #468ce6;
+}
+
+#marketcap .supply-row--sectora td,
+#marketcap .supply-mobile-row--sectora {
+  background: #eaf2fc;
+  border-top: 1px solid rgba(70, 140, 230, 0.28);
+}
+
+#marketcap .supply-row--sectora .supply-coin-dot,
+#marketcap .supply-mobile-row--sectora .supply-coin-dot,
+#marketcap .supply-coin-dot.live {
+  background: #468ce6;
+  box-shadow: 0 0 8px rgba(70, 140, 230, 0.55);
+}
+
+#marketcap .supply-status-dot--live {
+  background: #468ce6;
+  box-shadow: 0 0 0 0 rgba(70, 140, 230, 0.55);
+  animation: wp-supply-pulse-ring 2s ease-out infinite;
+}
+
+@keyframes wp-supply-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(70, 140, 230, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(70, 140, 230, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(70, 140, 230, 0);
+  }
+}
+
+#marketcap .supply-calc-pill:focus-visible,
+#marketcap .supply-calc-slider:focus-visible {
+  outline-color: #468ce6;
+}
+
+#marketcap .supply-calc-pill.is-active {
+  background: #468ce6;
+  border-color: #468ce6;
+}
+
+#marketcap .supply-calc-slider {
+  background: linear-gradient(90deg, #1a5fd6, #468ce6);
+}
+
+#marketcap .supply-calc-slider::-webkit-slider-thumb,
+#marketcap .supply-calc-slider::-moz-range-thumb {
+  border-color: #468ce6;
+}
+
+#marketcap .supply-calc-input-wrap:focus-within {
+  border-color: #468ce6;
+}
+
+#marketcap .exec-dot {
+  background: #468ce6;
+  box-shadow: 0 0 8px rgba(70, 140, 230, 0.9);
+}

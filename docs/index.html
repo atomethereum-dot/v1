@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sectora Whitepaper v1.0 | Verification &amp; Custody Layer for Tokenized Assets</title>
+<meta name="description" content="The Sectora whitepaper: a Layer 3 network for the verification, custody and exchange of tokenized real-world assets. Architecture, $SECT tokenomics, supply policy and roadmap." />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%2756.8%2034.4%2086.4%20134.4%27%3E%3Cpath%20d%3D%27M85.6%2034.4%20L56.8%2052.0%20L56.8%20122.4%20L85.6%20104.8%20Z%20M82.0%2068.0%20L82.0%20104.8%20L58.5%2086.4%20Z%27%20fill%3D%27%23ffffff%27%20fill-rule%3D%27evenodd%27%2F%3E%3Cpath%20d%3D%27M114.4%2052.0%20L141.6%2068.0%20L141.6%20120.8%20L114.4%20135.2%20L85.6%20120.8%20L85.6%2068.0%20Z%20M114.4%20126.0%20L114.4%2089.2%20L142.4%20107.6%20Z%27%20fill%3D%27%23e3e5e8%27%20fill-rule%3D%27evenodd%27%2F%3E%3Cpath%20d%3D%27M114.4%20159.6%20L143.2%20142.0%20L143.2%2071.6%20L114.4%2089.2%20Z%20M117.9%20126.0%20L117.9%2089.2%20L141.4%20107.6%20Z%27%20fill%3D%27%23c0c3c8%27%20fill-rule%3D%27evenodd%27%2F%3E%3C%2Fsvg%3E" />
+<link rel="preload" href="/fonts/SpaceGrotesk.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/JetBrainsMono.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/fonts/SoraLight.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/styles.css?v=20260810x" />
+<link rel="stylesheet" href="/whitepaper.css?v=20260810n" />
+</head>
+<body class="wp-body">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="wpDiaTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f5f6f7"/></linearGradient>
+    <linearGradient id="wpDiaMid" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef0f2"/><stop offset="1" stop-color="#dde0e3"/></linearGradient>
+    <linearGradient id="wpDiaBot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4d6da"/><stop offset="1" stop-color="#c0c3c8"/></linearGradient>
+    <symbol id="wpDiamondUnit" viewBox="56.8 34.4 86.4 134.4">
+      <path d="M85.6 34.4 L56.8 52.0 L56.8 122.4 L85.6 104.8 Z M82.0 68.0 L82.0 104.8 L58.5 86.4 Z" fill="url(#wpDiaTop)" fill-rule="evenodd"/>
+      <path d="M114.4 52.0 L141.6 68.0 L141.6 120.8 L114.4 135.2 L85.6 120.8 L85.6 68.0 Z M114.4 126.0 L114.4 89.2 L142.4 107.6 Z" fill="url(#wpDiaMid)" fill-rule="evenodd"/>
+      <path d="M114.4 159.6 L143.2 142.0 L143.2 71.6 L114.4 89.2 Z M117.9 126.0 L117.9 89.2 L141.4 107.6 Z" fill="url(#wpDiaBot)" fill-rule="evenodd"/>
+    </symbol>
+    <pattern id="wpSceneDots" width="140" height="140" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="18" r="1.1" fill="#ffffff" opacity="0.4"/>
+      <circle cx="36" cy="54" r="0.7" fill="#ffffff" opacity="0.25"/>
+      <circle cx="64" cy="12" r="0.9" fill="#ffffff" opacity="0.3"/>
+      <circle cx="92" cy="40" r="1.2" fill="#ffffff" opacity="0.45"/>
+      <circle cx="118" cy="20" r="0.6" fill="#ffffff" opacity="0.2"/>
+      <circle cx="22" cy="88" r="0.8" fill="#ffffff" opacity="0.3"/>
+      <circle cx="52" cy="104" r="1.0" fill="#ffffff" opacity="0.35"/>
+      <circle cx="80" cy="78" r="0.6" fill="#ffffff" opacity="0.22"/>
+      <circle cx="108" cy="98" r="0.9" fill="#ffffff" opacity="0.3"/>
+      <circle cx="132" cy="66" r="1.1" fill="#ffffff" opacity="0.4"/>
+      <circle cx="6" cy="126" r="0.7" fill="#ffffff" opacity="0.25"/>
+      <circle cx="46" cy="130" r="0.6" fill="#ffffff" opacity="0.2"/>
+    </pattern>
+  </defs>
+</svg>
+
+<div class="wp-progress" aria-hidden="true"><div class="wp-progress-fill" id="wpProgressFill"></div></div>
+
+<header class="wp-topbar">
+  <a class="wp-topbar-logo" href="/">
+    <span class="wp-topbar-mark" aria-hidden="true">
+      <svg viewBox="56.8 34.4 86.4 134.4" width="18" height="28"><defs><linearGradient id="wpNavTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f5f6f7"/></linearGradient><linearGradient id="wpNavMid" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef0f2"/><stop offset="1" stop-color="#dde0e3"/></linearGradient><linearGradient id="wpNavBot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4d6da"/><stop offset="1" stop-color="#c0c3c8"/></linearGradient></defs><path d="M85.6 34.4 L56.8 52.0 L56.8 122.4 L85.6 104.8 Z M82.0 68.0 L82.0 104.8 L58.5 86.4 Z" fill="url(#wpNavTop)" fill-rule="evenodd"/><path d="M114.4 52.0 L141.6 68.0 L141.6 120.8 L114.4 135.2 L85.6 120.8 L85.6 68.0 Z M114.4 126.0 L114.4 89.2 L142.4 107.6 Z" fill="url(#wpNavMid)" fill-rule="evenodd"/><path d="M114.4 159.6 L143.2 142.0 L143.2 71.6 L114.4 89.2 Z M117.9 126.0 L117.9 89.2 L141.4 107.6 Z" fill="url(#wpNavBot)" fill-rule="evenodd"/></svg>
+    </span>
+    <span class="wp-topbar-word">SECTORA</span>
+  </a>
+  <div class="wp-topbar-right">
+    <span class="wp-topbar-tag">v1.0 &middot; <span data-i18n="wp.topbar.testnet">Testnet</span></span>
+    <div class="lang-switch-wrap wp-lang-switch-wrap">
+      <select class="lang-switch" id="wpLangSwitch" data-i18n-attr="aria-label:nav.langLabel" aria-label="Language"></select>
+    </div>
+    <button class="wp-print-btn" id="wpPrintBtn" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      <span data-i18n="wp.topbar.print">Save as PDF</span>
+    </button>
+    <a class="wp-back" href="/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+      <span data-i18n="wp.topbar.back">Back to site</span>
+    </a>
+  </div>
+</header>
+
+<section class="wp-cover">
+  <div class="wp-cover-grid" aria-hidden="true"></div>
+  <div class="wp-cover-glow" aria-hidden="true"></div>
+  <div class="wp-cover-inner">
+    <span class="wp-cover-mark" aria-hidden="true">
+      <svg viewBox="56.8 34.4 86.4 134.4" width="18" height="28"><defs><linearGradient id="wpCoverTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f5f6f7"/></linearGradient><linearGradient id="wpCoverMid" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef0f2"/><stop offset="1" stop-color="#dde0e3"/></linearGradient><linearGradient id="wpCoverBot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4d6da"/><stop offset="1" stop-color="#c0c3c8"/></linearGradient></defs><path d="M85.6 34.4 L56.8 52.0 L56.8 122.4 L85.6 104.8 Z M82.0 68.0 L82.0 104.8 L58.5 86.4 Z" fill="url(#wpCoverTop)" fill-rule="evenodd"/><path d="M114.4 52.0 L141.6 68.0 L141.6 120.8 L114.4 135.2 L85.6 120.8 L85.6 68.0 Z M114.4 126.0 L114.4 89.2 L142.4 107.6 Z" fill="url(#wpCoverMid)" fill-rule="evenodd"/><path d="M114.4 159.6 L143.2 142.0 L143.2 71.6 L114.4 89.2 Z M117.9 126.0 L117.9 89.2 L141.4 107.6 Z" fill="url(#wpCoverBot)" fill-rule="evenodd"/></svg>
+    </span>
+    <p class="wp-cover-eyebrow"><span class="wp-cover-dot" aria-hidden="true"></span><span data-i18n="wp.cover.eyebrow">Sectora Foundation IL</span></p>
+    <h1 class="wp-cover-label" data-i18n="wp.cover.label">Whitepaper</h1>
+    <p class="wp-cover-sub" data-i18n="wp.cover.sub">A verification and custody layer for tokenized real-world assets, built on a dedicated Layer&nbsp;3 network.</p>
+    <div class="wp-cover-meta">
+      <span>v1.0</span><span class="wp-cover-meta-sep" aria-hidden="true"></span><span>Q1 2026</span><span class="wp-cover-meta-sep" aria-hidden="true"></span><span data-i18n="wp.cover.statusLive">Testnet Live</span>
+    </div>
+  </div>
+  <a class="wp-cover-scroll" href="#abstract" data-i18n-attr="aria-label:wp.cover.scroll" aria-label="Scroll to read">
+    <span class="wp-cover-scroll-line" aria-hidden="true"></span>
+    <span data-i18n="wp.cover.scroll">Scroll to read</span>
+  </a>
+</section>
+
+<div class="wp-body-wrap">
+  <nav class="wp-toc" id="wpToc" data-i18n-attr="aria-label:wp.toc.ariaLabel" aria-label="Table of contents">
+    <a href="#abstract" data-toc="abstract"><span class="wp-toc-num">00</span><span data-i18n="wp.toc.abstract">Abstract</span></a>
+    <a href="#introduction" data-toc="introduction"><span class="wp-toc-num">01</span><span data-i18n="wp.toc.introduction">Introduction</span></a>
+    <a href="#network" data-toc="network"><span class="wp-toc-num">02</span><span data-i18n="wp.toc.network">The Sectora Network</span></a>
+    <a href="#protocol" data-toc="protocol"><span class="wp-toc-num">03</span><span data-i18n="wp.toc.protocol">Verification &amp; Custody</span></a>
+    <a href="#validators" data-toc="validators"><span class="wp-toc-num">04</span><span data-i18n="wp.toc.validators">Validator Network</span></a>
+    <a href="#dex" data-toc="dex"><span class="wp-toc-num">05</span><span data-i18n="wp.toc.dex">Sectora DEX</span></a>
+    <a href="#tokenization" data-toc="tokenization"><span class="wp-toc-num">06</span><span data-i18n="wp.toc.tokenization">RWA Tokenization</span></a>
+    <a href="#tokenomics" data-toc="tokenomics"><span class="wp-toc-num">07</span><span data-i18n="wp.toc.tokenomics">$SECT Tokenomics</span></a>
+    <a href="#supply" data-toc="supply"><span class="wp-toc-num">08</span><span data-i18n="wp.toc.supply">Supply &amp; Buyback</span></a>
+    <a href="#marketcap" data-toc="marketcap"><span class="wp-toc-num">09</span><span data-i18n="wp.toc.marketcap">Supply &amp; Market Cap</span></a>
+    <a href="#contract" data-toc="contract"><span class="wp-toc-num">10</span><span data-i18n="wp.toc.contract">Token Contract</span></a>
+    <a href="#infrastructure" data-toc="infrastructure"><span class="wp-toc-num">11</span><span data-i18n="wp.toc.infrastructure">Infrastructure</span></a>
+    <a href="#roadmap" data-toc="roadmap"><span class="wp-toc-num">12</span><span data-i18n="wp.toc.roadmap">Roadmap</span></a>
+    <a href="#governance" data-toc="governance"><span class="wp-toc-num">13</span><span data-i18n="wp.toc.governance">Governance &amp; Risk</span></a>
+    <a href="#legal" data-toc="legal"><span class="wp-toc-num">14</span><span data-i18n="wp.toc.legal">Location &amp; Legal</span></a>
+    <a href="#conclusion" data-toc="conclusion"><span class="wp-toc-num">15</span><span data-i18n="wp.toc.conclusion">Conclusion</span></a>
+  </nav>
+
+  <main class="wp-content">
+
+    <section class="wp-section" id="abstract">
+      <p class="wp-kicker" data-i18n="wp.abstract.kicker">§00 &middot; Abstract</p>
+      <h2 class="wp-h2" data-i18n="wp.abstract.h2">Abstract</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 100 150"><image href="/sectora-logo-3d.png" x="16" y="22.1" width="68" height="105.8"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.abstract.kicker">&sect;00 &middot; Abstract</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.abstract.p1">Sectora is a Layer 3 network purpose-built for the verification, custody, and exchange of tokenized real-world assets. Where general-purpose chains treat asset tokenization as something built on top of the chain, Sectora treats verification as a protocol-level guarantee: every custodied asset is anchored to a dedicated attestation layer, secured by a distributed validator set, and made liquid through a native exchange.</p>
+      <p class="wp-body-text" data-i18n="wp.abstract.p2">This document describes the network's architecture, its verification and custody protocol, the $SECT token and its supply policy, the buyback mechanism that ties token scarcity to real usage, and the roadmap carrying Sectora from its current testnet phase to mainnet launch and cross-chain expansion.</p>
+    </section>
+
+    <section class="wp-section" id="introduction">
+      <p class="wp-kicker" data-i18n="wp.introduction.kicker">§01 &middot; Introduction</p>
+      <h2 class="wp-h2" data-i18n="wp.introduction.h2">Introduction</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 110 130"><image href="/sectora-logo-3d.png" x="18" y="37.4" width="60" height="93.3" opacity="0.32"/><image href="/sectora-logo-3d.png" x="26" y="25.4" width="60" height="93.3"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.introduction.kicker">&sect;01 &middot; Introduction</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.introduction.p1">Real-world assets moving on-chain today generally rely on off-chain custody with an on-chain claim layered on top of it &mdash; a bridge of trust rather than a proof. Holders are asked to believe an attestation instead of verifying one. That gap is tolerable for low-stakes use cases; it is not tolerable for institutional capital.</p>
+      <p class="wp-body-text" data-i18n="wp.introduction.p2">Sectora starts from a different premise: verification should be a primitive of the network, not a feature bolted onto it after the fact. Custody, attestation, and settlement are handled by infrastructure designed for that single purpose, rather than shared with unrelated general-purpose activity.</p>
+      <blockquote class="wp-quote" data-i18n="wp.introduction.quote">The question &ldquo;is this asset actually backed?&rdquo; has a cryptographic answer &mdash; not an institutional one.</blockquote>
+    </section>
+
+    <section class="wp-section" id="network">
+      <p class="wp-kicker" data-i18n="wp.network.kicker">§02 &middot; The Sectora Network</p>
+      <h2 class="wp-h2" data-i18n="wp.network.h2">Layer 3 Architecture</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 200 150"><path d="M40,90 L100,35 L160,100 Z" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1"/><image href="/sectora-logo-3d.png" x="23" y="63.5" width="34" height="52.9"/><image href="/sectora-logo-3d.png" x="83" y="8.6" width="34" height="52.9"/><image href="/sectora-logo-3d.png" x="143" y="73.5" width="34" height="52.9"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.network.kicker">&sect;02 &middot; The Sectora Network</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.network.p1">Sectora runs as a Layer 3 network, settling above a general-purpose base layer to inherit its security and finality while executing custody and verification logic in an environment purpose-built for that workload. Separating the execution layer from general-purpose blockspace means custody attestations never compete for throughput with unrelated activity, and the verification logic that matters most to institutional users can evolve independently of base-layer governance.</p>
+      <p class="wp-body-text" data-i18n="wp.network.p2" data-i18n-html>The network is currently <strong>live on testnet</strong>, open to validators, security researchers, and early integration partners ahead of its mainnet launch.</p>
+    </section>
+
+    <section class="wp-section" id="protocol">
+      <p class="wp-kicker" data-i18n="wp.protocol.kicker">§03 &middot; Verification &amp; Custody</p>
+      <h2 class="wp-h2" data-i18n="wp.protocol.h2">The Sectora Protocol</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 120 160"><path d="M60 14 L96 28 L96 88 Q96 122 60 146 Q24 122 24 88 L24 28 Z" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.4"/><image href="/sectora-logo-3d.png" x="33" y="42" width="54" height="84"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.protocol.kicker">&sect;03 &middot; Verification &amp; Custody</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.protocol.p1">The Sectora Protocol is the network's verification layer: native infrastructure to audit, protect, and tokenize real-world assets through cryptographic verification, distributed custody, and institutional-grade security by design.</p>
+      <p class="wp-body-text" data-i18n="wp.protocol.p2">Custodied assets are represented on-chain only after passing through a verification cycle &mdash; an auditable process that ties the on-chain instrument to its off-chain backing at defined intervals, rather than at issuance alone. The result is a continuously-verifiable claim rather than a one-time attestation, giving holders and counterparties a live cryptographic record instead of a static certificate.</p>
+    </section>
+
+    <section class="wp-section" id="validators">
+      <p class="wp-kicker" data-i18n="wp.validators.kicker">§04 &middot; Validator Network</p>
+      <h2 class="wp-h2" data-i18n="wp.validators.h2">Security by Distribution</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 200 140"><line x1="28" y1="120" x2="66" y2="55" stroke="rgba(255,255,255,0.16)" stroke-width="0.8"/><line x1="66" y1="55" x2="96" y2="25" stroke="rgba(255,255,255,0.16)" stroke-width="0.8"/><line x1="96" y1="25" x2="150" y2="45" stroke="rgba(255,255,255,0.16)" stroke-width="0.8"/><line x1="66" y1="55" x2="112" y2="115" stroke="rgba(255,255,255,0.16)" stroke-width="0.8"/><line x1="112" y1="115" x2="178" y2="105" stroke="rgba(255,255,255,0.16)" stroke-width="0.8"/><line x1="150" y1="45" x2="178" y2="105" stroke="rgba(255,255,255,0.16)" stroke-width="0.8"/><image href="/sectora-logo-3d.png" x="18" y="104.4" width="20" height="31.1"/><image href="/sectora-logo-3d.png" x="56" y="39.4" width="20" height="31.1"/><image href="/sectora-logo-3d.png" x="102" y="99.4" width="20" height="31.1"/><image href="/sectora-logo-3d.png" x="140" y="29.4" width="20" height="31.1"/><image href="/sectora-logo-3d.png" x="168" y="89.4" width="20" height="31.1"/><image href="/sectora-logo-3d.png" x="86" y="9.4" width="20" height="31.1"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.validators.kicker">&sect;04 &middot; Validator Network</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.validators.p1">Every transaction on Sectora &mdash; transfers, custody attestations, and DEX settlement alike &mdash; is secured by a distributed validator network. Validators stake $SECT to participate, propose and attest blocks in epoch-based rounds, and are economically accountable for the verification checks they perform.</p>
+      <p class="wp-body-text" data-i18n="wp.validators.p2" data-i18n-html>This is the same security model reflected in the network's live Node Map and Epoch History views on the <a class="wp-inline-link" href="/dashboard.html">Dashboard</a>, where validator distribution, uptime, and staking activity are visible in real time across the Americas, Asia-Pacific, and Europe/Africa regions.</p>
+    </section>
+
+    <section class="wp-section" id="dex">
+      <p class="wp-kicker" data-i18n="wp.dex.kicker">§05 &middot; Sectora DEX</p>
+      <h2 class="wp-h2" data-i18n="wp.dex.h2">A Single Markets Layer</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 210 140"><image href="/sectora-logo-3d.png" x="21" y="32.6" width="48" height="74.7"/><image href="/sectora-logo-3d.png" x="141" y="32.6" width="48" height="74.7"/><line x1="93" y1="70" x2="117" y2="70" stroke="rgba(255,255,255,0.35)" stroke-width="1.4"/><path d="M99,64 L91,70 L99,76" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M111,64 L119,70 L111,76" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.dex.kicker">&sect;05 &middot; Sectora DEX</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.dex.p1" data-i18n-html>The <a class="wp-inline-link" href="/dex-cover.html">Sectora DEX</a> is the network's markets layer: a single venue to trade, swap, and go P2P across live-quoted crypto, tokenized metals, and index-tracked assets. Rather than isolating tokenized real-world assets in a separate venue from native crypto pairs, Sectora settles both through the same custody-verified infrastructure, with every price refreshed in real time.</p>
+      <p class="wp-body-text" data-i18n="wp.dex.p2">Because tokenized assets on Sectora carry a live, verifiable custody record, the DEX can list them alongside crypto pairs without asking traders to trust a separate, off-chain attestation.</p>
+    </section>
+
+    <section class="wp-section" id="tokenization">
+      <p class="wp-kicker" data-i18n="wp.tokenization.kicker">§06 &middot; RWA Tokenization</p>
+      <h2 class="wp-h2" data-i18n="wp.tokenization.h2">Real-World Assets &amp; USD-SEC</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 190 140"><image href="/sectora-logo-3d.png" x="27" y="31.5" width="56" height="87.1"/><path d="M104,53 L120,60 L102,68 Z" fill="#ffffff" opacity="0.45"/><path d="M136,38 L148,44 L134,50 Z" fill="#ffffff" opacity="0.32"/><path d="M160,24 L169,28 L158,33 Z" fill="#ffffff" opacity="0.2"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.tokenization.kicker">&sect;06 &middot; RWA Tokenization</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.tokenization.p1" data-i18n-html>The Asset Tokenization Network is where real-world assets are verified, custodied, and represented as on-chain instruments &mdash; the substrate the rest of the protocol builds on. Tokenized positions can generate yield: current tokenized real-world-asset pools return an estimated <strong>15.2% APY</strong>, sourced from the underlying assets rather than emissions.</p>
+      <p class="wp-body-text" data-i18n="wp.tokenization.p2" data-i18n-html><strong>USD-SEC</strong> is Sectora's fully-collateralized stablecoin, used as the unit of account for custody attestations and DEX settlement across the network &mdash; a stable base against which both crypto and tokenized real-world assets are priced and settled.</p>
+    </section>
+
+    <section class="wp-section" id="tokenomics">
+      <p class="wp-kicker" data-i18n="wp.tokenomics.kicker">§07 &middot; $SECT Tokenomics</p>
+      <h2 class="wp-h2" data-i18n="wp.tokenomics.h2">The $SECT Token</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 150 150"><circle cx="75" cy="75" r="62" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.2" stroke-dasharray="4 6"/><image href="/sectora-logo-3d.png" x="48" y="33" width="54" height="84"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.tokenomics.kicker">&sect;07 &middot; $SECT Tokenomics</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.tokenomics.p1">$SECT is the network's native asset: validators stake it to secure the protocol, it is the reference collateral behind network fee capture, and it is the instrument through which the buyback engine ties token scarcity to real usage.</p>
+      <div class="wp-stats">
+        <div class="wp-stat">
+          <span class="wp-stat-value">50,000,000</span>
+          <span class="wp-stat-label" data-i18n="wp.tokenomics.stat1Label">Initial supply</span>
+        </div>
+        <div class="wp-stat">
+          <span class="wp-stat-value">$5,000,000</span>
+          <span class="wp-stat-label" data-i18n="wp.tokenomics.stat2Label">Fully diluted valuation</span>
+        </div>
+        <div class="wp-stat">
+          <span class="wp-stat-value">$1,000,000</span>
+          <span class="wp-stat-label" data-i18n="wp.tokenomics.stat3Label">Initial liquidity (locked)</span>
+        </div>
+        <div class="wp-stat">
+          <span class="wp-stat-value wp-stat-value--accent">25,000,000</span>
+          <span class="wp-stat-label" data-i18n="wp.tokenomics.stat4Label">Supply after Dec 2026 reduction</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wp-section" id="supply">
+      <p class="wp-kicker" data-i18n="wp.supply.kicker">§08 &middot; Supply &amp; Buyback</p>
+      <h2 class="wp-h2" data-i18n="wp.supply.h2">Supply Policy &amp; the Buyback Engine</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 150 150"><path d="M75,17 A58,58 0 1 1 24,52" fill="none" stroke="rgba(70,140,230,0.45)" stroke-width="1.4"/><path d="M15,46 L24,52 L30,42" fill="none" stroke="rgba(70,140,230,0.45)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/><image href="/sectora-logo-3d.png" x="50" y="36.1" width="50" height="77.8"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.supply.kicker">&sect;08 &middot; Supply &amp; Buyback</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.supply.p1" data-i18n-html>Sectora's supply policy is deliberately conservative: rather than an open-ended emission schedule, the network commits to a one-time <strong>Strategic Supply Reduction in December 2026</strong>, cutting total supply by 50% &mdash; from 50,000,000 to 25,000,000 $SECT &mdash; to align circulating supply with actual network usage rather than a fixed issuance curve decided in advance.</p>
+      <p class="wp-body-text" data-i18n="wp.supply.p2" data-i18n-html>The <strong>Buyback Engine</strong> reinforces that alignment on an ongoing basis: a share of network fee revenue generated by validators flows into a buyback pool, which purchases $SECT on the open market. Token scarcity is therefore a function of network activity &mdash; validators, custody volume, and DEX usage &mdash; rather than speculative demand alone.</p>
+      <div class="wp-flow" aria-hidden="true">
+        <span class="wp-flow-node" data-i18n="wp.supply.flowValidators">Validators</span>
+        <span class="wp-flow-arrow"></span>
+        <span class="wp-flow-node" data-i18n="wp.supply.flowPool">Buyback Pool</span>
+        <span class="wp-flow-arrow"></span>
+        <span class="wp-flow-node wp-flow-node--accent" data-i18n="wp.supply.flowMarket">Open Market</span>
+      </div>
+    </section>
+
+    <section class="wp-section" id="marketcap">
+      <p class="wp-kicker" data-i18n="wp.marketcap.kicker">&sect;09 &middot; Supply &amp; Market Cap</p>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 170 140"><rect x="15" y="105" width="14" height="25" fill="#ffffff" opacity="0.14"/><rect x="34" y="88" width="14" height="42" fill="#ffffff" opacity="0.18"/><rect x="53" y="66" width="14" height="64" fill="#ffffff" opacity="0.22"/><image href="/sectora-logo-3d.png" x="94" y="34.5" width="52" height="80.9"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.marketcap.kicker">&sect;09 &middot; Supply &amp; Market Cap</p>
+          </div>
+        </div>
+      </div>
+      <div class="supply-scenarios-block reveal" id="supply-scenarios">
+      <span class="eyebrow eyebrow-dot dark-text"><span class="exec-dot"></span><span data-i18n="supplyScenarios.eyebrow">Supply &amp; Market Cap</span></span>
+      <h2 class="display display-md dark-text supply-heading" data-i18n="supplyScenarios.heading" data-i18n-html>What a <strong>25,000,000</strong><br>token supply implies<br>at other networks&rsquo; market<br>caps</h2>
+      <p class="supply-lede" data-i18n="supplyScenarios.lede" data-i18n-html>
+        Sectora's circulating supply settles at <strong>25,000,000 #SECT</strong> after the December
+        2026 reduction. Below, the price and market capitalization of several established networks
+        &mdash; each paired with what #SECT would be priced at if Sectora
+        reached just 5% of that network's market cap, a conservative scenario.
+      </p>
+
+      <div class="supply-status-badge" id="supplyStatusBadge">
+        <span class="supply-status-dot" id="supplyStatusDot" aria-hidden="true"></span>
+        <span id="supplyStatusText" data-i18n="supplyScenarios.statusConnecting">Connecting to live prices&hellip;</span>
+      </div>
+
+      <div class="supply-table-wrap">
+        <table class="supply-table">
+          <thead>
+            <tr>
+              <th data-i18n="supplyScenarios.tableAsset">Asset</th>
+              <th class="num" data-i18n="supplyScenarios.tablePrice">Price</th>
+              <th class="num" data-i18n="supplyScenarios.tableSupply">Circulating Supply</th>
+              <th class="num supply-bar-col" data-i18n="supplyScenarios.tableMcap">Market Cap</th>
+              <th class="num" data-i18n="supplyScenarios.tableImplied">#SECT @ 5% Cap</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-asset="bitcoin">
+              <td><span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Bitcoin <span class="supply-coin-ticker">BTC</span></span></td>
+              <td class="num mono" data-el="price">$64,940</td>
+              <td class="num mono">20.1M</td>
+              <td class="num supply-bar-col">
+                <div class="mono supply-mcap" data-el="mcap">$1.30T</div>
+                <div class="supply-bar-track"><div class="supply-bar-fill" data-el="bar" data-pct="100"></div></div>
+              </td>
+              <td class="num mono supply-implied" data-el="implied5" data-count data-target="2607" data-prefix="$">$0</td>
+            </tr>
+            <tr data-asset="ethereum">
+              <td><span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Ethereum <span class="supply-coin-ticker">ETH</span></span></td>
+              <td class="num mono" data-el="price">$1,897</td>
+              <td class="num mono">120M</td>
+              <td class="num supply-bar-col">
+                <div class="mono supply-mcap" data-el="mcap">$227.64B</div>
+                <div class="supply-bar-track"><div class="supply-bar-fill" data-el="bar" data-pct="73"></div></div>
+              </td>
+              <td class="num mono supply-implied" data-el="implied5" data-count data-target="455.28" data-prefix="$">$0</td>
+            </tr>
+            <tr data-asset="bitcoin-cash">
+              <td><span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Bitcoin Cash <span class="supply-coin-ticker">BCH</span></span></td>
+              <td class="num mono" data-el="price">$216.69</td>
+              <td class="num mono">19.9M</td>
+              <td class="num supply-bar-col">
+                <div class="mono supply-mcap" data-el="mcap">$4.31B</div>
+                <div class="supply-bar-track"><div class="supply-bar-fill" data-el="bar" data-pct="11"></div></div>
+              </td>
+              <td class="num mono supply-implied" data-el="implied5" data-count data-target="8.61" data-prefix="$">$0</td>
+            </tr>
+            <tr data-asset="solana">
+              <td><span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Solana <span class="supply-coin-ticker">SOL</span></span></td>
+              <td class="num mono" data-el="price">$73.80</td>
+              <td class="num mono">581M</td>
+              <td class="num supply-bar-col">
+                <div class="mono supply-mcap" data-el="mcap">$42.88B</div>
+                <div class="supply-bar-track"><div class="supply-bar-fill" data-el="bar" data-pct="47"></div></div>
+              </td>
+              <td class="num mono supply-implied" data-el="implied5" data-count data-target="85.76" data-prefix="$">$0</td>
+            </tr>
+            <tr data-asset="litecoin">
+              <td><span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Litecoin <span class="supply-coin-ticker">LTC</span></span></td>
+              <td class="num mono" data-el="price">$45.69</td>
+              <td class="num mono">77.5M</td>
+              <td class="num supply-bar-col">
+                <div class="mono supply-mcap" data-el="mcap">$3.54B</div>
+                <div class="supply-bar-track"><div class="supply-bar-fill" data-el="bar" data-pct="8"></div></div>
+              </td>
+              <td class="num mono supply-implied" data-el="implied5" data-count data-target="7.08" data-prefix="$">$0</td>
+            </tr>
+            <tr data-asset="ripple">
+              <td><span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>XRP <span class="supply-coin-ticker">XRP</span></span></td>
+              <td class="num mono" data-el="price">$2.85</td>
+              <td class="num mono">59.0B</td>
+              <td class="num supply-bar-col">
+                <div class="mono supply-mcap" data-el="mcap">$168.15B</div>
+                <div class="supply-bar-track"><div class="supply-bar-fill" data-el="bar" data-pct="68"></div></div>
+              </td>
+              <td class="num mono supply-implied" data-el="implied5" data-count data-target="336.30" data-prefix="$">$0</td>
+            </tr>
+            <tr data-asset="sui">
+              <td><span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Sui <span class="supply-coin-ticker">SUI</span></span></td>
+              <td class="num mono" data-el="price">$3.40</td>
+              <td class="num mono">5.7B</td>
+              <td class="num supply-bar-col">
+                <div class="mono supply-mcap" data-el="mcap">$19.38B</div>
+                <div class="supply-bar-track"><div class="supply-bar-fill" data-el="bar" data-pct="35"></div></div>
+              </td>
+              <td class="num mono supply-implied" data-el="implied5" data-count data-target="38.76" data-prefix="$">$0</td>
+            </tr>
+            <tr data-asset="hyperliquid">
+              <td><span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Hyperliquid <span class="supply-coin-ticker">HYPE</span></span></td>
+              <td class="num mono" data-el="price">$28.50</td>
+              <td class="num mono">450M</td>
+              <td class="num supply-bar-col">
+                <div class="mono supply-mcap" data-el="mcap">$12.83B</div>
+                <div class="supply-bar-track"><div class="supply-bar-fill" data-el="bar" data-pct="28"></div></div>
+              </td>
+              <td class="num mono supply-implied" data-el="implied5" data-count data-target="25.65" data-prefix="$">$0</td>
+            </tr>
+            <tr class="supply-row--sectora">
+              <td><span class="supply-coin"><span class="supply-coin-dot" aria-hidden="true"></span>Sectora <span class="supply-coin-ticker">#SECT</span></span></td>
+              <td class="num mono">$0.10</td>
+              <td class="num mono">50.0M</td>
+              <td class="num mono supply-bar-col">$5.00M</td>
+              <td class="num mono">&mdash;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="supply-mobile-list">
+        <div class="supply-mobile-row" data-asset="bitcoin">
+          <div class="supply-mobile-top">
+            <span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Bitcoin <span class="supply-coin-ticker">BTC</span></span>
+            <span class="mono" data-el="price">$64,940</span>
+          </div>
+          <div class="supply-mobile-meta">
+            <span data-i18n="supplyScenarios.supplyLabel">Supply</span> <span class="mono">20.1M</span>
+            <span data-i18n="supplyScenarios.mcapLabel">Market cap</span> <span class="mono" data-el="mcap">$1.30T</span>
+          </div>
+          <div class="supply-mobile-implied">
+            <span class="supply-mobile-implied-label" data-i18n="supplyScenarios.tableImplied">#SECT @ 5% cap</span>
+            <span class="supply-mobile-implied-value mono" data-el="implied5" data-count data-target="2607" data-prefix="$">$0</span>
+          </div>
+        </div>
+        <div class="supply-mobile-row" data-asset="ethereum">
+          <div class="supply-mobile-top">
+            <span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Ethereum <span class="supply-coin-ticker">ETH</span></span>
+            <span class="mono" data-el="price">$1,897</span>
+          </div>
+          <div class="supply-mobile-meta">
+            <span data-i18n="supplyScenarios.supplyLabel">Supply</span> <span class="mono">120M</span>
+            <span data-i18n="supplyScenarios.mcapLabel">Market cap</span> <span class="mono" data-el="mcap">$227.64B</span>
+          </div>
+          <div class="supply-mobile-implied">
+            <span class="supply-mobile-implied-label" data-i18n="supplyScenarios.tableImplied">#SECT @ 5% cap</span>
+            <span class="supply-mobile-implied-value mono" data-el="implied5" data-count data-target="455.28" data-prefix="$">$0</span>
+          </div>
+        </div>
+        <div class="supply-mobile-row" data-asset="bitcoin-cash">
+          <div class="supply-mobile-top">
+            <span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Bitcoin Cash <span class="supply-coin-ticker">BCH</span></span>
+            <span class="mono" data-el="price">$216.69</span>
+          </div>
+          <div class="supply-mobile-meta">
+            <span data-i18n="supplyScenarios.supplyLabel">Supply</span> <span class="mono">19.9M</span>
+            <span data-i18n="supplyScenarios.mcapLabel">Market cap</span> <span class="mono" data-el="mcap">$4.31B</span>
+          </div>
+          <div class="supply-mobile-implied">
+            <span class="supply-mobile-implied-label" data-i18n="supplyScenarios.tableImplied">#SECT @ 5% cap</span>
+            <span class="supply-mobile-implied-value mono" data-el="implied5" data-count data-target="8.61" data-prefix="$">$0</span>
+          </div>
+        </div>
+        <div class="supply-mobile-row" data-asset="solana">
+          <div class="supply-mobile-top">
+            <span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Solana <span class="supply-coin-ticker">SOL</span></span>
+            <span class="mono" data-el="price">$73.80</span>
+          </div>
+          <div class="supply-mobile-meta">
+            <span data-i18n="supplyScenarios.supplyLabel">Supply</span> <span class="mono">581M</span>
+            <span data-i18n="supplyScenarios.mcapLabel">Market cap</span> <span class="mono" data-el="mcap">$42.88B</span>
+          </div>
+          <div class="supply-mobile-implied">
+            <span class="supply-mobile-implied-label" data-i18n="supplyScenarios.tableImplied">#SECT @ 5% cap</span>
+            <span class="supply-mobile-implied-value mono" data-el="implied5" data-count data-target="85.76" data-prefix="$">$0</span>
+          </div>
+        </div>
+        <div class="supply-mobile-row" data-asset="litecoin">
+          <div class="supply-mobile-top">
+            <span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Litecoin <span class="supply-coin-ticker">LTC</span></span>
+            <span class="mono" data-el="price">$45.69</span>
+          </div>
+          <div class="supply-mobile-meta">
+            <span data-i18n="supplyScenarios.supplyLabel">Supply</span> <span class="mono">77.5M</span>
+            <span data-i18n="supplyScenarios.mcapLabel">Market cap</span> <span class="mono" data-el="mcap">$3.54B</span>
+          </div>
+          <div class="supply-mobile-implied">
+            <span class="supply-mobile-implied-label" data-i18n="supplyScenarios.tableImplied">#SECT @ 5% cap</span>
+            <span class="supply-mobile-implied-value mono" data-el="implied5" data-count data-target="7.08" data-prefix="$">$0</span>
+          </div>
+        </div>
+        <div class="supply-mobile-row" data-asset="ripple">
+          <div class="supply-mobile-top">
+            <span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>XRP <span class="supply-coin-ticker">XRP</span></span>
+            <span class="mono" data-el="price">$2.85</span>
+          </div>
+          <div class="supply-mobile-meta">
+            <span data-i18n="supplyScenarios.supplyLabel">Supply</span> <span class="mono">59.0B</span>
+            <span data-i18n="supplyScenarios.mcapLabel">Market cap</span> <span class="mono" data-el="mcap">$168.15B</span>
+          </div>
+          <div class="supply-mobile-implied">
+            <span class="supply-mobile-implied-label" data-i18n="supplyScenarios.tableImplied">#SECT @ 5% cap</span>
+            <span class="supply-mobile-implied-value mono" data-el="implied5" data-count data-target="336.30" data-prefix="$">$0</span>
+          </div>
+        </div>
+        <div class="supply-mobile-row" data-asset="sui">
+          <div class="supply-mobile-top">
+            <span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Sui <span class="supply-coin-ticker">SUI</span></span>
+            <span class="mono" data-el="price">$3.40</span>
+          </div>
+          <div class="supply-mobile-meta">
+            <span data-i18n="supplyScenarios.supplyLabel">Supply</span> <span class="mono">5.7B</span>
+            <span data-i18n="supplyScenarios.mcapLabel">Market cap</span> <span class="mono" data-el="mcap">$19.38B</span>
+          </div>
+          <div class="supply-mobile-implied">
+            <span class="supply-mobile-implied-label" data-i18n="supplyScenarios.tableImplied">#SECT @ 5% cap</span>
+            <span class="supply-mobile-implied-value mono" data-el="implied5" data-count data-target="38.76" data-prefix="$">$0</span>
+          </div>
+        </div>
+        <div class="supply-mobile-row" data-asset="hyperliquid">
+          <div class="supply-mobile-top">
+            <span class="supply-coin"><span class="supply-coin-dot" data-el="dot" aria-hidden="true"></span>Hyperliquid <span class="supply-coin-ticker">HYPE</span></span>
+            <span class="mono" data-el="price">$28.50</span>
+          </div>
+          <div class="supply-mobile-meta">
+            <span data-i18n="supplyScenarios.supplyLabel">Supply</span> <span class="mono">450M</span>
+            <span data-i18n="supplyScenarios.mcapLabel">Market cap</span> <span class="mono" data-el="mcap">$12.83B</span>
+          </div>
+          <div class="supply-mobile-implied">
+            <span class="supply-mobile-implied-label" data-i18n="supplyScenarios.tableImplied">#SECT @ 5% cap</span>
+            <span class="supply-mobile-implied-value mono" data-el="implied5" data-count data-target="25.65" data-prefix="$">$0</span>
+          </div>
+        </div>
+        <div class="supply-mobile-row supply-mobile-row--sectora">
+          <div class="supply-mobile-top">
+            <span class="supply-coin"><span class="supply-coin-dot" aria-hidden="true"></span>Sectora <span class="supply-coin-ticker">#SECT</span></span>
+            <span class="mono">$0.10</span>
+          </div>
+          <div class="supply-mobile-meta">
+            <span data-i18n="supplyScenarios.supplyLabel">Supply</span> <span class="mono">50.0M</span>
+            <span data-i18n="supplyScenarios.mcapLabel">Market cap</span> <span class="mono">$5.00M</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="supply-disclaimer">
+        <span data-i18n="supplyScenarios.disclaimer" data-i18n-html>Illustrative only, not a price prediction or financial advice. The #SECT @ 5% cap column
+        divides 5% of each reference asset's market cap by Sectora's fixed 25,000,000 #SECT supply.
+        It assumes valuation parity with each network, which is not guaranteed, and ignores
+        differences in token utility, unlock schedules, and liquidity depth. Circulating supply
+        figures are fixed reference snapshots; price and market cap refresh from
+        live market data roughly every 10 seconds.</span>
+        <span class="supply-stamp" id="supplyStamp" data-i18n="supplyScenarios.stampStatic">SOURCE: STATIC SNAPSHOT &mdash; COINGECKO, COINMARKETCAP &mdash; AS OF AUGUST 7&ndash;8, 2026</span>
+      </p>
+
+      <div class="supply-calc reveal" id="supplyCalc">
+        <div class="supply-calc-head">
+          <span class="eyebrow eyebrow-dot dark-text"><span class="exec-dot"></span><span data-i18n="calc.eyebrow">#SECT Price Calculator</span></span>
+          <h3 class="supply-calc-title" data-i18n="calc.heading">Model Your Own Scenario</h3>
+          <p class="supply-calc-lede" data-i18n="calc.lede">Pick a reference network, choose what share of its market cap #SECT could reach, and see the implied price and what your investment would be worth.</p>
+        </div>
+
+        <div class="supply-calc-body">
+          <div class="supply-calc-controls">
+            <div class="supply-calc-field">
+              <span class="supply-calc-label" data-i18n="calc.assetLabel">Reference Network</span>
+              <div class="supply-calc-pills" id="calcAssetPills" role="radiogroup" aria-label="Reference network">
+                <button type="button" class="supply-calc-pill is-active" data-asset="bitcoin" role="radio" aria-checked="true">Bitcoin</button>
+                <button type="button" class="supply-calc-pill" data-asset="ethereum" role="radio" aria-checked="false">Ethereum</button>
+                <button type="button" class="supply-calc-pill" data-asset="bitcoin-cash" role="radio" aria-checked="false">Bitcoin Cash</button>
+                <button type="button" class="supply-calc-pill" data-asset="solana" role="radio" aria-checked="false">Solana</button>
+                <button type="button" class="supply-calc-pill" data-asset="litecoin" role="radio" aria-checked="false">Litecoin</button>
+                <button type="button" class="supply-calc-pill" data-asset="ripple" role="radio" aria-checked="false">XRP</button>
+                <button type="button" class="supply-calc-pill" data-asset="sui" role="radio" aria-checked="false">Sui</button>
+                <button type="button" class="supply-calc-pill" data-asset="hyperliquid" role="radio" aria-checked="false">Hyperliquid</button>
+              </div>
+            </div>
+
+            <div class="supply-calc-field">
+              <label class="supply-calc-label" for="calcPctSlider" data-i18n="calc.pctLabel">Share of Market Cap</label>
+              <div class="supply-calc-slider-row">
+                <input type="range" id="calcPctSlider" class="supply-calc-slider" min="0.1" max="100" step="0.1" value="5" />
+                <span class="supply-calc-pct-value mono" id="calcPctValue">5.0%</span>
+              </div>
+            </div>
+
+            <div class="supply-calc-field">
+              <label class="supply-calc-label" for="calcInvestInput" data-i18n="calc.investLabel">Your Investment</label>
+              <div class="supply-calc-input-wrap">
+                <span class="supply-calc-input-prefix mono">$</span>
+                <input type="number" id="calcInvestInput" class="supply-calc-input mono" value="1000" min="0" step="100" inputmode="decimal" />
+              </div>
+            </div>
+          </div>
+
+          <div class="supply-calc-results">
+            <div class="supply-calc-result">
+              <span class="supply-calc-result-label" data-i18n="calc.impliedMcap">Implied #SECT Market Cap</span>
+              <span class="supply-calc-result-value mono" id="calcMcapOut">$0</span>
+            </div>
+            <div class="supply-calc-result supply-calc-result--accent">
+              <span class="supply-calc-result-label" data-i18n="calc.impliedPrice">Implied #SECT Price</span>
+              <span class="supply-calc-result-value supply-calc-result-value--big mono" id="calcPriceOut">$0</span>
+            </div>
+            <div class="supply-calc-result">
+              <span class="supply-calc-result-label" data-i18n="calc.tokensOut">#SECT You&rsquo;d Hold</span>
+              <span class="supply-calc-result-value mono" id="calcTokensOut">0</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="supply-calc-note" data-i18n="calc.note">Illustrative only &mdash; same assumptions as the table above. Not financial advice.</p>
+      </div>
+    </div>
+    </section>
+
+    <section class="wp-section" id="contract">
+      <p class="wp-kicker" data-i18n="wp.contract.kicker">§10 &middot; Token Contract</p>
+      <h2 class="wp-h2" data-i18n="wp.contract.h2">$SECT Token Contract</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 180 140"><image href="/sectora-logo-3d.png" x="29" y="34.5" width="52" height="80.9"/><path d="M120,40 H150 L160,50 V94 H120 Z" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.2"/><path d="M150,40 V50 H160" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.2"/><line x1="128" y1="62" x2="152" y2="62" stroke="rgba(255,255,255,0.28)" stroke-width="1"/><line x1="128" y1="72" x2="152" y2="72" stroke="rgba(255,255,255,0.28)" stroke-width="1"/><line x1="128" y1="82" x2="144" y2="82" stroke="rgba(255,255,255,0.28)" stroke-width="1"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.contract.kicker">&sect;10 &middot; Token Contract</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.contract.p1">$SECT is a standard ERC-20 token deployed on the Ethereum network. Ownership of the contract has been renounced, permanently removing any privileged address capable of altering its core parameters after deployment.</p>
+      <div class="wp-legal-table">
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.contract.rowNetwork">Network</span>
+          <span class="wp-legal-value" data-i18n="wp.contract.valNetwork">Ethereum &mdash; ERC-20</span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.contract.rowOwnership">Contract Ownership</span>
+          <span class="wp-legal-value" data-i18n="wp.contract.valOwnership">Renounced</span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.contract.rowRenounceVerif">Renouncement Verification</span>
+          <span class="wp-legal-value wp-legal-value--blank" data-i18n-attr="aria-label:wp.common.toBeAdded" aria-label="To be added"></span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.contract.rowInitialSupply">Initial Supply</span>
+          <span class="wp-legal-value">50,000,000 $SECT</span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.contract.rowFinalSupply">Final Supply</span>
+          <span class="wp-legal-value" data-i18n="wp.contract.valFinalSupply" data-i18n-html>25,000,000 $SECT &mdash; after the December 2026 burn</span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.contract.rowBuyTax">Buy Tax</span>
+          <span class="wp-legal-value">0%</span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.contract.rowSellTax">Sell Tax</span>
+          <span class="wp-legal-value">3%</span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.contract.rowContractAddress">Contract Address</span>
+          <span class="wp-legal-value wp-legal-value--blank" data-i18n-attr="aria-label:wp.common.toBeAdded" aria-label="To be added"></span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.contract.rowEtherscan">Etherscan</span>
+          <span class="wp-legal-value wp-legal-value--blank" data-i18n-attr="aria-label:wp.common.toBeAdded" aria-label="To be added"></span>
+        </div>
+      </div>
+      <p class="wp-legal-note" data-i18n="wp.contract.note">Contract address, Etherscan verification link, and the ownership renouncement transaction link will be added here once the token is deployed to Ethereum mainnet.</p>
+    </section>
+
+    <section class="wp-section" id="infrastructure">
+      <p class="wp-kicker" data-i18n="wp.infrastructure.kicker">§11 &middot; Infrastructure</p>
+      <h2 class="wp-h2" data-i18n="wp.infrastructure.h2">Network Infrastructure</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 160 150"><image href="/sectora-logo-3d.png" x="53" y="18" width="54" height="84"/><line x1="20" y1="130" x2="140" y2="130" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><line x1="40" y1="122" x2="40" y2="138" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><line x1="60" y1="122" x2="60" y2="138" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><line x1="80" y1="122" x2="80" y2="138" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><line x1="100" y1="122" x2="100" y2="138" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><line x1="120" y1="122" x2="120" y2="138" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><circle cx="40" cy="130" r="2" fill="rgba(70,140,230,0.5)"/><circle cx="80" cy="130" r="2" fill="rgba(70,140,230,0.5)"/><circle cx="120" cy="130" r="2" fill="rgba(70,140,230,0.5)"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.infrastructure.kicker">&sect;11 &middot; Infrastructure</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.infrastructure.p1">Three tools give the network's activity a public, verifiable surface.</p>
+      <div class="wp-cards">
+        <a class="wp-card" href="/dashboard.html">
+          <span class="wp-card-label" data-i18n="wp.infrastructure.card1Label">Dashboard</span>
+          <p data-i18n="wp.infrastructure.card1Desc">Real-time network health: the validator node map, epoch history and uptime, live throughput and TPS, block fullness, gas price, and staking totals.</p>
+        </a>
+        <a class="wp-card" href="/explorer.html">
+          <span class="wp-card-label" data-i18n="wp.infrastructure.card2Label">Sectorascan</span>
+          <p data-i18n="wp.infrastructure.card2Desc">The network's block explorer &mdash; blocks, transactions, addresses and tokenized assets, in an interface familiar to anyone who has used a mainstream chain explorer.</p>
+        </a>
+        <a class="wp-card" href="/dashboard.html#hash-market">
+          <span class="wp-card-label" data-i18n="wp.infrastructure.card3Label">Hash Market</span>
+          <p data-i18n="wp.infrastructure.card3Desc">A dedicated view within the Dashboard for validator hash economics and staking yield &mdash; a live read on network-wide return before committing stake.</p>
+        </a>
+      </div>
+    </section>
+
+    <section class="wp-section" id="roadmap">
+      <p class="wp-kicker" data-i18n="wp.roadmap.kicker">§12 &middot; Roadmap</p>
+      <h2 class="wp-h2" data-i18n="roadmap.heading">What's Next</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 210 130"><image href="/sectora-logo-3d.png" x="16" y="32.6" width="48" height="74.7"/><path d="M70,70 Q120,40 190,70" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-dasharray="1 6" stroke-linecap="round"/><circle cx="110" cy="52" r="2.6" fill="rgba(255,255,255,0.4)"/><circle cx="150" cy="50" r="2.8" fill="rgba(255,255,255,0.55)"/><circle cx="190" cy="70" r="3.2" fill="#468ce6"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.roadmap.kicker">&sect;12 &middot; Roadmap</p>
+          </div>
+        </div>
+      </div>
+      <div class="wp-timeline">
+        <div class="wp-timeline-item">
+          <span class="wp-timeline-date" data-i18n="roadmap.q1_2026.date">Q1 2026</span>
+          <span class="wp-timeline-title" data-i18n="roadmap.q1_2026.title">Security Audit Completion</span>
+          <p data-i18n="roadmap.q1_2026.desc">Sectora Protocol completes its third-party security audit cycle, covering smart contracts, custody logic, and the verification layer.</p>
+        </div>
+        <div class="wp-timeline-item">
+          <span class="wp-timeline-date" data-i18n="roadmap.q2_2026.date">Q2 2026</span>
+          <span class="wp-timeline-title" data-i18n="roadmap.q2_2026.title">Testnet Launch</span>
+          <p data-i18n="roadmap.q2_2026.desc">The Sectora testnet opens to security researchers and early partners to stress-test custody and tokenization flows.</p>
+        </div>
+        <div class="wp-timeline-item">
+          <span class="wp-timeline-date" data-i18n="roadmap.q3_2026.date">Q3 2026</span>
+          <span class="wp-timeline-title" data-i18n="roadmap.q3_2026.title">Custody Network Genesis</span>
+          <p data-i18n="roadmap.q3_2026.desc">The first wave of validators and custody nodes onboard, moving Sectora from development to an active, distributed network.</p>
+        </div>
+        <div class="wp-timeline-item">
+          <span class="wp-timeline-date" data-i18n="roadmap.q4_2026.date">Q4 2026</span>
+          <span class="wp-timeline-title" data-i18n="roadmap.q4_2026.title">Mainnet Launch</span>
+          <p data-i18n="roadmap.q4_2026.desc">Sectora Protocol goes live on mainnet, enabling verifiable tokenization and institutional-grade custody in production.</p>
+        </div>
+        <div class="wp-timeline-item">
+          <span class="wp-timeline-date" data-i18n="roadmap.q1_2027.date">Q1 2027</span>
+          <span class="wp-timeline-title" data-i18n="roadmap.q1_2027.title">Institutional Integrations</span>
+          <p data-i18n="roadmap.q1_2027.desc">First integrations with custody partners and exchanges, expanding access to tokenized real-world assets.</p>
+        </div>
+        <div class="wp-timeline-item">
+          <span class="wp-timeline-date" data-i18n="roadmap.q2_2027.date">Q2 2027</span>
+          <span class="wp-timeline-title" data-i18n="roadmap.q2_2027.title">Cross-Chain Expansion</span>
+          <p data-i18n="roadmap.q2_2027.desc">Sectora extends verification and custody coverage to additional chains, following the same audited security model.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wp-section" id="governance">
+      <p class="wp-kicker" data-i18n="wp.governance.kicker">§13 &middot; Governance &amp; Risk</p>
+      <h2 class="wp-h2" data-i18n="wp.governance.h2">Governance, Foundation &amp; Risk Disclosure</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 150 160"><path d="M75,18 L128.7,49 L128.7,111 L75,142 L21.3,111 L21.3,49 Z" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.3"/><image href="/sectora-logo-3d.png" x="49" y="39.5" width="52" height="80.9"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.governance.kicker">&sect;13 &middot; Governance &amp; Risk</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.governance.p1">During the network's bootstrap phase, the Sectora Foundation IL stewards protocol development, treasury, and the roadmap outlined in this document. As validator participation and $SECT distribution mature, governance is intended to progressively decentralize toward the network's stakeholders.</p>
+      <div class="wp-disclaimer">
+        <p class="wp-disclaimer-title" data-i18n="wp.governance.disclaimerTitle">Risk Disclosure</p>
+        <p data-i18n="wp.governance.disclaimerText">This document is provided for informational purposes only and does not constitute an offer or solicitation to buy or sell any security or financial instrument, nor investment, legal, or tax advice. Sectora is in active development: testnet features, metrics, and figures referenced in this document are simulated or subject to change and should not be relied upon as production data. Statements about future features, timelines, or network performance are forward-looking and involve risk and uncertainty, including but not limited to smart contract risk, regulatory risk, and market risk. $SECT may lose some or all of its value. Prospective participants should conduct independent research and consult professional advisors before interacting with the protocol.</p>
+      </div>
+    </section>
+
+    <section class="wp-section" id="legal">
+      <p class="wp-kicker" data-i18n="wp.legal.kicker">§14 &middot; Location &amp; Legal Documents</p>
+      <h2 class="wp-h2" data-i18n="wp.legal.h2">Location &amp; Legal Documents</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 180 130"><image href="/sectora-logo-3d.png" x="29" y="37.5" width="52" height="80.9"/><path d="M140,35 C151,35 160,44 160,55 C160,72 140,95 140,95 C140,95 120,72 120,55 C120,44 129,35 140,35 Z" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.3"/><circle cx="140" cy="55" r="7" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.1"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.legal.kicker">&sect;14 &middot; Location &amp; Legal Documents</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.legal.p1">Sectora is operated by the entity below. Verification details and complete legal documentation will be published to this section as they become available.</p>
+      <div class="wp-legal-table">
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.legal.rowLegalName">Legal Name</span>
+          <span class="wp-legal-value">Sectora Foundation IL</span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.legal.rowLocation">Location</span>
+          <span class="wp-legal-value" data-i18n="wp.legal.valLocation">Chicago, Illinois, United States</span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.legal.rowRegNumber">Company Registration Number</span>
+          <span class="wp-legal-value wp-legal-value--blank" data-i18n-attr="aria-label:wp.common.toBeAdded" aria-label="To be added"></span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.legal.rowVerification">Verification</span>
+          <span class="wp-legal-value wp-legal-value--blank" data-i18n-attr="aria-label:wp.common.toBeAdded" aria-label="To be added"></span>
+        </div>
+        <div class="wp-legal-row">
+          <span class="wp-legal-label" data-i18n="wp.legal.rowLegalDocs">Legal Documents</span>
+          <span class="wp-legal-value wp-legal-value--blank" data-i18n-attr="aria-label:wp.common.toBeAdded" aria-label="To be added"></span>
+        </div>
+      </div>
+      <p class="wp-legal-note" data-i18n="wp.legal.note">Registration number, the verification link to the Illinois Secretary of State business search, and legal documents will be added here once available.</p>
+    </section>
+
+    <section class="wp-section" id="conclusion">
+      <p class="wp-kicker" data-i18n="wp.conclusion.kicker">§15 &middot; Conclusion</p>
+      <h2 class="wp-h2" data-i18n="wp.conclusion.h2">Conclusion</h2>
+      <div class="wp-scene">
+        <svg class="wp-scene-dots" aria-hidden="true"><rect width="100%" height="100%" fill="url(#wpSceneDots)"/></svg>
+        <div class="wp-scene-glow" aria-hidden="true"></div>
+        <div class="wp-scene-inner">
+          <span class="wp-scene-icon" aria-hidden="true"><svg viewBox="0 0 150 150"><line x1="133.0" y1="75.0" x2="147.0" y2="75.0" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><line x1="116.0" y1="116.0" x2="125.9" y2="125.9" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><line x1="75.0" y1="133.0" x2="75.0" y2="147.0" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><line x1="34.0" y1="116.0" x2="24.1" y2="125.9" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><line x1="17.0" y1="75.0" x2="3.0" y2="75.0" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><line x1="34.0" y1="34.0" x2="24.1" y2="24.1" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><line x1="75.0" y1="17.0" x2="75.0" y2="3.0" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><line x1="116.0" y1="34.0" x2="125.9" y2="24.1" stroke="rgba(255,255,255,0.18)" stroke-width="1"/><image href="/sectora-logo-3d.png" x="47" y="31.5" width="56" height="87.1"/></svg></span>
+          <div class="wp-scene-text">
+            <p class="wp-scene-eyebrow" data-i18n="wp.scene.welcome">Welcome to</p>
+            <p class="wp-scene-title" data-i18n="wp.conclusion.kicker">&sect;15 &middot; Conclusion</p>
+          </div>
+        </div>
+      </div>
+      <p class="wp-body-text" data-i18n="wp.conclusion.p1">Sectora's premise is simple: tokenized real-world assets deserve infrastructure built around verification, not around trust. A dedicated Layer 3 network, a validator set that secures every custody attestation, a native exchange that settles crypto and real-world assets through the same verified rails, and a supply policy tied to real usage rather than speculation &mdash; together, these are the pieces of a network designed to hold institutional-grade capital.</p>
+      <p class="wp-body-text" data-i18n="wp.conclusion.p2">The testnet is live today. The Dashboard, Sectorascan, and the DEX are open to explore now, ahead of the mainnet launch outlined in the roadmap above.</p>
+      <div class="wp-cta-row">
+        <a class="wp-cta wp-cta--solid" href="/dashboard.html" data-i18n="wp.conclusion.ctaDashboard">Open Dashboard</a>
+        <a class="wp-cta" href="/dex-cover.html" data-i18n="wp.conclusion.ctaDex">Enter the DEX</a>
+        <a class="wp-cta" href="/explorer.html" data-i18n="wp.conclusion.ctaExplorer">View Explorer</a>
+      </div>
+    </section>
+
+    <footer class="wp-doc-footer">
+      <p class="wp-doc-footer-copy" data-i18n="wp.footer.copy">&copy; 2026 Sectora Foundation IL. All rights reserved. This whitepaper is a living document and may be revised as the protocol develops.</p>
+    </footer>
+
+  </main>
+</div>
+
+<div class="cursor-light" id="cursorLight" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"><span class="cursor-ring-label" id="cursorLabel"></span></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+<script src="/translations.js?v=20260810i"></script>
+<script src="/whitepaper-translations.js?v=20260811a"></script>
+<script src="/i18n.js?v=20260811a"></script>
+<script src="/supply-scenarios.js?v=20260808h"></script>
+<script src="/supply-calc.js?v=20260808h"></script>
+<script src="/reveal.js?v=20260808h"></script>
+<script src="/whitepaper.js?v=20260810a"></script>
+<script src="/cursor.js?v=20260808h"></script>
+</body>
+</html>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title data-i18n="dashboard.meta.title">Testnet Dashboard | Sectora</title>
+<meta name="description" content="Live network overview for the Sectora testnet: validators, epochs, throughput, blocks and staking." data-i18n-attr="content:dashboard.meta.description" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%2756.8%2034.4%2086.4%20134.4%27%3E%3Cpath%20d%3D%27M85.6%2034.4%20L56.8%2052.0%20L56.8%20122.4%20L85.6%20104.8%20Z%20M82.0%2068.0%20L82.0%20104.8%20L58.5%2086.4%20Z%27%20fill%3D%27%23ffffff%27%20fill-rule%3D%27evenodd%27%2F%3E%3Cpath%20d%3D%27M114.4%2052.0%20L141.6%2068.0%20L141.6%20120.8%20L114.4%20135.2%20L85.6%20120.8%20L85.6%2068.0%20Z%20M114.4%20126.0%20L114.4%2089.2%20L142.4%20107.6%20Z%27%20fill%3D%27%23e3e5e8%27%20fill-rule%3D%27evenodd%27%2F%3E%3Cpath%20d%3D%27M114.4%20159.6%20L143.2%20142.0%20L143.2%2071.6%20L114.4%2089.2%20Z%20M117.9%20126.0%20L117.9%2089.2%20L141.4%20107.6%20Z%27%20fill%3D%27%23c0c3c8%27%20fill-rule%3D%27evenodd%27%2F%3E%3C%2Fsvg%3E" />
+<link rel="preload" href="fonts/SpaceGrotesk.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/JetBrainsMono.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="styles.css?v=20260810x" />
+<link rel="stylesheet" href="dashboard.css?v=2026081001" />
+</head>
+<body>
+
+<div class="dash">
+  <div class="dash-glow" aria-hidden="true"></div>
+
+  <div class="dash-app">
+    <aside class="dash-sidebar">
+      <a class="dash-sidebar-brand" href="index.html">
+        <span class="dash-brand-mark" aria-hidden="true">
+          <svg viewBox="56.8 34.4 86.4 134.4" width="20" height="31"><defs><linearGradient id="dbTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f5f6f7"/></linearGradient><linearGradient id="dbMid" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef0f2"/><stop offset="1" stop-color="#dde0e3"/></linearGradient><linearGradient id="dbBot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4d6da"/><stop offset="1" stop-color="#c0c3c8"/></linearGradient></defs><path d="M85.6 34.4 L56.8 52.0 L56.8 122.4 L85.6 104.8 Z M82.0 68.0 L82.0 104.8 L58.5 86.4 Z" fill="url(#dbTop)" fill-rule="evenodd"/><path d="M114.4 52.0 L141.6 68.0 L141.6 120.8 L114.4 135.2 L85.6 120.8 L85.6 68.0 Z M114.4 126.0 L114.4 89.2 L142.4 107.6 Z" fill="url(#dbMid)" fill-rule="evenodd"/><path d="M114.4 159.6 L143.2 142.0 L143.2 71.6 L114.4 89.2 Z M117.9 126.0 L117.9 89.2 L141.4 107.6 Z" fill="url(#dbBot)" fill-rule="evenodd"/></svg>
+        </span>
+        <span class="dash-sidebar-brand-word">SECTORA</span>
+      </a>
+      <nav class="dash-sidebar-nav">
+        <a class="dash-sidebar-link is-active" href="#overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+          <span data-i18n="dashboard.sidebar.overview">Overview</span>
+        </a>
+        <a class="dash-sidebar-link" href="#validator-panel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span data-i18n="dashboard.sidebar.validators">Validators</span>
+        </a>
+        <a class="dash-sidebar-link" href="#node-map">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5Z"/></svg>
+          <span data-i18n="dashboard.sidebar.nodeMap">Node Map</span>
+        </a>
+        <a class="dash-sidebar-link" href="#network-metrics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg>
+          <span data-i18n="dashboard.sidebar.metrics">Metrics</span>
+        </a>
+        <a class="dash-sidebar-link" href="#staking">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span data-i18n="dashboard.sidebar.staking">Staking</span>
+        </a>
+      </nav>
+      <div class="dash-sidebar-foot">
+        <div class="dash-sidebar-cta">
+          <span class="dash-sidebar-cta-title" data-i18n="dashboard.sidebar.ctaTitle">Explore the Mainnet</span>
+          <span class="dash-sidebar-cta-sub" data-i18n="dashboard.sidebar.ctaSub">See #SECT price, supply and the live network story on the main site.</span>
+          <a class="dash-sidebar-cta-btn" href="index.html">
+            <span data-i18n="dashboard.sidebar.ctaBtn">Visit sectoraorg.com</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="dash-content">
+
+  <header class="dash-topbar">
+    <div class="dash-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" placeholder="Search validators, blocks…" aria-label="Search" data-i18n-attr="placeholder:dashboard.topbar.searchPlaceholder;aria-label:dashboard.topbar.searchPlaceholder" />
+    </div>
+    <div class="dash-topbar-right">
+      <span class="dash-net-pill"><span class="dash-net-dot" aria-hidden="true"></span><span data-i18n="dashboard.topbar.netPill">Sectora Testnet</span></span>
+      <div class="lang-switch-wrap">
+        <select class="lang-switch" id="dashLangSwitch" data-i18n-attr="aria-label:nav.langLabel" aria-label="Language"></select>
+      </div>
+    </div>
+  </header>
+
+  <section class="dash-heroband" id="overview">
+    <div class="dash-heroband-grid" aria-hidden="true"></div>
+    <div class="dash-heroband-bars" id="dashHeroBars" aria-hidden="true"></div>
+    <div class="dash-heroband-fade" aria-hidden="true"></div>
+    <div class="dash-heroband-inner">
+      <p class="dash-eyebrow"><span class="dash-eyebrow-dot" aria-hidden="true"></span><span data-i18n="dashboard.hero.eyebrow">Network Overview</span></p>
+      <h1 class="dash-title" data-i18n="dashboard.hero.title" data-i18n-html>Sectora<br>Node<br>Validator</h1>
+      <p class="dash-title-sub" data-i18n="dashboard.hero.sub" data-i18n-html>Validators, throughput,<br>blocks and staking across<br>the Sectora test network,<br>refreshed in real time.</p>
+      <div class="dash-hero-actions">
+        <span class="dash-sim-note">
+          <span data-i18n="dashboard.hero.simNote">Preview Dashboard &middot; Visualizer Network</span>
+        </span>
+        <div class="dash-wallet" id="dashWallet">
+          <button class="dash-wallet-btn" id="dashWalletBtn" type="button" aria-haspopup="true" aria-expanded="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1.5"/><path d="M21 12h-4a2 2 0 0 0 0 4h4a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1Z"/></svg>
+            <span class="dash-wallet-dot" id="dashWalletDot" aria-hidden="true" hidden></span>
+            <span id="dashWalletBtnLabel">Connect Wallet</span>
+          </button>
+          <div class="dash-wallet-panel" id="dashWalletPanel" hidden>
+            <div class="dash-wallet-picker" id="dashWalletPicker">
+              <p class="dash-wallet-panel-title">Connect a wallet</p>
+              <div class="dash-wallet-list" id="dashWalletList"></div>
+              <p class="dash-wallet-hint" id="dashWalletError" hidden></p>
+            </div>
+            <div class="dash-wallet-qr" id="dashWalletQr" hidden>
+              <button class="dash-wallet-back" id="dashWalletQrBack" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+                Back
+              </button>
+              <div class="dash-wallet-qr-box" id="dashWalletQrBox"></div>
+              <p class="dash-wallet-qr-hint">Scan with <span id="dashWalletQrWalletName">your wallet</span> app</p>
+            </div>
+            <div class="dash-wallet-panel-connected" id="dashWalletPanelConnected" hidden>
+              <div class="dash-wallet-panel-row">
+                <span class="dash-wallet-panel-label">Address</span>
+                <span class="dash-wallet-panel-value mono" id="dashWalletAddress">&mdash;</span>
+                <button class="dash-wallet-copy" id="dashWalletCopy" type="button" aria-label="Copy address">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+              <div class="dash-wallet-panel-row">
+                <span class="dash-wallet-panel-label">Network</span>
+                <span class="dash-wallet-panel-value" id="dashWalletNetwork">&mdash;</span>
+              </div>
+              <div class="dash-wallet-panel-row">
+                <span class="dash-wallet-panel-label">Balance</span>
+                <span class="dash-wallet-panel-value mono" id="dashWalletBalance">&mdash;</span>
+              </div>
+              <button class="dash-wallet-disconnect" id="dashWalletDisconnect" type="button">Disconnect</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="dash-shell">
+
+    <!-- ---- node map ---- -->
+    <section class="dash-hero reveal" id="node-map">
+      <div class="dcard dash-map-card">
+        <div class="dash-map-frame" id="dashMapFrame">
+          <svg class="dmap-svg" viewBox="0 0 1000 391.7" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <g class="dmap-countries" id="dmapCountries"></g>
+          </svg>
+          <div class="dash-map-overlay-top">
+            <span class="dash-map-title"><span class="dash-map-title-dot" aria-hidden="true"></span><span data-i18n="dashboard.map.title">Validator Node Map</span></span>
+            <span class="dash-node-count"><strong id="dashNodeCount">0</strong> <span data-i18n="dashboard.map.nodesOnline">nodes online</span></span>
+          </div>
+          <div id="dashMapNodes"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- history timeline ---- -->
+    <div class="dcard dash-history-card reveal">
+      <div class="dash-history-top">
+        <span class="dash-section-title" data-i18n="dashboard.history.title">Epoch History</span>
+        <span class="dash-history-uptime"><span data-i18n="dashboard.history.uptime">30-epoch uptime</span> <strong id="dashUptimePct">&mdash;</strong></span>
+      </div>
+      <div class="dash-history-bars" id="dashHistoryBars"></div>
+      <div class="dash-history-labels"><span data-i18n="dashboard.history.rangeStart">-30 epochs</span><span data-i18n="dashboard.history.rangeNow">now</span></div>
+    </div>
+
+    <!-- ---- network globe (3D) ---- -->
+    <div class="dcard dash-globe-card reveal" id="network-globe">
+      <div class="dash-globe-stage" id="dashGlobeStage">
+        <canvas id="dashGlobeCanvas" aria-label="Rotatable globe showing live Sectora testnet validator nodes"></canvas>
+        <div class="dgl-title-row">
+          <span class="dash-map-title"><span class="dash-map-title-dot" aria-hidden="true"></span><span data-i18n="dashboard.globe.title">Sectora Network Globe</span></span>
+        </div>
+        <p class="dgl-hint" id="dashGlobeHint" data-i18n="dashboard.globe.hint">Drag to rotate &middot; scroll to zoom</p>
+        <div class="dgl-feed" id="dashGlobeFeed" aria-hidden="true"></div>
+        <label class="dgl-saver">
+          <input type="checkbox" id="dashGlobeSaver">
+          <span class="dgl-saver-box">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2 6.3 4.6 9 10 3.2" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span data-i18n="dashboard.globe.saver">Battery saver</span>
+        </label>
+        <button class="dgl-recenter" id="dashGlobeRecenter" type="button" aria-label="Recenter globe">
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="10" cy="10" r="3.1" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M10 1.2v3.2M10 15.6v3.2M1.2 10h3.2M15.6 10h3.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M3 3h2.6M3 3v2.6M17 3h-2.6M17 3v2.6M3 17h2.6M3 17v-2.6M17 17h-2.6M17 17v-2.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ---- hash market: real on-chain validator onboarding ---- -->
+    <div class="dash-section-head" id="hash-market">
+      <span class="dash-section-title">Become a Validator</span>
+      <span class="dash-section-hint">Real on-chain testnet contracts</span>
+    </div>
+    <div class="dcard dhm-card reveal">
+      <div class="dhm-not-deployed" id="dhmNotDeployed" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+        <span>Contracts deploying to testnet &mdash; purchases open shortly.</span>
+      </div>
+
+      <div class="dhm-top">
+        <div class="dhm-top-left">
+          <span class="dhm-eyebrow"><span class="dhm-eyebrow-dot" aria-hidden="true"></span>Sectora Hash Market</span>
+          <p class="dhm-sub">Buy hash power &mdash; rented online or via physical validator hardware &mdash; to unlock on-chain validator registration.</p>
+        </div>
+        <div class="dhm-wallet-summary">
+          <div class="dhm-balance">
+            <span class="dhm-balance-label">tSECT Balance</span>
+            <span class="dhm-balance-value" id="dhmTokenBalance">&mdash;</span>
+          </div>
+          <button class="dhm-faucet-btn" id="dhmFaucetBtn" type="button">Claim faucet</button>
+        </div>
+      </div>
+
+      <div class="dhm-tabs-row">
+        <div class="dhm-tabs" role="tablist">
+          <button class="dhm-tab is-active" id="dhmTabOnline" data-kind="0" type="button" role="tab" aria-selected="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+            Online Hash
+          </button>
+          <button class="dhm-tab" id="dhmTabPhysical" data-kind="1" type="button" role="tab" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><path d="M8 7h.01M8 17h.01"/></svg>
+            Physical Node
+          </button>
+        </div>
+        <button class="dhm-howitworks-btn" id="dhmHowItWorksBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.2a2.5 2.5 0 0 1 4.9.8c0 1.7-2.4 2-2.4 3.5"/><path d="M12 17h.01"/></svg>
+          Learn how it works
+        </button>
+      </div>
+
+      <div class="dhm-packages" id="dhmPackages"></div>
+
+      <div class="dhm-validator-panel">
+        <div class="dhm-progress">
+          <div class="dhm-progress-head">
+            <span class="dhm-progress-label">Your Hash Power</span>
+            <span class="dhm-progress-nums"><strong id="dhmHashPower">0</strong> / <span id="dhmHashRequired">&mdash;</span></span>
+          </div>
+          <div class="dhm-progress-bar"><div class="dhm-progress-fill" id="dhmProgressFill"></div></div>
+        </div>
+
+        <div class="dhm-register-form" id="dhmRegisterForm">
+          <div class="dhm-field">
+            <label class="dhm-field-label" for="dhmNodeName">Node name</label>
+            <input class="dhm-input" id="dhmNodeName" type="text" maxlength="64" placeholder="e.g. Sectora Node BA-1" />
+          </div>
+          <div class="dhm-field-row">
+            <div class="dhm-field">
+              <label class="dhm-field-label" for="dhmLat">Latitude</label>
+              <input class="dhm-input" id="dhmLat" type="number" step="0.0001" min="-90" max="90" placeholder="-34.6037" />
+            </div>
+            <div class="dhm-field">
+              <label class="dhm-field-label" for="dhmLon">Longitude</label>
+              <input class="dhm-input" id="dhmLon" type="number" step="0.0001" min="-180" max="180" placeholder="-58.3816" />
+            </div>
+            <button class="dhm-geo-btn" id="dhmGeoBtn" type="button" aria-label="Use my location">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7Z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </button>
+          </div>
+          <button class="dhm-register-btn" id="dhmRegisterBtn" type="button">Register as Validator</button>
+          <p class="dhm-hint" id="dhmHint"></p>
+        </div>
+
+        <div class="dhm-registered-status" id="dhmRegisteredStatus" hidden>
+          <div class="dhm-registered-row">
+            <span class="dhm-registered-dot" aria-hidden="true"></span>
+            <span>Registered as <strong id="dhmRegisteredName">&mdash;</strong></span>
+          </div>
+          <button class="dhm-deactivate-btn" id="dhmDeactivateBtn" type="button">Deactivate</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- buyback engine: hash revenue -> pool -> #SECT buybacks ---- -->
+    <div class="dash-section-head" id="buyback-engine">
+      <span class="dash-section-title">Buyback Engine</span>
+      <span class="dash-section-hint">100% of hash revenue funds #SECT buybacks</span>
+    </div>
+    <div class="dcard dbb-card reveal">
+      <div class="dbb-badge-row">
+        <span class="dbb-badge dbb-badge--amber">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+          100% Hash Revenue
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+        </span>
+      </div>
+
+      <div class="dbb-flow">
+        <div class="dbb-node">
+          <span class="dbb-node-icon dbb-node-icon--validators">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </span>
+          <span class="dbb-node-label">Validators</span>
+          <span class="dbb-node-sub">Hash purchases</span>
+        </div>
+
+        <div class="dbb-connector dbb-connector--blue" aria-hidden="true">
+          <span class="dbb-connector-line"></span>
+          <span class="dbb-connector-dot dbb-connector-dot--1"></span>
+          <span class="dbb-connector-dot dbb-connector-dot--2"></span>
+          <span class="dbb-connector-dot dbb-connector-dot--3"></span>
+        </div>
+
+        <div class="dbb-node dbb-node--pool">
+          <span class="dbb-node-icon dbb-node-icon--pool">
+            <svg viewBox="56.8 34.4 86.4 134.4" width="22" height="34" aria-hidden="true"><defs><linearGradient id="dbbTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f5f6f7"/></linearGradient><linearGradient id="dbbMid" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef0f2"/><stop offset="1" stop-color="#dde0e3"/></linearGradient><linearGradient id="dbbBot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d4d6da"/><stop offset="1" stop-color="#c0c3c8"/></linearGradient></defs><path d="M85.6 34.4 L56.8 52.0 L56.8 122.4 L85.6 104.8 Z M82.0 68.0 L82.0 104.8 L58.5 86.4 Z" fill="url(#dbbTop)" fill-rule="evenodd"/><path d="M114.4 52.0 L141.6 68.0 L141.6 120.8 L114.4 135.2 L85.6 120.8 L85.6 68.0 Z M114.4 126.0 L114.4 89.2 L142.4 107.6 Z" fill="url(#dbbMid)" fill-rule="evenodd"/><path d="M114.4 159.6 L143.2 142.0 L143.2 71.6 L114.4 89.2 Z M117.9 126.0 L117.9 89.2 L141.4 107.6 Z" fill="url(#dbbBot)" fill-rule="evenodd"/></svg>
+            <span class="dbb-node-icon-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            </span>
+          </span>
+          <span class="dbb-node-label">Buyback Pool</span>
+          <span class="dbb-node-sub">On-chain treasury</span>
+        </div>
+
+        <div class="dbb-connector dbb-connector--violet" aria-hidden="true">
+          <span class="dbb-connector-line"></span>
+          <span class="dbb-connector-dot dbb-connector-dot--1"></span>
+          <span class="dbb-connector-dot dbb-connector-dot--2"></span>
+          <span class="dbb-connector-dot dbb-connector-dot--3"></span>
+        </div>
+
+        <div class="dbb-node">
+          <span class="dbb-node-icon dbb-node-icon--market">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17 9 11 13 15 21 7"/><path d="M15 7h6v6"/></svg>
+          </span>
+          <span class="dbb-node-label">#SECT Market</span>
+          <span class="dbb-node-sub">Buyback executed</span>
+        </div>
+      </div>
+
+      <div class="dbb-pill-row">
+        <span class="dbb-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          Zero inflation &mdash; pure buybacks, no new emissions
+        </span>
+      </div>
+
+      <div class="dbb-features">
+        <div class="dbb-feature">
+          <span class="dbb-feature-icon dbb-feature-icon--blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+          <div>
+            <p class="dbb-feature-title">100% Revenue Share</p>
+            <p class="dbb-feature-text">Every Online Hash and Physical Node sale routes straight into the pool.</p>
+          </div>
+        </div>
+        <div class="dbb-feature">
+          <span class="dbb-feature-icon dbb-feature-icon--green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          <div>
+            <p class="dbb-feature-title">No Middlemen</p>
+            <p class="dbb-feature-text">Funds move directly from validator purchases to the treasury contract.</p>
+          </div>
+        </div>
+        <div class="dbb-feature">
+          <span class="dbb-feature-icon dbb-feature-icon--violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+          <div>
+            <p class="dbb-feature-title">Transparent On-Chain</p>
+            <p class="dbb-feature-text">Every buyback is a verifiable transaction, auditable by anyone, anytime.</p>
+          </div>
+        </div>
+        <div class="dbb-feature">
+          <span class="dbb-feature-icon dbb-feature-icon--amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
+          <div>
+            <p class="dbb-feature-title">Continuous Pressure</p>
+            <p class="dbb-feature-text">Buybacks execute as hash sales come in &mdash; not on a fixed schedule.</p>
+          </div>
+        </div>
+      </div>
+
+      <a class="dbb-cta" href="#hash-market">
+        Become a Validator
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <button class="dash-metrics-toggle" id="dashMetricsToggle" type="button" aria-expanded="false" aria-controls="dashMetricsCollapse">
+      <span data-i18n="dashboard.metrics.viewBtn">View metrics</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+
+    <div id="dashMetricsCollapse" hidden>
+
+    <!-- ---- KPI row: network stat cards + promo ---- -->
+    <div class="dash-kpi-row reveal-stagger">
+      <div class="dcard dstat-card">
+        <div class="dstat-head">
+          <span class="dstat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+          <a class="dstat-link" href="#validator-panel" aria-label="View validators"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <div class="dstat-body">
+          <span class="dstat-label" data-i18n="dashboard.kpi.validators">Active Validators</span>
+          <span class="dstat-value" id="dashKpiValidators">&mdash;</span>
+        </div>
+        <div class="dstat-chart-row">
+          <svg class="dstat-spark" id="spark-kpiValidators-svg" viewBox="0 0 120 34" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="gradKpiValidators" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#468ce6" stop-opacity="0.38"/><stop offset="55%" stop-color="#468ce6" stop-opacity="0.09"/><stop offset="100%" stop-color="#468ce6" stop-opacity="0"/></linearGradient>
+              <linearGradient id="lineKpiValidators" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#468ce6" stop-opacity="0.5"/><stop offset="100%" stop-color="#468ce6" stop-opacity="1"/></linearGradient>
+            </defs>
+            <path class="dstat-spark-fill" id="fill-kpiValidators" fill="url(#gradKpiValidators)"/>
+            <path class="dstat-spark-line" id="line-kpiValidators" stroke="url(#lineKpiValidators)"/>
+            <circle class="dstat-spark-dot" id="dot-kpiValidators" r="2.6" fill="#468ce6"/>
+          </svg>
+          <span class="metric-delta" id="delta-kpiValidators"></span>
+        </div>
+      </div>
+
+      <div class="dcard dstat-card">
+        <div class="dstat-head">
+          <span class="dstat-icon dstat-icon--blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg></span>
+          <a class="dstat-link" href="#network-metrics" aria-label="View metrics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <div class="dstat-body">
+          <span class="dstat-label" data-i18n="dashboard.kpi.contracts">Contracts Deployed</span>
+          <span class="dstat-value" id="dashKpiContracts">&mdash;</span>
+        </div>
+        <div class="dstat-chart-row">
+          <svg class="dstat-spark" id="spark-kpiContracts-svg" viewBox="0 0 120 34" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="gradKpiContracts" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.3"/><stop offset="55%" stop-color="#ffffff" stop-opacity="0.07"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+              <linearGradient id="lineKpiContracts" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.4"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0.9"/></linearGradient>
+            </defs>
+            <path class="dstat-spark-fill" id="fill-kpiContracts" fill="url(#gradKpiContracts)"/>
+            <path class="dstat-spark-line" id="line-kpiContracts" stroke="url(#lineKpiContracts)"/>
+            <circle class="dstat-spark-dot" id="dot-kpiContracts" r="2.6" fill="#ffffff"/>
+          </svg>
+          <span class="metric-delta" id="delta-kpiContracts"></span>
+        </div>
+      </div>
+
+      <div class="dcard dstat-card">
+        <div class="dstat-head">
+          <span class="dstat-icon dstat-icon--violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg></span>
+          <a class="dstat-link" href="#network-metrics" aria-label="View throughput"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        </div>
+        <div class="dstat-body">
+          <span class="dstat-label" data-i18n="dashboard.kpi.tps">Live TPS</span>
+          <span class="dstat-value" id="dashKpiTps">&mdash;</span>
+        </div>
+        <div class="dstat-chart-row">
+          <svg class="dstat-spark" id="spark-kpiTps-svg" viewBox="0 0 120 34" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="gradKpiTps" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#468ce6" stop-opacity="0.38"/><stop offset="55%" stop-color="#468ce6" stop-opacity="0.09"/><stop offset="100%" stop-color="#468ce6" stop-opacity="0"/></linearGradient>
+              <linearGradient id="lineKpiTps" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#468ce6" stop-opacity="0.5"/><stop offset="100%" stop-color="#468ce6" stop-opacity="1"/></linearGradient>
+            </defs>
+            <path class="dstat-spark-fill" id="fill-kpiTps" fill="url(#gradKpiTps)"/>
+            <path class="dstat-spark-line" id="line-kpiTps" stroke="url(#lineKpiTps)"/>
+            <circle class="dstat-spark-dot" id="dot-kpiTps" r="2.6" fill="#468ce6"/>
+          </svg>
+          <span class="metric-delta" id="delta-kpiTps"></span>
+        </div>
+      </div>
+
+      <div class="dash-promo-card">
+        <span class="dash-promo-badge" data-i18n="dashboard.promo.badge">Testnet</span>
+        <h3 class="dash-promo-title" data-i18n="dashboard.promo.title">Run a Sectora Validator</h3>
+        <p class="dash-promo-sub" data-i18n="dashboard.promo.sub">Spin up a node, help secure the test network, and get on the leaderboard before mainnet.</p>
+        <div class="dash-promo-actions">
+          <a class="dash-promo-btn dash-promo-btn--solid" href="mailto:support@sectoraorg.com">
+            <span data-i18n="dashboard.promo.join">Join the Testnet</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+          </a>
+          <a class="dash-promo-btn dash-promo-btn--outline" href="index.html#protocol">
+            <span data-i18n="dashboard.promo.docs">Read the Docs</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---- validator detail panel ---- -->
+    <section class="dash-validator-panel reveal-stagger" id="validator-panel">
+      <div class="dcard dvp-main">
+        <div class="dvp-head">
+          <div class="dvp-avatar" id="dashValAvatar">S</div>
+          <div class="dvp-name-wrap">
+            <span class="dvp-name" id="dashValName">&mdash;</span>
+            <span class="dvp-addr" id="dashValAddr">&mdash;</span>
+          </div>
+          <span class="dvp-status"><span class="dvp-status-dot"></span><span data-i18n="dashboard.validator.active">Active</span></span>
+        </div>
+
+        <div class="dvp-stake-row">
+          <span class="dvp-stake-label" data-i18n="dashboard.validator.stakedBalance">Staked Balance</span>
+          <div class="dvp-stake-line">
+            <span class="dvp-stake-value" id="dashValStake">&mdash;</span>
+            <span class="dvp-stake-unit">#SECT</span>
+          </div>
+        </div>
+
+        <div class="dvp-actions">
+          <a class="dvp-btn dvp-btn--solid" href="#validator-panel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <span data-i18n="dashboard.validator.explorer">View on Explorer</span>
+          </a>
+          <button class="dvp-btn dvp-btn--outline" type="button" id="dashCopyAddr">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span data-i18n="dashboard.validator.copy">Copy Address</span>
+          </button>
+        </div>
+
+        <div class="dvp-chips">
+          <div class="dvp-chip">
+            <div class="dvp-chip-top"><span class="dvp-chip-label" data-i18n="dashboard.validator.uptime">Uptime</span></div>
+            <span class="dvp-chip-value" id="dashValUptime">&mdash;</span>
+          </div>
+          <div class="dvp-chip">
+            <div class="dvp-chip-top"><span class="dvp-chip-label" data-i18n="dashboard.validator.commission">Commission</span></div>
+            <span class="dvp-chip-value" id="dashValCommission">&mdash;</span>
+          </div>
+          <div class="dvp-chip">
+            <div class="dvp-chip-top"><span class="dvp-chip-label" data-i18n="dashboard.validator.blocksProposed">Blocks Proposed</span></div>
+            <span class="dvp-chip-value" id="dashValBlocks">&mdash;</span>
+          </div>
+          <div class="dvp-chip">
+            <div class="dvp-chip-top"><span class="dvp-chip-label" data-i18n="dashboard.validator.networkRank">Network Rank</span></div>
+            <span class="dvp-chip-value" id="dashValRank">&mdash;</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dvp-side">
+        <div class="dcard dvp-epoch-card">
+          <div class="dvp-epoch-ring-wrap">
+            <svg viewBox="0 0 52 52">
+              <circle class="dvp-epoch-ring-bg" cx="26" cy="26" r="22"/>
+              <circle class="dvp-epoch-ring-fg" id="dashEpochRing" cx="26" cy="26" r="22" stroke-dasharray="138.2" stroke-dashoffset="138.2"/>
+            </svg>
+            <div class="dvp-epoch-center">
+              <span class="dvp-epoch-num" id="dashEpochNum">&mdash;</span>
+              <span class="dvp-epoch-label2" data-i18n="dashboard.validator.epoch">Epoch</span>
+            </div>
+          </div>
+          <span class="dvp-epoch-eta" id="dashEpochEta">&mdash;</span>
+          <div class="dvp-bar-track"><div class="dvp-bar-fill" id="dashEpochBar" style="width: 0%"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---- TPS + recent blocks ---- -->
+    <div class="dash-section-head">
+      <span class="dash-section-title" data-i18n="dashboard.throughput.title">Throughput &amp; Activity</span>
+      <span class="dash-section-hint" data-i18n="dashboard.throughput.hint">Live, updates every few seconds</span>
+    </div>
+    <div class="dash-row-2 reveal-stagger">
+      <div class="dcard dash-tps-card">
+        <div class="dcard-label" data-i18n="dashboard.throughput.tpsLabel">Transactions per Second</div>
+        <div class="dash-tps-top">
+          <div><span class="dash-tps-value" id="dashTpsValue">0</span><span class="dash-tps-unit" data-i18n="dashboard.throughput.tpsUnit">TPS</span></div>
+          <div class="dash-tps-peak"><span data-i18n="dashboard.throughput.peak">24H peak</span><br><strong id="dashTpsPeak">&mdash;</strong></div>
+        </div>
+        <svg class="dash-tps-chart" id="dashTpsChart" viewBox="0 0 600 110" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="dashTpsGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#468ce6" stop-opacity="0.4"/>
+              <stop offset="55%" stop-color="#468ce6" stop-opacity="0.1"/>
+              <stop offset="100%" stop-color="#468ce6" stop-opacity="0"/>
+            </linearGradient>
+            <linearGradient id="dashTpsLineGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#468ce6" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#468ce6" stop-opacity="1"/>
+            </linearGradient>
+          </defs>
+          <path class="dash-tps-fill" id="dashTpsFill" d=""/>
+          <path class="dash-tps-line" id="dashTpsLine" stroke="url(#dashTpsLineGrad)" d=""/>
+        </svg>
+      </div>
+
+      <div class="dcard dash-blocks-card">
+        <div class="dcard-label" data-i18n="dashboard.throughput.recentBlocks">Recent Blocks</div>
+        <div class="dash-blocks-list" id="dashBlocksList"></div>
+      </div>
+    </div>
+
+    <!-- ---- metrics grid ---- -->
+    <div class="dash-section-head" id="network-metrics">
+      <span class="dash-section-title" data-i18n="dashboard.metrics.title">Network Metrics</span>
+      <span class="dash-section-hint" data-i18n="dashboard.metrics.hint">Rolling window</span>
+    </div>
+    <div class="dash-metrics-grid reveal-stagger" id="dashMetricsGrid"></div>
+
+    <!-- ---- staking ---- -->
+    <div class="dash-section-head" id="staking">
+      <span class="dash-section-title" data-i18n="dashboard.staking.title">Staking</span>
+      <span class="dash-section-hint" data-i18n="dashboard.staking.hint">Network totals</span>
+    </div>
+    <div class="dash-staking-grid reveal-stagger">
+      <div class="dcard stake-card">
+        <div class="stake-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <div class="stake-label" data-i18n="dashboard.staking.total">Total Staked</div>
+        <div class="stake-value" id="dashStakeTotal">&mdash;</div>
+        <div class="stake-sub" id="dashStakeTotalPct">&mdash;</div>
+      </div>
+      <div class="dcard stake-card">
+        <div class="stake-icon stake-icon--blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <div class="stake-label" data-i18n="dashboard.staking.pending">Pending Stake</div>
+        <div class="stake-value" id="dashStakePending">&mdash;</div>
+        <div class="stake-sub" id="dashStakePendingSub">&mdash;</div>
+      </div>
+      <div class="dcard stake-card">
+        <div class="stake-icon stake-icon--violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 12-4-4v3H3v2h15v3Z"/><path d="M2 12v0"/></svg></div>
+        <div class="stake-label" data-i18n="dashboard.staking.apy">Estimated APY</div>
+        <div class="stake-value" id="dashStakeApy">&mdash;</div>
+        <div class="stake-sub" data-i18n="dashboard.staking.apySub">Variable, network-wide average</div>
+      </div>
+    </div>
+
+    </div>
+
+  </main>
+
+  <footer class="dash-footer">
+    <div class="dash-footer-inner">
+      <div class="dash-footer-left">
+        <span class="dash-footer-brand" data-i18n="dashboard.footer.copyright">&copy; 2026 Sectora Foundation IL &middot; Testnet preview</span>
+        <p class="dash-footer-powered">
+          <span data-i18n="footer.poweredBy">Powered By</span>
+          <span class="dash-footer-eth-icon" aria-hidden="true">
+            <svg viewBox="0 0 256 417" xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor" fill-opacity="0.6" d="M127.9611 0L125.1661 9.5V285.168L127.9611 287.958L255.9231 212.32L127.9611 0Z"/>
+              <path fill="currentColor" d="M127.962 0L0 212.32L127.962 287.959V154.158V0Z"/>
+              <path fill="currentColor" fill-opacity="0.6" d="M127.9611 312.187L126.3861 314.107V415.6167L127.9611 420.2971L256.0001 236.5877L127.9611 312.187Z"/>
+              <path fill="currentColor" d="M127.962 420.297V312.187L0 236.588L127.962 420.297Z"/>
+              <path fill="currentColor" fill-opacity="0.2" d="M127.9611 287.9584L255.9231 212.3204L127.9611 154.1584V287.9584Z"/>
+              <path fill="currentColor" fill-opacity="0.6" d="M0.0009 212.3204L127.9609 287.9584V154.1584L0.0009 212.3204Z"/>
+            </svg>
+          </span>
+          <span data-i18n="footer.ethereum">Ethereum</span>
+        </p>
+      </div>
+      <div class="dx-store-badges dx-store-badges--compact">
+        <span class="dx-store-label" data-i18n="dex.storeBadges.comingSoon">Coming Soon</span>
+        <div class="dx-store-list">
+          <span class="dx-store-btn" aria-disabled="true">
+            <svg class="dx-store-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.5c-.03-2.4 1.96-3.55 2.05-3.6-1.12-1.64-2.86-1.86-3.48-1.89-1.48-.15-2.9.87-3.65.87-.76 0-1.92-.85-3.16-.83-1.62.02-3.13.95-3.97 2.4-1.7 2.94-.43 7.3 1.22 9.68.81 1.16 1.77 2.47 3.03 2.42 1.22-.05 1.68-.79 3.15-.79 1.47 0 1.88.79 3.16.76 1.3-.02 2.13-1.18 2.93-2.35.92-1.35 1.3-2.66 1.32-2.73-.03-.01-2.53-.97-2.56-3.84z"/><path d="M14.85 5.4c.67-.81 1.12-1.94.99-3.07-.96.04-2.13.64-2.82 1.45-.62.72-1.16 1.87-1.02 2.98 1.08.08 2.18-.55 2.85-1.36z"/></svg>
+            <span class="dx-store-text"><small data-i18n="dex.storeBadges.appStoreSmall">Download on the</small><strong>App Store</strong></span>
+          </span>
+          <span class="dx-store-btn" aria-disabled="true">
+            <svg class="dx-store-icon dx-store-icon--android" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <line x1="7" y1="5" x2="8.3" y2="7.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <line x1="17" y1="5" x2="15.7" y2="7.2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M6.5 16 L6.5 10.5 A5.5 5.5 0 0 1 17.5 10.5 L17.5 16 Z"/>
+              <circle cx="9.3" cy="11.3" r="0.9" fill="#04120c"/>
+              <circle cx="14.7" cy="11.3" r="0.9" fill="#04120c"/>
+              <rect x="6.8" y="16.5" width="1.6" height="3.2" rx="0.8"/>
+              <rect x="15.6" y="16.5" width="1.6" height="3.2" rx="0.8"/>
+              <rect x="4.2" y="10.8" width="1.6" height="4.5" rx="0.8"/>
+              <rect x="18.2" y="10.8" width="1.6" height="4.5" rx="0.8"/>
+            </svg>
+            <span class="dx-store-text"><small data-i18n="dex.storeBadges.googlePlaySmall">GET IT ON</small><strong>Google Play</strong></span>
+          </span>
+        </div>
+      </div>
+      <span class="dash-footer-links">
+        <a href="index.html" data-i18n="dashboard.footer.mainSite">Main site</a>
+        <a href="index.html#protocol" data-i18n="dashboard.footer.protocol">Protocol</a>
+        <a href="explorer.html">Explorer</a>
+        <a href="mailto:support@sectoraorg.com" data-i18n="dashboard.footer.support">Support</a>
+      </span>
+    </div>
+    <div class="footer-giant dash-footer-giant" aria-hidden="true">
+      <div class="footer-giant-inner">
+        <svg class="footer-giant-mark" viewBox="56.8 34.4 86.4 134.4">
+          <path d="M85.6 34.4 L56.8 52.0 L56.8 122.4 L85.6 104.8 Z M82.0 68.0 L82.0 104.8 L58.5 86.4 Z" fill-rule="evenodd"/>
+          <path d="M114.4 52.0 L141.6 68.0 L141.6 120.8 L114.4 135.2 L85.6 120.8 L85.6 68.0 Z M114.4 126.0 L114.4 89.2 L142.4 107.6 Z" fill-rule="evenodd"/>
+          <path d="M114.4 159.6 L143.2 142.0 L143.2 71.6 L114.4 89.2 Z M117.9 126.0 L117.9 89.2 L141.4 107.6 Z" fill-rule="evenodd"/>
+        </svg>
+        <span>SECTORA</span>
+      </div>
+    </div>
+  </footer>
+
+    </div>
+  </div>
+</div>
+
+<div class="dhm-modal-overlay" id="dhmModalOverlay" hidden>
+  <div class="dhm-modal" role="dialog" aria-modal="true" aria-labelledby="dhmModalTitle">
+    <button class="dhm-modal-close" id="dhmModalClose" type="button" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <p class="dhm-modal-eyebrow">Sectora Hash Market</p>
+    <h3 class="dhm-modal-title" id="dhmModalTitle">How it works</h3>
+    <ol class="dhm-modal-steps">
+      <li class="dhm-modal-step">
+        <span class="dhm-modal-step-num">1</span>
+        <div class="dhm-modal-step-body">
+          <p class="dhm-modal-step-title">Get test tokens</p>
+          <p class="dhm-modal-step-text">Claim free tSECT from the faucet once every 24h &mdash; this is testnet money, it has no real value.</p>
+        </div>
+      </li>
+      <li class="dhm-modal-step">
+        <span class="dhm-modal-step-num">2</span>
+        <div class="dhm-modal-step-body">
+          <p class="dhm-modal-step-title">Buy hash power</p>
+          <p class="dhm-modal-step-text">Pick a package: rent hash online, or buy a physical validator node kit for a better rate. Each purchase credits hash power to your wallet on-chain.</p>
+        </div>
+      </li>
+      <li class="dhm-modal-step">
+        <span class="dhm-modal-step-num">3</span>
+        <div class="dhm-modal-step-body">
+          <p class="dhm-modal-step-title">Reach the minimum</p>
+          <p class="dhm-modal-step-text">The network requires a minimum hash power before you can validate. Combine multiple purchases if one package isn't enough &mdash; your progress bar fills in real time.</p>
+        </div>
+      </li>
+      <li class="dhm-modal-step">
+        <span class="dhm-modal-step-num">4</span>
+        <div class="dhm-modal-step-body">
+          <p class="dhm-modal-step-title">Register your node</p>
+          <p class="dhm-modal-step-text">Give it a name and a location, then register on-chain. You can deactivate or reactivate it at any time &mdash; your hash power stays in your wallet either way.</p>
+        </div>
+      </li>
+    </ol>
+    <button class="dhm-modal-got-it" id="dhmModalGotIt" type="button">Got it</button>
+  </div>
+</div>
+
+<div class="dcursor-light" id="dCursorLight" aria-hidden="true"></div>
+<div class="dcursor-ring" id="dCursorRing" aria-hidden="true"></div>
+<div class="dcursor-dot" id="dCursorDot" aria-hidden="true"></div>
+
+<script src="translations.js?v=20260810i"></script>
+<script src="i18n.js?v=20260808h"></script>
+<script src="dashboard-map-topology.js?v=20260808c"></script>
+<script src="dashboard.js?v=20260809c"></script>
+<script src="dashboard-wallet-logos.js?v=20260809b"></script>
+<script src="dashboard-wallet.js?v=20260809g"></script>
+<script src="ethers.min.js?v=20260809a"></script>
+<script src="dashboard-hashmarket.js?v=20260809a"></script>
+<script src="dashboard-cursor.js?v=20260809a"></script>
+<script src="reveal.js?v=20260808h"></script>
+<script src="dashboard-globe-land.js?v=20260808a"></script>
+<script src="dashboard-globe-topology.js?v=20260808a"></script>
+<script src="three.min.js?v=20260808a"></script>
+<script src="dashboard-globe.js?v=20260810a"></script>
+</body>
+</html>

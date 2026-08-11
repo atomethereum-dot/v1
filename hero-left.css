@@ -1,0 +1,54 @@
+/* Portada preview — hero text aligned left. Scoped to .hero-left only, never touches the live homepage hero. */
+
+.hero-left {
+  text-align: left;
+}
+
+.hero-left .hero-main {
+  align-items: flex-start;
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+@media (min-width: 721px) {
+  .hero-left .hero-main {
+    justify-content: flex-start;
+    padding-top: 48px;
+  }
+}
+
+.hero-left .hero-heading {
+  text-align: left;
+  font-family: "Sora Light", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 200;
+  font-size: clamp(45px, 7.5vw, 78px);
+  color: var(--white);
+  max-width: 900px;
+}
+
+.hero-left .hero-subtitle {
+  font-family: "Sora Light", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 200;
+  font-size: 17px;
+  line-height: 1.55;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--white-dim);
+  max-width: 480px;
+}
+
+.hero-left .hero-cta-row {
+  justify-content: flex-start;
+}
+
+@media (max-width: 720px) {
+  .hero-left .hero-main {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hero-left .hero-heading {
+    font-size: clamp(42px, 13vw, 50px);
+    max-width: 350px;
+  }
+}

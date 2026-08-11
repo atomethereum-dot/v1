@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Testnet Dashboard (v3 preview) | Sectora</title>
+<meta name="description" content="Candidate design: Sectora testnet portfolio dashboard with crypto + RWA holdings." />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%2756.8%2034.4%2086.4%20134.4%27%3E%3Cpath%20d%3D%27M85.6%2034.4%20L56.8%2052.0%20L56.8%20122.4%20L85.6%20104.8%20Z%20M82.0%2068.0%20L82.0%20104.8%20L58.5%2086.4%20Z%27%20fill%3D%27%2394ff45%27%20fill-rule%3D%27evenodd%27%2F%3E%3Cpath%20d%3D%27M114.4%2052.0%20L141.6%2068.0%20L141.6%20120.8%20L114.4%20135.2%20L85.6%20120.8%20L85.6%2068.0%20Z%20M114.4%20126.0%20L114.4%2089.2%20L142.4%20107.6%20Z%27%20fill%3D%27%23ffffff%27%20fill-rule%3D%27evenodd%27%2F%3E%3Cpath%20d%3D%27M114.4%20159.6%20L143.2%20142.0%20L143.2%2071.6%20L114.4%2089.2%20Z%20M117.9%20126.0%20L117.9%2089.2%20L141.4%20107.6%20Z%27%20fill%3D%27%23c0c3c8%27%20fill-rule%3D%27evenodd%27%2F%3E%3C%2Fsvg%3E" />
+<link rel="preload" href="fonts/SpaceGrotesk.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/JetBrainsMono.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="styles.css?v=20260808h" />
+<link rel="stylesheet" href="dashboard-v3.css?v=20260808c" />
+</head>
+<body>
+
+<div class="v3">
+  <div class="v3-app">
+    <aside class="v3-rail">
+      <div class="v3-rail-logo" aria-hidden="true">
+        <svg viewBox="56.8 34.4 86.4 134.4" width="18" height="28"><path d="M85.6 34.4 L56.8 52.0 L56.8 122.4 L85.6 104.8 Z M82.0 68.0 L82.0 104.8 L58.5 86.4 Z" fill="#94ff45" fill-rule="evenodd"/><path d="M114.4 52.0 L141.6 68.0 L141.6 120.8 L114.4 135.2 L85.6 120.8 L85.6 68.0 Z M114.4 126.0 L114.4 89.2 L142.4 107.6 Z" fill="#ffffff" fill-rule="evenodd"/><path d="M114.4 159.6 L143.2 142.0 L143.2 71.6 L114.4 89.2 Z M117.9 126.0 L117.9 89.2 L141.4 107.6 Z" fill="#c0c3c8" fill-rule="evenodd"/></svg>
+      </div>
+      <a class="v3-rail-btn is-active" href="#" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg>
+      </a>
+      <a class="v3-rail-btn" href="#" aria-label="Swap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      </a>
+      <a class="v3-rail-btn" href="#" aria-label="Analytics">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg>
+      </a>
+      <a class="v3-rail-btn" href="#" aria-label="RWA Vault">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/></svg>
+      </a>
+      <a class="v3-rail-btn" href="#" aria-label="Bridge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M6 8v8M12 5v14M18 8v8"/></svg>
+      </a>
+      <a class="v3-rail-btn" href="#" aria-label="Messages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4Z"/></svg>
+      </a>
+      <div class="v3-rail-spacer"></div>
+      <a class="v3-rail-btn" href="index.html" aria-label="Back to main site">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+      </a>
+      <a class="v3-rail-btn" href="#" aria-label="Settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+      </a>
+    </aside>
+
+    <div class="v3-content">
+
+      <div class="v3-topbar">
+        <div class="v3-pair-pill">
+          <span class="v3-pair-icon">S</span>
+          <span class="v3-pair-text">
+            <span class="v3-pair-top">#SECT / USDC</span>
+            <span class="v3-pair-sub">TESTNET · SIMULATED</span>
+          </span>
+          <button class="v3-pair-close" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+        </div>
+        <button class="v3-add-btn" type="button" aria-label="Add asset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></button>
+        <span class="v3-icon-sq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+        <span class="v3-icon-sq"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5.2 3.4 9.4 8 11 4.6-1.6 8-5.8 8-11V5Z"/></svg></span>
+
+        <div class="v3-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" placeholder="Search…" aria-label="Search" />
+        </div>
+
+        <span class="v3-viewall">View all <strong>Testnet</strong> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+
+        <div class="v3-spacer"></div>
+
+        <button class="v3-bell" type="button" aria-label="Notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span class="v3-bell-dot"></span>
+        </button>
+        <div class="v3-wallet-pill">
+          <span id="v3-wallet-addr">0x0000…0000</span>
+          <span class="v3-wallet-avatar">S</span>
+        </div>
+      </div>
+
+      <div class="v3-row1">
+        <div class="v3card">
+          <div class="v3-eval-top">
+            <div>
+              <p class="v3-eval-title">Portfolio Evaluation</p>
+              <p class="v3-eval-sub">#SECT stake + RWA holdings, testnet</p>
+            </div>
+            <div class="v3-eval-controls">
+              <span class="v3-eval-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/></svg></span>
+              <span class="v3-eval-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20"/><path d="M6 8v8M12 5v14M18 8v8"/></svg></span>
+              <span class="v3-eval-range">Last 30 days <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </div>
+          </div>
+          <div class="v3-eval-value-row">
+            <span class="v3-eval-value" id="v3-eval-value">$0.00</span>
+            <span class="v3-pill v3-pill--green" id="v3-eval-pct">+0.0%</span>
+            <span class="v3-pill v3-pill--ghost" id="v3-eval-usd">$0.00</span>
+          </div>
+          <div class="v3-eval-chart-wrap">
+            <div class="v3-eval-tip" id="v3-eval-tip" style="left:0; top:0;">Earned +$0</div>
+            <svg class="v3-eval-chart" id="v3-eval-chart" viewBox="0 0 720 168" preserveAspectRatio="none">
+              <defs><linearGradient id="v3EvalGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></linearGradient></defs>
+              <g class="v3-eval-grid"><line x1="0" y1="42" x2="720" y2="42"/><line x1="0" y1="84" x2="720" y2="84"/><line x1="0" y1="126" x2="720" y2="126"/></g>
+              <path class="v3-eval-fill" id="v3-eval-fill" fill="url(#v3EvalGrad)"/>
+              <path class="v3-eval-line" id="v3-eval-line"/>
+            </svg>
+          </div>
+          <div class="v3-eval-slider">
+            <div class="v3-eval-slider-track">
+              <div class="v3-eval-slider-fill" style="width: 34%;"></div>
+              <div class="v3-eval-slider-handle" style="left: 34%;"></div>
+            </div>
+            <div class="v3-eval-slider-labels"><span>1-5</span><span>10-15</span><span>15-20</span><span>20-25</span><span>25-30</span><span>1-5</span></div>
+          </div>
+        </div>
+
+        <div class="v3card">
+          <div class="v3-ops-top">
+            <div>
+              <p class="v3-ops-title">Recent operations</p>
+              <p class="v3-ops-value" id="v3-ops-total">$0.00</p>
+              <p class="v3-ops-sub" id="v3-ops-perday">$0.00 / day</p>
+            </div>
+            <span class="v3-ops-filter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3Z"/></svg></span>
+          </div>
+          <div class="v3-ops-list" id="v3-ops-list"></div>
+        </div>
+
+        <div class="v3-actions">
+          <a class="v3-action-btn" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg>Deposit</a>
+          <a class="v3-action-btn is-muted" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>Withdraw</a>
+          <a class="v3-action-btn is-muted" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>P2P</a>
+          <a class="v3-action-btn is-muted" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09Z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2Z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>Launchpad</a>
+          <div class="v3-actions-wallet">
+            <div class="v3-actions-wallet-row">
+              <span class="v3-actions-wallet-addr" id="v3-actions-addr">0x0000…0000</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" style="color:var(--v3-text-faint);flex:none;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            </div>
+            <div class="v3-actions-wallet-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="v3-row2">
+        <div class="v3-glow-card v3-glow-card--green">
+          <div class="v3-glow-head">
+            <span class="v3-glow-name">Bitcoin (BTC)</span>
+          </div>
+          <div class="v3-glow-price" id="v3-btc-price">$0</div>
+          <div class="v3-glow-delta" id="v3-btc-delta">+0.0%</div>
+          <svg class="v3-glow-chart" id="v3-btc-chart" viewBox="0 0 260 56" preserveAspectRatio="none">
+            <defs><linearGradient id="v3BtcGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff" stop-opacity="0.5"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+            <path class="fill" id="v3-btc-fill" fill="url(#v3BtcGrad)"/>
+            <path class="line" id="v3-btc-line"/>
+          </svg>
+          <div class="v3-glow-foot"><span>11 Dec</span><span>11 Jan</span></div>
+        </div>
+
+        <div class="v3-stackcol">
+          <div class="v3card v3-mini-wallet">
+            <div class="v3-mini-wallet-top">
+              <span class="v3-mini-wallet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></span>
+              <span class="v3-mini-wallet-addr" id="v3-mini-wallet-addr">0x0000…0000</span>
+            </div>
+            <span class="v3-pill v3-pill--red" id="v3-mini-wallet-delta" style="align-self:flex-start;">-3.1%</span>
+            <span class="v3-mini-wallet-amt" id="v3-mini-wallet-amt">0.0000 #SECT</span>
+            <span class="v3-mini-wallet-usd" id="v3-mini-wallet-usd">$0.00</span>
+          </div>
+
+          <div class="v3-glow-card v3-glow-card--red" style="min-height: 130px;">
+            <div class="v3-glow-head">
+              <span class="v3-glow-name">Tokenized T-Bill (RWA)</span>
+            </div>
+            <svg class="v3-glow-chart" id="v3-rwa-chart" viewBox="0 0 260 56" preserveAspectRatio="none">
+              <defs><linearGradient id="v3RwaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff" stop-opacity="0.5"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+              <path class="fill" id="v3-rwa-fill" fill="url(#v3RwaGrad)"/>
+              <path class="line" id="v3-rwa-line"/>
+            </svg>
+            <div class="v3-glow-foot"><span id="v3-rwa-low">$0.00</span><span id="v3-rwa-high">$0.00</span></div>
+          </div>
+        </div>
+
+        <div class="v3card v3-fg-card">
+          <div>
+            <p class="v3-fg-label">Fear &amp; greed index</p>
+            <p class="v3-fg-sub" id="v3-fg-word">74 Greed</p>
+          </div>
+          <div class="v3-fg-dots" id="v3-fg-dots"></div>
+          <div class="v3-fg-foot"><span>LOW</span><span class="v3-fg-value" id="v3-fg-num">74</span><span>HIGH</span></div>
+        </div>
+
+        <div class="v3card v3-phantom-card">
+          <div class="v3-phantom-top">
+            <span class="v3-phantom-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M16 6V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2"/></svg></span>
+            <div>
+              <div class="v3-phantom-name">Sectora Wallet</div>
+              <div class="v3-phantom-sub">Testnet</div>
+            </div>
+          </div>
+          <div class="v3-phantom-amt" id="v3-phantom-amt">$0.00</div>
+          <div class="v3-phantom-slider">
+            <div class="v3-phantom-slider-fill" style="width: 58%;"></div>
+            <div class="v3-phantom-handle" style="left: 58%;"></div>
+          </div>
+        </div>
+
+        <div class="v3card v3-bar-card">
+          <div class="v3-bar-head">
+            <div>
+              <div class="v3-bar-name">Litecoin (LTC)</div>
+              <div class="v3-bar-sub" id="v3-ltc-amt">0.00 LTC</div>
+            </div>
+            <span class="v3-pill v3-pill--green" id="v3-ltc-delta">+0.0%</span>
+          </div>
+          <div class="v3-bar-price" id="v3-ltc-price">$0.00</div>
+          <div class="v3-bars" id="v3-ltc-bars"></div>
+          <div class="v3-bar-labels" id="v3-ltc-labels"></div>
+          <div class="v3-bar-values" id="v3-ltc-values"></div>
+        </div>
+      </div>
+
+      <div class="v3-footnote">
+        <span>Illustrative preview · simulated testnet data · candidate design 3 of 3</span>
+        <a href="index.html">&larr; Back to sectoraorg.com</a>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="v3-overlay" id="v3Overlay"></div>
+  <div class="v3-drawer" id="v3Drawer">
+    <button class="v3-drawer-back" id="v3DrawerClose" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Order / <span id="v3-drawer-id">#000000</span>
+    </button>
+    <div class="v3-drawer-amt-row">
+      <span class="v3-drawer-amt" id="v3-drawer-amt">+$0.00</span>
+      <span class="v3-drawer-badge" id="v3-drawer-status">In progress</span>
+    </div>
+    <p class="v3-drawer-track">Tracking ID: <code id="v3-drawer-tracking">—</code></p>
+
+    <div class="v3-drawer-grid">
+      <div>
+        <div class="v3-drawer-label">Network</div>
+        <div class="v3-drawer-val" id="v3-drawer-network">—</div>
+      </div>
+      <div>
+        <div class="v3-drawer-label">Time</div>
+        <div class="v3-drawer-val" id="v3-drawer-time">—</div>
+      </div>
+    </div>
+    <div class="v3-drawer-label">Address</div>
+    <p class="v3-drawer-mono" id="v3-drawer-address">—</p>
+    <div class="v3-drawer-label" style="margin-top:14px;">Txid</div>
+    <p class="v3-drawer-mono" id="v3-drawer-txid">—</p>
+    <div class="v3-drawer-label" style="margin-top:14px;">Deposit wallet</div>
+    <p class="v3-drawer-val" id="v3-drawer-depositwallet">Spot wallet</p>
+
+    <h3 class="v3-drawer-status-title" style="margin-top:22px;">Status</h3>
+    <div class="v3-timeline" id="v3-timeline"></div>
+  </div>
+</div>
+
+<script src="dashboard-v3.js?v=20260808b"></script>
+</body>
+</html>

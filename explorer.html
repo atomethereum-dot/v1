@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sectorascan | Sectora L3 Explorer</title>
+<meta name="description" content="Sectorascan: the block explorer for the Sectora Layer 3 testnet — search blocks, transactions, addresses and tokenized real-world assets (metals, indices) on Sectora." />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%2756.8%2034.4%2086.4%20134.4%27%3E%3Cpath%20d%3D%27M85.6%2034.4%20L56.8%2052.0%20L56.8%20122.4%20L85.6%20104.8%20Z%20M82.0%2068.0%20L82.0%20104.8%20L58.5%2086.4%20Z%27%20fill%3D%27%23111111%27%20fill-rule%3D%27evenodd%27%2F%3E%3Cpath%20d%3D%27M114.4%2052.0%20L141.6%2068.0%20L141.6%20120.8%20L114.4%20135.2%20L85.6%20120.8%20L85.6%2068.0%20Z%20M114.4%20126.0%20L114.4%2089.2%20L142.4%20107.6%20Z%27%20fill%3D%27%23468ce6%27%20fill-rule%3D%27evenodd%27%2F%3E%3Cpath%20d%3D%27M114.4%20159.6%20L143.2%20142.0%20L143.2%2071.6%20L114.4%2089.2%20Z%20M117.9%20126.0%20L117.9%2089.2%20L141.4%20107.6%20Z%27%20fill%3D%27%232f6bcf%27%20fill-rule%3D%27evenodd%27%2F%3E%3C%2Fsvg%3E" />
+<link rel="preload" href="fonts/SpaceGrotesk.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/JetBrainsMono.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="styles.css?v=20260810x" />
+<link rel="stylesheet" href="explorer.css?v=20260810b" />
+<script>(function(){try{var t=localStorage.getItem("sectorascanTheme");if(t==="dark")document.documentElement.setAttribute("data-theme","dark");}catch(e){}})();</script>
+</head>
+<body>
+
+<div class="ex">
+  <div class="ex-banner">
+    <span class="ex-banner-dot" aria-hidden="true"></span>
+    <span>SECTORA L3 TESTNET &middot; All blocks, transactions and balances shown are simulated for preview purposes.</span>
+  </div>
+
+  <header class="ex-header">
+    <div class="ex-header-row">
+      <a class="ex-logo" href="index.html">
+        <span class="ex-logo-mark" aria-hidden="true">
+          <svg viewBox="56.8 34.4 86.4 134.4" width="22" height="34"><defs><linearGradient id="exTop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a1c20"/><stop offset="1" stop-color="#000000"/></linearGradient><linearGradient id="exMid" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5c9bee"/><stop offset="1" stop-color="#3672d6"/></linearGradient><linearGradient id="exBot" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2f6bcf"/><stop offset="1" stop-color="#1f4fa8"/></linearGradient></defs><path d="M85.6 34.4 L56.8 52.0 L56.8 122.4 L85.6 104.8 Z M82.0 68.0 L82.0 104.8 L58.5 86.4 Z" fill="url(#exTop)" fill-rule="evenodd"/><path d="M114.4 52.0 L141.6 68.0 L141.6 120.8 L114.4 135.2 L85.6 120.8 L85.6 68.0 Z M114.4 126.0 L114.4 89.2 L142.4 107.6 Z" fill="url(#exMid)" fill-rule="evenodd"/><path d="M114.4 159.6 L143.2 142.0 L143.2 71.6 L114.4 89.2 Z M117.9 126.0 L117.9 89.2 L141.4 107.6 Z" fill="url(#exBot)" fill-rule="evenodd"/></svg>
+        </span>
+        <span class="ex-logo-word">SECTORASCAN</span>
+      </a>
+
+      <nav class="ex-nav" id="exNavDesktop">
+        <a class="ex-navlink" data-view="home" href="#/">Home</a>
+        <div class="ex-navdrop">
+          <button type="button" class="ex-navlink ex-navdrop-btn">Blockchain <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ex-navdrop-menu">
+            <a data-view="blocks" href="#/blocks">Blocks</a>
+            <a data-view="txs" href="#/txs">Transactions</a>
+          </div>
+        </div>
+        <div class="ex-navdrop">
+          <button type="button" class="ex-navlink ex-navdrop-btn">Tokens <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+          <div class="ex-navdrop-menu">
+            <a data-view="tokens" href="#/tokens">Token Tracker</a>
+          </div>
+        </div>
+        <a class="ex-navlink" data-view="gastracker" href="#/gastracker">Gas Tracker</a>
+        <a class="ex-navlink" data-view="charts" href="#/charts">Charts &amp; Stats</a>
+      </nav>
+
+      <div class="ex-header-right">
+        <form class="ex-header-search" id="exHeaderSearch">
+          <span class="ex-header-search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span>
+          <input type="text" id="exHeaderSearchInput" placeholder="Search block / txn / address / token" autocomplete="off" spellcheck="false" />
+        </form>
+        <a class="ex-back" href="index.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          <span>Back to site</span>
+        </a>
+        <button class="ex-signin" type="button" aria-disabled="true">Sign In <small>Coming Soon</small></button>
+        <button class="ex-theme-toggle" id="exThemeToggle" type="button" aria-label="Switch to dark mode" title="Light / Dark">
+          <span class="ex-theme-icon ex-theme-icon--sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+          <span class="ex-theme-icon ex-theme-icon--moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span>
+        </button>
+        <button class="ex-nav-toggle" id="exNavToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="ex-ticker">
+      <div class="ex-ticker-inner">
+        <span class="ex-ticker-item"><b>Sectora L3 Testnet</b></span>
+        <span class="ex-ticker-item">SECT Price: <b id="exTickerPrice">$0.1034</b></span>
+        <span class="ex-ticker-item">Block Height: <b id="exTickerBlock">—</b></span>
+        <span class="ex-ticker-item">Gas: <b id="exTickerGas">—</b></span>
+      </div>
+    </div>
+
+    <nav class="ex-nav-mobile" id="exNavMobile">
+      <a href="#/">Home</a>
+      <a href="#/blocks">Blocks</a>
+      <a href="#/txs">Transactions</a>
+      <a href="#/tokens">Token Tracker</a>
+      <a href="#/gastracker">Gas Tracker</a>
+      <a href="#/charts">Charts &amp; Stats</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="dex-cover.html">DEX</a>
+      <a href="index.html">Main site</a>
+    </nav>
+  </header>
+
+  <main class="ex-main" id="exMain"></main>
+
+  <footer class="ex-footer">
+    <div class="ex-footer-inner">
+      <span>&copy; 2026 Sectora Foundation IL &middot; Sectorascan is a testnet preview. Not a live blockchain explorer. All data simulated.</span>
+      <span class="ex-footer-links">
+        <a href="index.html">Main site</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="dex-cover.html">DEX</a>
+        <a href="mailto:support@sectoraorg.com">Support</a>
+      </span>
+    </div>
+  </footer>
+</div>
+
+<div class="cursor-light" id="cursorLight" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"><span class="cursor-ring-label" id="cursorLabel"></span></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+
+<script src="cursor.js?v=20260808h"></script>
+<script src="explorer.js?v=20260810b"></script>
+</body>
+</html>
