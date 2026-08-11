@@ -160,7 +160,7 @@
   .docs:hover::before,.docs:focus-visible::before{transform:translateY(0)}
 
   /* ============ hero ============ */
-  .stage{position:relative;min-height:calc(100svh - var(--head-h,96px));display:flex;flex-direction:column;background:#000;overflow:hidden}
+  .stage{position:relative;min-height:calc(100vh - var(--head-h,96px));min-height:calc(100dvh - var(--head-h,96px));display:flex;flex-direction:column;background:#000;overflow:hidden}
   #grid{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
   .vignette{
     position:absolute;inset:0;z-index:1;pointer-events:none;
@@ -283,7 +283,9 @@
   /* ============ iris ligado al scroll ============ */
   .iris{position:relative;height:340vh;background:#000}
   .iris-pin{
-    position:sticky;top:0;height:100svh;overflow:hidden;
+    /* dvh sigue a las barras del navegador; svh dejaba una franja negra
+       al ocultarse la barra inferior en movil */
+    position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;
     display:grid;place-items:center;isolation:isolate;
     background:
       radial-gradient(70% 55% at 50% 52%, rgba(21,105,255,.13), transparent 62%),
@@ -507,7 +509,7 @@
      scroll, con el filo encendido en azul */
   .wipe{position:relative;height:280vh;background:#000}
   .wipe-pin{
-    position:sticky;top:0;height:100svh;overflow:hidden;
+    position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;
     display:grid;place-items:center;isolation:isolate;
     background:
       radial-gradient(80% 60% at 50% 40%, #ffffff, transparent 72%),
@@ -755,13 +757,24 @@
   .p-live:hover{color:var(--ink)}
   .p-live:hover i{transform:translate(3px,-3px)}
 
-  .p-dev{
+  /* aun no disponible: mismo formato que el estado en vivo, pero el
+     punto pulsa en gris en vez de verde. Se lee como "en curso, no listo" */
+  .p-soon{
     display:inline-flex;align-items:center;gap:10px;
     margin-top:16px;
     font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;
     text-transform:uppercase;color:var(--ink-4);
   }
-  .p-dev .dot{width:6px;height:6px;border-radius:50%;background:var(--ink-4);flex:none}
+  .p-soon .led{
+    position:relative;width:6px;height:6px;border-radius:50%;flex:none;
+    background:var(--ink-3);
+    box-shadow:0 0 10px 1px rgba(124,132,150,.45);
+  }
+  .p-soon .led::after{
+    content:'';position:absolute;inset:-4px;border-radius:50%;
+    border:1px solid var(--ink-3);
+    animation:ping 2.6s var(--ease) infinite;
+  }
 
   @media (max-width:980px){
     .p-inner{grid-template-columns:1fr;gap:0}
@@ -1070,7 +1083,7 @@
         <span class="p-name">Stablecoin USD-SEC</span>
         <div class="p-meta">
           <span class="p-desc">A dollar-denominated unit of account for settlement across the products above.</span>
-          <span class="p-dev"><span class="dot"></span>In development</span>
+          <span class="p-soon"><span class="led"></span>In development</span>
         </div>
       </div>
     </div>
@@ -1243,19 +1256,31 @@
 
   function resize(){
     const stage = document.getElementById('stage');
-    W = stage.clientWidth; H = stage.clientHeight;
+    const w = stage.clientWidth, h = stage.clientHeight;
+    // si el elemento no esta en pantalla mide 0: reconstruir aqui dejaria
+    // el lienzo de lineas a 0x0 y drawImage fallaria en cada fotograma
+    if(w < 1 || h < 1) return;
+    W = w; H = h;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = W*dpr; canvas.height = H*dpr;
     ctx.setTransform(dpr,0,0,dpr,0,0);
     cols = Math.ceil(W/CELL); rows = Math.ceil(H/CELL);
     heat = new Float32Array(cols*rows);
     tone = new Float32Array(cols*rows);
-    for(let i=0;i<tone.length;i++) tone[i] = Math.random();
+    for(let i=0;i<tone.length;i++) tone[i] = rnd(i % cols, (i / cols) | 0);
     lineLayer.width = W*dpr; lineLayer.height = H*dpr;
     paintLines();
     seedWalkers();
   }
   const idx = (c,r) => r*cols + c;
+
+  /* ruido estable por celda: al recalcular por un cambio de alto (las
+     barras del navegador entrando y saliendo) el patron es el mismo,
+     asi que no se ve ningun rebarajado */
+  function rnd(c, r){
+    const x = Math.sin(c * 127.1 + r * 311.7) * 43758.5453;
+    return x - Math.floor(x);
+  }
 
   let walkers = [];
   function seedWalkers(){
@@ -1384,6 +1409,8 @@
   function frame(t){
     requestAnimationFrame(frame);
     if(!tabVisible){ last = t; return; }
+    // vuelve a medir si aun no hay lienzo: cubre el caso de arrancar oculto
+    if(!lineLayer.width){ resize(); if(!lineLayer.width){ last = t; return; } }
     const dt = Math.min(t-last, 50); last = t;
     if(!startT){ startT = t; sweepStart = t + INTRO_MS + 4500; }
     const intoIntro = (t - startT) < INTRO_MS;
@@ -1418,7 +1445,9 @@
   let cols=0, rows=0, heat=null, W=0, H=0;
 
   function resize(){
-    W = pin.clientWidth; H = pin.clientHeight;
+    const w = pin.clientWidth, h = pin.clientHeight;
+    if(w < 1 || h < 1) return;
+    W = w; H = h;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     [cd, cl].forEach((c, i) => {
       c.width = W*dpr; c.height = H*dpr;
@@ -1516,6 +1545,11 @@
   if(!sec || !pin || !cv) return;
 
   const ctx = cv.getContext('2d');
+  // mismo ruido estable que en el hero
+  function rndW(c, r){
+    const x = Math.sin(c * 127.1 + r * 311.7) * 43758.5453;
+    return x - Math.floor(x);
+  }
   const items   = [...document.querySelectorAll('#wipe-list span')];
   const counter = document.getElementById('wipe-n');
   const horizon = document.getElementById('wipe-horizon');
@@ -1528,7 +1562,9 @@
   let cols=0, rows=0, thr=null, W=0, H=0;
 
   function build(){
-    W = pin.clientWidth; H = pin.clientHeight;
+    const w = pin.clientWidth, h = pin.clientHeight;
+    if(w < 1 || h < 1) return;
+    W = w; H = h;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     cv.width = W*dpr; cv.height = H*dpr;
     ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -1540,7 +1576,7 @@
       for(let c=0;c<cols;c++){
         // diagonal normalizada, comprimida para dejar sitio a la rampa
         const d = (c + r) / span;
-        thr[r*cols+c] = d * (1 - RAMP) + (Math.random()-.5) * .07;
+        thr[r*cols+c] = d * (1 - RAMP) + (rndW(c,r) - .5) * .07;
       }
     }
     paint();
