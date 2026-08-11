@@ -755,6 +755,14 @@
   .p-live:hover{color:var(--ink)}
   .p-live:hover i{transform:translate(3px,-3px)}
 
+  .p-dev{
+    display:inline-flex;align-items:center;gap:10px;
+    margin-top:16px;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-4);
+  }
+  .p-dev .dot{width:6px;height:6px;border-radius:50%;background:var(--ink-4);flex:none}
+
   @media (max-width:980px){
     .p-inner{grid-template-columns:1fr;gap:0}
     .p-count{display:none}
@@ -1062,6 +1070,7 @@
         <span class="p-name">Stablecoin USD-SEC</span>
         <div class="p-meta">
           <span class="p-desc">A dollar-denominated unit of account for settlement across the products above.</span>
+          <span class="p-dev"><span class="dot"></span>In development</span>
         </div>
       </div>
     </div>
