@@ -5,37 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#000000">
-<title>Whitepaper Official Sectora Foundation</title>
-<meta name="description" content="Official whitepaper of Sectora Foundation — security infrastructure for tokenized real-world assets. Published for informational purposes only.">
+<title>Website Official Sectora Foundation</title>
+<meta name="description" content="Sectora Foundation — security infrastructure for tokenized real-world assets: contract auditing, custody controls and continuous on-chain monitoring.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Whitepaper Official Sectora Foundation">
+<meta property="og:title" content="Website Official Sectora Foundation">
 <meta property="og:description" content="Security infrastructure for tokenized real-world assets. Informational document, not an offer of securities.">
 <link rel="preload" href="fonts/IBMPlexSans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/IBMPlexMono-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/IBMPlexMono-500.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  @font-face{
-    font-family:'IBM Plex Sans';
-    src:url("fonts/IBMPlexSans.woff2") format("woff2");
-    font-weight:200 500;
-    font-style:normal;
-    font-display:swap;
-  }
-  @font-face{
-    font-family:'IBM Plex Mono';
-    src:url("fonts/IBMPlexMono-400.woff2") format("woff2");
-    font-weight:400;
-    font-style:normal;
-    font-display:swap;
-  }
-  @font-face{
-    font-family:'IBM Plex Mono';
-    src:url("fonts/IBMPlexMono-500.woff2") format("woff2");
-    font-weight:500;
-    font-style:normal;
-    font-display:swap;
-  }
-
+  @font-face{font-family:'IBM Plex Sans';src:url("fonts/IBMPlexSans.woff2") format("woff2");font-weight:200 500;font-style:normal;font-display:swap;}
+  @font-face{font-family:'IBM Plex Mono';src:url("fonts/IBMPlexMono-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;}
+  @font-face{font-family:'IBM Plex Mono';src:url("fonts/IBMPlexMono-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap;}
   :root{
     --bg:#000;
     --ink:#fff;
@@ -273,7 +254,9 @@
     color:var(--ink-3);font-family:'IBM Plex Mono',monospace;
     font-size:9.5px;letter-spacing:.14em;padding:12px 0 0 16px;
     will-change:transform;
+    opacity:0;transition:opacity .35s var(--ease);
   }
+  .readout.on{opacity:1}
   .readout::before{
     content:'';position:absolute;left:0;top:0;width:9px;height:9px;
     border-left:1px solid var(--blue);border-top:1px solid var(--blue);opacity:.9;
@@ -330,9 +313,28 @@
   /* aurora: horizonte vivo en lugar de una barra plana */
   .aurora{position:absolute;left:0;right:0;bottom:0;height:52vh;z-index:1;pointer-events:none;overflow:hidden}
   .aurora span{position:absolute;bottom:-22vh;border-radius:50%;filter:blur(72px);will-change:transform}
-  .aurora span:nth-child(1){left:2%;width:62vw;height:40vh;background:#1569ff;opacity:.92;animation:drift1 19s ease-in-out infinite}
-  .aurora span:nth-child(2){left:34%;width:50vw;height:34vh;background:#3f86ff;opacity:.72;animation:drift2 26s ease-in-out infinite}
-  .aurora span:nth-child(3){right:0;width:56vw;height:38vh;background:#0b3ecb;opacity:.8;animation:drift3 33s ease-in-out infinite}
+  /* dos masas espejadas mas una central sin deriva lateral: el centro de
+     gravedad de la luz queda clavado en el eje, pase lo que pase con las
+     animaciones. Antes las tres derivaban libres y el conjunto se torcia */
+  .aurora span:nth-child(1){left:-8%;width:56vw;height:40vh;background:#1569ff;opacity:.85;
+    animation:driftIzq 22s ease-in-out infinite}
+  .aurora span:nth-child(2){right:-8%;width:56vw;height:40vh;background:#1569ff;opacity:.85;
+    animation:driftDer 22s ease-in-out infinite}
+  .aurora span:nth-child(3){left:50%;width:64vw;height:36vh;margin-left:-32vw;background:#3f86ff;opacity:.6;
+    animation:driftCentro 17s ease-in-out infinite}
+  /* espejadas exactas: lo que una hace a la derecha, la otra a la izquierda */
+  @keyframes driftIzq{
+    0%,100%{transform:translate3d(-4%,0,0) scale(1)}
+    50%{transform:translate3d(9%,-6%,0) scale(1.14)}
+  }
+  @keyframes driftDer{
+    0%,100%{transform:translate3d(4%,0,0) scale(1)}
+    50%{transform:translate3d(-9%,-6%,0) scale(1.14)}
+  }
+  @keyframes driftCentro{
+    0%,100%{transform:translate3d(0,2%,0) scale(1)}
+    50%{transform:translate3d(0,-5%,0) scale(1.12)}
+  }
   @keyframes drift1{0%,100%{transform:translate3d(-5%,0,0) scale(1)}50%{transform:translate3d(12%,-7%,0) scale(1.18)}}
   @keyframes drift2{0%,100%{transform:translate3d(6%,-4%,0) scale(1.1)}50%{transform:translate3d(-11%,2%,0) scale(.92)}}
   @keyframes drift3{0%,100%{transform:translate3d(4%,2%,0) scale(.95)}50%{transform:translate3d(-8%,-8%,0) scale(1.22)}}
@@ -357,12 +359,38 @@
   .iris-edge{
     position:absolute;left:50%;top:50%;z-index:3;width:0;height:0;
     transform:translate(-50%,-50%);border-radius:50%;
-    border:1px solid rgba(150,195,255,.8);
-    box-shadow:0 0 26px 4px rgba(21,105,255,.55),
-               0 0 90px 18px rgba(21,105,255,.30),
-               inset 0 0 34px 6px rgba(21,105,255,.24);
     pointer-events:none;opacity:0;will-change:width,height;
+    /* el aro se dibuja con degradados, no con box-shadow: escala con el
+       circulo, se mantiene nitido a cualquier tamano y cuesta una fraccion */
+    background:
+      radial-gradient(circle at 50% 50%,
+        rgba(21,105,255,0)    calc(50% - 40px),
+        rgba(21,105,255,.30)  calc(50% - 12px),
+        rgba(150,195,255,.95) calc(50% - 2px),
+        rgba(190,225,255,1)   50%,
+        rgba(90,160,255,.75)  calc(50% + 2px),
+        rgba(21,105,255,.35)  calc(50% + 16px),
+        rgba(21,105,255,0)    calc(50% + 46px));
   }
+  .iris-edge::after{
+    content:'';position:absolute;inset:0;border-radius:50%;
+    /* reflejo que recorre el filo: es lo que impide que se lea como un
+       simple circulo creciendo */
+    background:conic-gradient(from 0deg,
+      rgba(255,255,255,0) 0deg,
+      rgba(255,255,255,.9) 26deg,
+      rgba(120,190,255,.5) 62deg,
+      rgba(255,255,255,0) 120deg,
+      rgba(255,255,255,0) 360deg);
+    -webkit-mask:radial-gradient(circle at 50% 50%,
+      transparent calc(50% - 7px), #000 calc(50% - 4px),
+      #000 calc(50% + 3px), transparent calc(50% + 7px));
+    mask:radial-gradient(circle at 50% 50%,
+      transparent calc(50% - 7px), #000 calc(50% - 4px),
+      #000 calc(50% + 3px), transparent calc(50% + 7px));
+    animation:rimSpin 4.6s linear infinite;
+  }
+  @keyframes rimSpin{to{transform:rotate(360deg)}}
 
   .iris-panel{
     position:absolute;inset:0;z-index:2;
@@ -647,7 +675,7 @@
   }
   .p-inner{
     position:relative;z-index:1;max-width:1280px;
-    --sticky-bg:rgba(0,0,0,.78);
+    --sticky-bg:rgba(0,0,0,.96);
     display:grid;
     grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);
     gap:clamp(36px,5vw,104px);
@@ -758,7 +786,7 @@
   .p-live:hover i{transform:translate(3px,-3px)}
 
   /* aun no disponible: mismo formato que el estado en vivo, pero el
-     punto pulsa en gris en vez de verde. Se lee como "en curso, no listo" */
+     punto va hueco y sin pulso. Se lee como "apagado" de un vistazo */
   .p-soon{
     display:inline-flex;align-items:center;gap:10px;
     margin-top:16px;
@@ -796,6 +824,751 @@
     .p-row{grid-template-columns:44px minmax(0,1fr);row-gap:10px}
   }
 
+
+
+
+
+  /* ============ lamina grabada ============
+     el roadmap como plancha de grabado de seguridad: rosetas guilloche
+     trazadas con el scroll, bisel con las seis marcas y cartela
+     tipografica. Sin efectos: precision. */
+  .plate{position:relative;height:520vh;background:#000}
+  .plate-pin{
+    position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;isolation:isolate;
+    background:
+      radial-gradient(66% 54% at 50% 46%, rgba(21,105,255,.17), transparent 64%),
+      radial-gradient(130% 80% at 50% 112%, rgba(13,60,150,.22), transparent 62%),
+      #000;
+  }
+  /* masas de luz derivando por detras de la plancha: sacan la escena
+     del negro plano sin tocar la limpieza del grabado */
+  .plate-aura{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+  .plate-aura span{position:absolute;border-radius:50%;filter:blur(92px);will-change:transform}
+  .plate-aura span:nth-child(1){
+    left:2%;top:2%;width:48vw;height:46vh;background:rgba(21,105,255,.24);
+    animation:drift1 23s ease-in-out infinite;
+  }
+  .plate-aura span:nth-child(2){
+    right:-4%;bottom:-10%;width:54vw;height:48vh;background:rgba(21,105,255,.17);
+    animation:drift3 31s ease-in-out infinite;
+  }
+  /* halo central: la roseta queda dentro de un charco de luz */
+  .plate-halo{
+    position:absolute;left:50%;top:50%;z-index:0;pointer-events:none;
+    width:74vmin;height:74vmin;margin:-37vmin 0 0 -37vmin;border-radius:50%;
+    background:radial-gradient(circle, rgba(96,156,255,.26), rgba(21,105,255,.10) 46%, transparent 68%);
+    filter:blur(46px);
+    animation:plateBreathe 9s ease-in-out infinite;
+  }
+  @keyframes plateBreathe{
+    0%,100%{transform:scale(1);opacity:.9}
+    50%{transform:scale(1.09);opacity:.62}
+  }
+  /* rejilla de 54px, la medida que recorre toda la pagina */
+  .plate-grid{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(66% 60% at 50% 50%,#000,transparent 84%);
+    mask-image:radial-gradient(66% 60% at 50% 50%,#000,transparent 84%);
+  }
+  /* horizonte: las mismas masas de luz que cierran el iris */
+  .plate-horizon{position:absolute;left:0;right:0;bottom:0;height:46vh;z-index:0;pointer-events:none;overflow:hidden}
+  .plate-horizon span{position:absolute;bottom:-20vh;border-radius:50%;filter:blur(74px);will-change:transform}
+  .plate-horizon span:nth-child(1){left:0;width:60vw;height:36vh;background:#1569ff;opacity:.5;animation:drift1 21s ease-in-out infinite}
+  .plate-horizon span:nth-child(2){right:0;width:54vw;height:34vh;background:#0b3ecb;opacity:.55;animation:drift3 29s ease-in-out infinite}
+  /* barrido de luz, con mezcla superpuesta para que realce y no blanquee */
+  .plate-sweep{
+    position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.2;
+    background:linear-gradient(104deg,transparent 42%,rgba(255,255,255,.5) 50%,transparent 58%);
+    transform:translate3d(-130%,0,0);
+    animation:sweep 13s cubic-bezier(.5,0,.2,1) infinite;
+    mix-blend-mode:overlay;will-change:transform;
+  }
+  /* cruces de registro, invertidas por mezcla como en el iris */
+  .plate-marks{position:absolute;inset:34px;z-index:3;pointer-events:none}
+  .plate-marks i{position:absolute;width:11px;height:11px;mix-blend-mode:difference}
+  .plate-marks i::before,.plate-marks i::after{content:'';position:absolute;background:#fff;opacity:.5}
+  .plate-marks i::before{left:50%;top:0;bottom:0;width:1px;transform:translateX(-.5px)}
+  .plate-marks i::after{top:50%;left:0;right:0;height:1px;transform:translateY(-.5px)}
+  .plate-marks i:nth-child(1){left:0;top:0}
+  .plate-marks i:nth-child(2){right:0;top:0}
+  .plate-marks i:nth-child(3){left:0;bottom:0}
+  .plate-marks i:nth-child(4){right:0;bottom:0}
+
+  #plate-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+
+  .plate-card{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    z-index:2;text-align:center;pointer-events:none;width:min(88vw,760px);
+  }
+  .plate-q{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--blue);
+  }
+  .plate-rule{height:1px;background:rgba(255,255,255,.16);margin:16px auto;width:clamp(120px,26vw,260px)}
+  .plate-name{
+    font-size:clamp(24px,3.6vw,52px);font-weight:200;letter-spacing:.02em;
+    line-height:1.1;color:#fff;text-wrap:balance;
+  }
+  .plate-sub{
+    margin-top:16px;font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--ink-4);
+  }
+
+  /* cartelas de esquina, como en una lamina tecnica */
+  .plate-meta{
+    position:absolute;z-index:2;pointer-events:none;
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-4);
+  }
+  .plate-meta.tl{left:var(--pad);top:clamp(26px,5vh,48px)}
+  .plate-meta.tr{right:var(--pad);top:clamp(26px,5vh,48px);text-align:right}
+  .plate-meta.bl{left:var(--pad);bottom:clamp(26px,5vh,48px)}
+  .plate-meta.br{right:var(--pad);bottom:clamp(26px,5vh,48px);text-align:right}
+  .plate-meta b{font-weight:500;color:var(--ink-3);font-variant-numeric:tabular-nums}
+
+  @media (max-width:700px){
+    .plate{height:460vh}
+    .plate-meta.tr,.plate-meta.br{display:none}
+  }
+
+  /* ============ roadmap ============ */
+  .rsm{
+    position:relative;background:#000;   /* igual que la seccion anterior */
+    padding:clamp(80px,13vh,150px) var(--pad) clamp(90px,14vh,160px);
+  }
+  .rsm::before{
+    content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.032) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.032) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(85% 70% at 50% 25%,#000,transparent 88%);
+    mask-image:radial-gradient(85% 70% at 50% 25%,#000,transparent 88%);
+  }
+  /* arranca en el propio borde con opacidad cero: nada que recortar */
+  .rsm-glow{
+    position:absolute;top:0;left:0;right:0;height:46vh;z-index:0;pointer-events:none;
+    background:radial-gradient(58% 62% at 50% 46%, rgba(21,105,255,.34), transparent 74%);
+    filter:blur(66px);
+    -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 46%,#000 70%,transparent 100%);
+    mask-image:linear-gradient(180deg,transparent 0%,#000 46%,#000 70%,transparent 100%);
+  }
+  .rsm-inner{
+    position:relative;z-index:1;max-width:1280px;
+    --sticky-bg:rgba(0,0,0,.96);
+    display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
+    gap:clamp(36px,5vw,104px);align-items:start;
+  }
+  .rsm-sticky{position:sticky;top:clamp(30px,7vh,72px);align-self:start;height:fit-content}
+  .rsm h2{
+    font-size:clamp(28px,4.4vw,58px);font-weight:200;line-height:1.06;
+    letter-spacing:-.03em;max-width:14ch;text-wrap:balance;
+  }
+  .rsm-lede{margin-top:24px;max-width:34ch;font-size:14.5px;line-height:1.75;color:var(--ink-3)}
+
+  .rsm-count{
+    margin-top:32px;padding-top:18px;border-top:1px solid var(--hair);
+    color:var(--ink-4);
+  }
+  .figs{display:none}
+  .fig dt{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-4);margin-bottom:7px;
+  }
+  .fig dd{font-size:clamp(19px,2vw,26px);font-weight:200;letter-spacing:-.02em;
+    font-variant-numeric:tabular-nums;color:var(--ink)}
+  .fig dd small{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    font-family:'IBM Plex Mono',monospace;color:var(--ink-4);margin-top:6px}
+
+  /* --- linea de tiempo --- */
+  .tl{position:relative;padding-left:30px}
+  .tl::before{
+    content:'';position:absolute;left:0;top:6px;bottom:6px;width:1px;
+    background:linear-gradient(180deg,var(--blue),rgba(21,105,255,.12));
+  }
+  .tl-item{position:relative;padding:0 0 clamp(30px,4.4vh,46px)}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-item::before{
+    content:'';position:absolute;left:-34px;top:7px;width:7px;height:7px;border-radius:50%;
+    background:#000;border:1px solid var(--blue);
+    transition:background .45s var(--ease),box-shadow .45s var(--ease);
+  }
+  .tl-item.done::before{background:var(--blue);box-shadow:0 0 11px 1px rgba(21,105,255,.75)}
+  .tl-q{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--blue);
+  }
+  .tl-item h3{font-size:clamp(17px,1.7vw,22px);font-weight:400;margin:10px 0 8px;letter-spacing:-.012em}
+  .tl-item p{font-size:14px;line-height:1.7;color:var(--ink-3);max-width:44ch}
+
+  @media (max-width:980px){
+    .rsm-inner{grid-template-columns:1fr;gap:0}
+    .rsm-lede,.rsm-count{display:none}
+    .rsm-sticky{
+      position:sticky;top:0;z-index:2;
+      margin:0 calc(var(--pad) * -1) 26px;
+      padding:20px var(--pad) 18px;
+      background:var(--sticky-bg);
+      backdrop-filter:blur(16px) saturate(1.3);
+      -webkit-backdrop-filter:blur(16px) saturate(1.3);
+      border-bottom:1px solid var(--hair);
+    }
+  }
+
+
+  /* ============ zoom tipografico: de negro a blanco ============
+     la cifra del supply se amplia hasta que uno de sus trazos cubre el
+     encuadre. No hay cortina ni recorte: el blanco de la seccion
+     siguiente sale de dentro del propio numero. */
+  .zoom{position:relative;height:360vh;background:#000}
+  .zoom-pin{
+    position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;background:#000;
+  }
+  /* aros de sonar: identicos a los del iris, mismo ciclo y desfase */
+  .zoom-rings{
+    position:absolute;inset:-20%;z-index:0;pointer-events:none;
+    background:repeating-radial-gradient(circle at 50% 50%,
+      transparent 0 92px, rgba(110,170,255,.17) 92px 94px);
+    -webkit-mask-image:radial-gradient(46% 46% at 50% 50%,#000,transparent 76%);
+    mask-image:radial-gradient(46% 46% at 50% 50%,#000,transparent 76%);
+    animation:ringOut 5.2s linear infinite;
+    will-change:transform,opacity;
+  }
+  .zoom-rings.b{animation-delay:-2.6s}
+  .zoom-pulse{
+    position:absolute;left:50%;top:50%;z-index:0;pointer-events:none;
+    width:60vmax;height:60vmax;margin:-30vmax 0 0 -30vmax;border-radius:50%;
+    background:radial-gradient(circle,rgba(21,105,255,.20),transparent 62%);
+    filter:blur(30px);
+    animation:pulseOut 5.2s ease-out infinite;will-change:transform,opacity;
+  }
+
+  #zoom-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+  .zoom-cap{
+    position:absolute;left:0;right:0;top:calc(50% - clamp(96px,13vh,150px));
+    z-index:2;text-align:center;pointer-events:none;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--ink-3);
+    transition:opacity .3s var(--ease);
+  }
+  .zoom-note{
+    position:absolute;left:var(--pad);right:var(--pad);bottom:clamp(26px,4vh,44px);
+    z-index:2;display:flex;justify-content:space-between;gap:20px;pointer-events:none;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-4);
+    transition:opacity .3s var(--ease);
+  }
+
+  /* ============ supply y market cap ============ */
+  .supply{
+    position:relative;background:#f2f2ef;color:#07080a;
+    padding:clamp(80px,13vh,150px) var(--pad) clamp(90px,14vh,160px);
+  }
+  .supply::before{
+    content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(0,0,0,.05) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(0,0,0,.05) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(84% 70% at 50% 44%,#000,transparent 88%);
+    mask-image:radial-gradient(84% 70% at 50% 44%,#000,transparent 88%);
+  }
+  .sp-inner{
+    position:relative;z-index:1;max-width:1280px;
+    --sticky-bg:rgba(242,242,239,.97);
+    display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
+    gap:clamp(36px,5vw,104px);align-items:start;
+  }
+  .sp-sticky{position:sticky;top:clamp(30px,7vh,72px);align-self:start;height:fit-content}
+  .supply .eyebrow{color:#6b7280;margin-bottom:clamp(26px,4vh,44px)}
+  .supply .eyebrow i{width:30px;background:#07080a}
+  .supply h2{
+    font-size:clamp(28px,4.4vw,58px);font-weight:200;line-height:1.06;
+    letter-spacing:-.03em;max-width:15ch;text-wrap:balance;
+  }
+  .sp-lede{margin-top:24px;max-width:36ch;font-size:14.5px;line-height:1.75;color:#3c414c}
+
+  /* libro de cifras */
+  .ledger{border-top:1px solid rgba(0,0,0,.16)}
+  .lg-row{
+    display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 24px;align-items:baseline;
+    padding:clamp(18px,2.6vh,26px) 0;border-bottom:1px solid rgba(0,0,0,.09);
+  }
+  .lg-row dt{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:#6b7280;
+  }
+  .lg-row dd{
+    font-size:clamp(19px,2.1vw,28px);font-weight:200;letter-spacing:-.02em;
+    text-align:right;font-variant-numeric:tabular-nums;
+  }
+  .lg-row dd small{
+    display:block;margin-top:6px;font-family:'IBM Plex Mono',monospace;
+    font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9aa0ab;
+  }
+  .lg-row.key dd{color:#0d4fd8}
+  .sp-fine{
+    margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:.08em;line-height:1.9;color:#9aa0ab;max-width:70ch;
+  }
+
+  @media (max-width:980px){
+    .sp-inner{grid-template-columns:1fr;gap:0}
+    .sp-lede{display:none}
+    .sp-sticky{
+      position:sticky;top:0;z-index:2;
+      margin:0 calc(var(--pad) * -1) 24px;padding:20px var(--pad) 18px;
+      background:var(--sticky-bg);
+      backdrop-filter:blur(16px) saturate(1.3);
+      -webkit-backdrop-filter:blur(16px) saturate(1.3);
+      border-bottom:1px solid rgba(0,0,0,.12);
+    }
+  }
+
+
+  /* ============ tabla comparativa de market cap ============ */
+  /* ocupan el ancho completo: son hijos del grid de dos columnas y sin
+     esto quedan encajonados en una sola */
+  .cap{grid-column:1 / -1;position:relative;z-index:1;margin-top:clamp(64px,10vh,120px)}
+  .sp-fine{grid-column:1 / -1}
+  .cap-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 40px;align-items:end;
+    padding-bottom:clamp(24px,3.4vh,34px)}
+  .cap-head h3{font-size:clamp(22px,2.8vw,34px);font-weight:200;letter-spacing:-.025em;
+    line-height:1.12;max-width:22ch;text-wrap:balance}
+  .cap-lede{margin-top:14px;max-width:62ch;font-size:14px;line-height:1.75;color:#3c414c}
+
+  .cap-tools{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .cap-seg{display:flex;border:1px solid rgba(0,0,0,.16);border-radius:2px;overflow:hidden}
+  .cap-seg button{
+    appearance:none;border:0;background:transparent;cursor:pointer;
+    padding:9px 15px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:.14em;text-transform:uppercase;color:#6b7280;
+    border-right:1px solid rgba(0,0,0,.12);
+    transition:background .25s var(--ease),color .25s var(--ease);
+  }
+  .cap-seg button:last-child{border-right:0}
+  .cap-seg button:hover{color:#07080a}
+  .cap-seg button.on{background:#0d4fd8;color:#fff}
+  .cap-live{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:#6b7280;
+  }
+  .cap-live .led{
+    position:relative;width:6px;height:6px;border-radius:50%;background:#25d366;flex:none;
+    box-shadow:0 0 9px 1px rgba(37,211,102,.5);
+  }
+  .cap-live .led::after{content:'';position:absolute;inset:-4px;border-radius:50%;
+    border:1px solid #25d366;animation:ping 2.6s var(--ease) infinite}
+
+  /* la tabla es una retícula: control fino en cada breakpoint */
+  .cap-grid{border-top:1px solid rgba(0,0,0,.18)}
+  .cap-row{
+    display:grid;
+    grid-template-columns:minmax(0,1.5fr) .9fr 1fr minmax(0,2fr) 1fr;
+    gap:clamp(10px,1.6vw,28px);align-items:center;
+    padding:clamp(14px,2vh,19px) 14px;
+    margin:0 -14px;                 /* el realce sobresale del texto */
+    border-bottom:1px solid rgba(0,0,0,.08);
+  }
+  .cap-row.head{
+    padding:12px 14px;border-bottom:1px solid rgba(0,0,0,.18);
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:#9aa0ab;
+  }
+  .cap-row.head .r{text-align:right}
+  .cap-name{display:flex;align-items:center;gap:9px;min-width:0}
+  .cap-name b{font-weight:400;font-size:15px;letter-spacing:-.01em}
+  .cap-name span{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;color:#9aa0ab;position:relative;top:.5px}
+  .cap-name .dot{width:6px;height:6px;border-radius:50%;background:#25d366;flex:none}
+  .cap-num{text-align:right;font-size:14px;font-variant-numeric:tabular-nums;color:#3c414c}
+  .cap-cell{position:relative}
+  .cap-bar{position:relative;height:4px;background:rgba(0,0,0,.07);overflow:hidden}
+  .cap-bar i{
+    position:absolute;left:0;top:0;bottom:0;width:100%;
+    background:linear-gradient(90deg,#0d4fd8,#5a9bff);
+    transform:scaleX(0);transform-origin:0 50%;
+    transition:transform 1s var(--ease);
+  }
+  .cap-capv{display:block;text-align:right;font-size:12.5px;color:#6b7280;
+    font-variant-numeric:tabular-nums;margin-bottom:7px}
+  .cap-out{
+    text-align:right;font-size:clamp(15px,1.5vw,19px);font-weight:400;
+    font-variant-numeric:tabular-nums;color:#07080a;
+  }
+  /* la fila de Sectora, destacada */
+  .cap-row.self{background:rgba(21,105,255,.06);border-bottom:1px solid rgba(13,79,216,.25)}
+  .cap-row.self .cap-name b{color:#0d4fd8}
+  .cap-row.self .cap-name .dot{background:#0d4fd8}
+  .cap-fine{
+    margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:.06em;line-height:1.95;color:#9aa0ab;max-width:86ch;
+  }
+
+  @media (max-width:900px){
+    .cap-head{grid-template-columns:1fr}
+    .cap-row{grid-template-columns:minmax(0,1.4fr) minmax(0,1.5fr) 1fr;gap:12px}
+    .cap-row .hide-s{display:none}
+  }
+
+
+  /* ============ oportunidad de mercado: RWA ============
+     el fondo recorre de blanco hueso a negro con el scroll. Todo el
+     contenido va en blanco con mezcla difference, asi que se invierte
+     solo: negro sobre el blanco inicial, blanco sobre el negro final.
+     Un unico valor animado gobierna toda la escena. */
+  .rwa{position:relative;height:420vh;background:#f2f2ef}
+  .rwa-pin{
+    position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;
+    display:flex;align-items:center;
+    padding:clamp(40px,7vh,90px) var(--pad);
+    background:#f2f2ef;isolation:isolate;
+  }
+  /* misma reticula de 54px que en Our projects; con mezcla difference se
+     lee tanto sobre el blanco inicial como sobre el negro final */
+  .rwa-grid{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(78% 68% at 50% 48%,#000,transparent 90%);
+    mask-image:radial-gradient(78% 68% at 50% 48%,#000,transparent 90%);
+    mix-blend-mode:difference;
+  }
+  /* aviso de scroll, como el del iris */
+  .rwa-hint{
+    position:absolute;left:50%;bottom:clamp(22px,3.4vh,38px);transform:translateX(-50%);
+    z-index:2;mix-blend-mode:difference;color:#fff;opacity:.5;
+    display:flex;align-items:center;gap:10px;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;
+    text-transform:uppercase;
+  }
+  .rwa-hint i{display:block;width:1px;height:18px;background:currentColor;
+    animation:hintDrop 2.2s var(--ease) infinite}
+  @keyframes hintDrop{
+    0%{transform:translateY(-6px);opacity:0}
+    40%{opacity:1}
+    100%{transform:translateY(8px);opacity:0}
+  }
+
+  .rwa-inner{
+    position:relative;z-index:1;width:100%;max-width:1320px;margin:0 auto;
+    display:grid;grid-template-columns:minmax(0,1.62fr) minmax(0,1fr);
+    gap:clamp(30px,5vw,88px);align-items:start;
+    mix-blend-mode:difference;color:#fff;
+  }
+
+  .rwa-eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.24em;
+    text-transform:uppercase;opacity:.6;
+  }
+  .rwa-title{
+    font-size:clamp(30px,4.6vw,62px);font-weight:200;line-height:1.04;
+    letter-spacing:-.03em;margin:14px 0 clamp(30px,5vh,52px);max-width:14ch;
+  }
+
+  .rwa-rows{display:flex;flex-direction:column;gap:clamp(9px,1.5vh,15px)}
+  .rwa-row{
+    display:grid;grid-template-columns:58px minmax(0,1fr) 78px;
+    gap:clamp(12px,2vw,22px);align-items:center;
+    opacity:.35;transition:opacity .5s var(--ease);
+  }
+  .rwa-row.on{opacity:1}
+  .rwa-year{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;
+    font-variant-numeric:tabular-nums;
+  }
+  .rwa-track{position:relative;height:clamp(20px,2.9vh,28px);background:rgba(255,255,255,.12);overflow:hidden}
+  .rwa-track i{
+    position:absolute;inset:0;display:block;
+    background:linear-gradient(90deg,rgba(255,255,255,.5),#fff);
+    transform:scaleX(0);transform-origin:0 50%;
+    transition:transform .9s var(--ease);
+  }
+  .rwa-val{
+    text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;
+    letter-spacing:.06em;font-variant-numeric:tabular-nums;
+  }
+  .rwa-row.last .rwa-val{font-weight:500}
+
+  .rwa-axis{
+    display:grid;grid-template-columns:58px minmax(0,1fr) 78px;
+    gap:clamp(12px,2vw,22px);margin-top:14px;
+  }
+  .rwa-ticks{
+    display:flex;justify-content:space-between;
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;opacity:.45;
+  }
+  .rwa-src{
+    margin-top:clamp(22px,3.4vh,34px);
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;
+    text-transform:uppercase;opacity:.45;
+  }
+
+  .rwa-stat{padding-top:clamp(30px,6vh,72px);border-top:1px solid rgba(255,255,255,.22)}
+  .rwa-big{
+    font-size:clamp(42px,6.4vw,96px);font-weight:500;letter-spacing:-.045em;
+    line-height:.98;font-variant-numeric:tabular-nums;
+  }
+  .rwa-copy{
+    margin-top:clamp(16px,2.6vh,24px);max-width:32ch;
+    font-size:15px;line-height:1.7;opacity:.7;
+  }
+  .rwa-note{
+    margin-top:clamp(20px,3vh,30px);padding-top:16px;
+    border-top:1px solid rgba(255,255,255,.16);
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;opacity:.5;
+  }
+
+  @media (max-width:900px){
+    .rwa{height:380vh}
+    .rwa-inner{grid-template-columns:1fr;gap:34px}
+    .rwa-row{grid-template-columns:46px minmax(0,1fr) 66px}
+    .rwa-axis{grid-template-columns:46px minmax(0,1fr) 66px}
+    .rwa-copy{display:none}
+  }
+
+
+  /* ============ apertura a blanco: Join us ============
+     misma mecanica que el iris de la cubierta: un circulo claro que se
+     abre desde el centro con el scroll y desemboca en la seccion final. */
+  .jiris{position:relative;height:300vh;background:#000}
+  .jiris-pin{
+    position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;
+    display:grid;place-items:center;isolation:isolate;
+    background:
+      radial-gradient(66% 54% at 50% 48%, rgba(21,105,255,.15), transparent 64%),
+      radial-gradient(130% 84% at 50% 110%, rgba(13,60,150,.20), transparent 62%),
+      #000;
+  }
+  .jiris-grid{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(68% 62% at 50% 50%,#000,transparent 84%);
+    mask-image:radial-gradient(68% 62% at 50% 50%,#000,transparent 84%);
+  }
+  #jb-canvas{position:absolute;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}
+  .jiris-rings{
+    position:absolute;inset:-20%;z-index:0;pointer-events:none;
+    background:repeating-radial-gradient(circle at 50% 50%,
+      transparent 0 92px, rgba(110,170,255,.17) 92px 94px);
+    -webkit-mask-image:radial-gradient(46% 46% at 50% 50%,#000,transparent 76%);
+    mask-image:radial-gradient(46% 46% at 50% 50%,#000,transparent 76%);
+    animation:ringOut 5.2s linear infinite;will-change:transform,opacity;
+  }
+  .jiris-rings.b{animation-delay:-2.6s}
+  .jiris-panel{
+    position:absolute;inset:0;z-index:2;
+    background:
+      radial-gradient(74% 60% at 50% 46%, #ffffff, transparent 70%),
+      radial-gradient(120% 80% at 50% 100%, rgba(21,105,255,.10), transparent 62%),
+      #ececea;
+    clip-path:circle(0px at 50% 50%);will-change:clip-path;
+  }
+  .jiris-panel-grid{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(0,0,0,.055) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(0,0,0,.055) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(68% 62% at 50% 50%,#000,transparent 84%);
+    mask-image:radial-gradient(68% 62% at 50% 50%,#000,transparent 84%);
+  }
+  .jiris-edge{
+    position:absolute;left:50%;top:50%;z-index:3;width:0;height:0;
+    transform:translate(-50%,-50%);border-radius:50%;
+    pointer-events:none;opacity:0;will-change:width,height;
+    /* el aro se dibuja con degradados, no con box-shadow: escala con el
+       circulo, se mantiene nitido a cualquier tamano y cuesta una fraccion */
+    background:
+      radial-gradient(circle at 50% 50%,
+        rgba(21,105,255,0)    calc(50% - 40px),
+        rgba(21,105,255,.30)  calc(50% - 12px),
+        rgba(150,195,255,.95) calc(50% - 2px),
+        rgba(190,225,255,1)   50%,
+        rgba(90,160,255,.75)  calc(50% + 2px),
+        rgba(21,105,255,.35)  calc(50% + 16px),
+        rgba(21,105,255,0)    calc(50% + 46px));
+  }
+  .jiris-edge::after{
+    content:'';position:absolute;inset:0;border-radius:50%;
+    /* reflejo que recorre el filo: es lo que impide que se lea como un
+       simple circulo creciendo */
+    background:conic-gradient(from 0deg,
+      rgba(255,255,255,0) 0deg,
+      rgba(255,255,255,.9) 26deg,
+      rgba(120,190,255,.5) 62deg,
+      rgba(255,255,255,0) 120deg,
+      rgba(255,255,255,0) 360deg);
+    -webkit-mask:radial-gradient(circle at 50% 50%,
+      transparent calc(50% - 7px), #000 calc(50% - 4px),
+      #000 calc(50% + 3px), transparent calc(50% + 7px));
+    mask:radial-gradient(circle at 50% 50%,
+      transparent calc(50% - 7px), #000 calc(50% - 4px),
+      #000 calc(50% + 3px), transparent calc(50% + 7px));
+    animation:rimSpin 4.6s linear infinite;
+  }
+  
+  .jiris-card{position:relative;z-index:3;text-align:center;padding:0 var(--pad);
+    mix-blend-mode:difference;color:#fff}
+  .jiris-card p{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.3em;
+    text-transform:uppercase;opacity:.6;margin-bottom:24px;
+  }
+  .jiris-card h2{
+    font-size:clamp(32px,7vw,96px);font-weight:200;letter-spacing:-.034em;line-height:1;
+  }
+  .jiris-card h2 b{font-weight:400}
+  .jiris-marks{position:absolute;inset:36px;z-index:3;pointer-events:none}
+  .jiris-marks i{position:absolute;width:11px;height:11px;mix-blend-mode:difference}
+  .jiris-marks i::before,.jiris-marks i::after{content:'';position:absolute;background:#fff;opacity:.5}
+  .jiris-marks i::before{left:50%;top:0;bottom:0;width:1px;transform:translateX(-.5px)}
+  .jiris-marks i::after{top:50%;left:0;right:0;height:1px;transform:translateY(-.5px)}
+  .jiris-marks i:nth-child(1){left:0;top:0}
+  .jiris-marks i:nth-child(2){right:0;top:0}
+  .jiris-marks i:nth-child(3){left:0;bottom:0}
+  .jiris-marks i:nth-child(4){right:0;bottom:0}
+
+  /* ============ Join us ============ */
+  .join{
+    position:relative;background:#f2f2ef;color:#07080a;
+    padding:clamp(84px,13vh,150px) var(--pad) clamp(90px,14vh,160px);
+  }
+  .join::before{
+    content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(0,0,0,.05) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(0,0,0,.05) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(72% 66% at 50% 40%,#000,transparent 88%);
+    mask-image:radial-gradient(72% 66% at 50% 40%,#000,transparent 88%);
+  }
+  .join-inner{position:relative;z-index:1;max-width:1000px;margin:0 auto;text-align:center}
+
+  /* hilo punteado que baja de la transicion, como en la referencia */
+  .join-thread{
+    position:absolute;left:50%;top:calc(-1 * clamp(84px,13vh,150px));
+    width:1px;height:clamp(84px,13vh,150px);z-index:1;
+    background:repeating-linear-gradient(180deg,rgba(0,0,0,.35) 0 3px,transparent 3px 8px);
+  }
+  .join-thread::after{
+    content:'';position:absolute;left:50%;bottom:-4px;width:8px;height:8px;
+    margin-left:-4px;background:#0d4fd8;
+    box-shadow:0 0 12px 2px rgba(13,79,216,.55);
+  }
+
+  .join .eyebrow{justify-content:center;color:#6b7280;margin-bottom:26px}
+  .join .eyebrow i{width:30px;background:#0d4fd8}
+  .join h2{
+    font-size:clamp(34px,6vw,84px);font-weight:200;line-height:1;
+    letter-spacing:-.036em;text-wrap:balance;
+  }
+  .join h2 b{font-weight:400}
+  .join-lede{margin:26px auto 0;max-width:48ch;font-size:15px;line-height:1.75;color:#3c414c}
+
+  /* tarjetas con escuadras de registro, como el resto de la pieza */
+  .join-cards{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:16px;margin-top:clamp(38px,6vh,64px);text-align:left;
+  }
+  .jc{
+    position:relative;display:block;text-decoration:none;color:#07080a;
+    padding:26px 24px 24px;
+    background:rgba(255,255,255,.6);
+    border:1px solid rgba(0,0,0,.12);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    transition:transform .45s var(--ease),border-color .45s var(--ease),background .45s var(--ease);
+  }
+  .jc:hover,.jc:focus-visible{transform:translateY(-4px);border-color:#0d4fd8;background:#fff}
+  .jc-i{position:absolute;inset:10px;pointer-events:none}
+  .jc-i i{position:absolute;width:9px;height:9px;opacity:0;transition:opacity .4s var(--ease)}
+  .jc-i i::before,.jc-i i::after{content:'';position:absolute;background:#0d4fd8}
+  .jc-i i::before{left:0;top:0;width:100%;height:1px}
+  .jc-i i::after{left:0;top:0;width:1px;height:100%}
+  .jc-i i:nth-child(1){left:0;top:0}
+  .jc-i i:nth-child(2){right:0;top:0;transform:scaleX(-1)}
+  .jc-i i:nth-child(3){left:0;bottom:0;transform:scaleY(-1)}
+  .jc-i i:nth-child(4){right:0;bottom:0;transform:scale(-1)}
+  .jc:hover .jc-i i,.jc:focus-visible .jc-i i{opacity:1}
+
+  .jc-num{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;
+    color:#9aa0ab;display:block;margin-bottom:20px;
+  }
+  .jc-row{display:flex;align-items:center;gap:12px}
+  .jc-row svg{width:18px;height:18px;fill:currentColor;flex:none}
+  .jc-row b{font-size:19px;font-weight:400;letter-spacing:-.012em}
+  .jc p{margin-top:10px;font-size:13.5px;line-height:1.7;color:#6b7280;max-width:30ch}
+  .jc-go{
+    margin-top:22px;padding-top:14px;border-top:1px solid rgba(0,0,0,.10);
+    display:flex;align-items:center;justify-content:space-between;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:#6b7280;
+  }
+  .jc-go em{font-style:normal;transition:transform .38s var(--ease)}
+  .jc:hover .jc-go{color:#0d4fd8}
+  .jc:hover .jc-go em{transform:translate(3px,-3px)}
+
+  .join-fine{
+    margin-top:clamp(34px,5vh,54px);
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:#9aa0ab;
+  }
+
+  /* sin backdrop-filter no hay difuminado que separe las capas: el fondo
+     de la banda fija pasa a opaco, o el texto de debajo la atraviesa */
+  @supports not (backdrop-filter: blur(1px)){
+    .m-sticky,.p-sticky,.rsm-sticky,.sp-sticky{backdrop-filter:none}
+  }
+  @media (max-width:980px){
+    @supports not (backdrop-filter: blur(1px)){
+      .m-sticky{background:#f2f2ef}
+      .mandates.dark .m-sticky{background:#05070c}
+      .p-sticky,.rsm-sticky{background:#000}
+      .sp-sticky{background:#f2f2ef}
+    }
+  }
+
+  /* ============ columnas fijas: envoltorio de confinamiento ============
+     un elemento sticky que es hijo directo de un grid queda a merced de
+     como interprete cada navegador su bloque contenedor: unos lo limitan
+     a la celda y otros le dejan recorrer toda la retícula, montandose
+     sobre lo que viene despues. El envoltorio ocupa exactamente la fila
+     y el sticky se mueve dentro de el, que es predecible en todos. */
+  .m-col,.p-col,.rsm-col,.sp-col{position:relative;height:100%}
+  @media (max-width:980px){
+    /* en movil la banda fija si debe recorrer la seccion, asi que el
+       envoltorio desaparece y el sticky vuelve a ser el propio item */
+    .m-col,.p-col,.rsm-col,.sp-col{display:contents}
+  }
+
+  /* ============ modo ligero (telefonos) ============
+     iOS descarta la pagina cuando la memoria de GPU se dispara. Los tres
+     mayores consumidores son: sombras muy desenfocadas sobre elementos
+     grandes, desenfoques de 90px a pantalla completa y capas fijas que se
+     recomponen en cada fotograma. Aqui se recortan sin tocar la estructura. */
+  @media (max-width:900px){
+    /* el reflejo giratorio se detiene en movil: el aro sigue brillando */
+    .iris-edge::after,.jiris-edge::after{animation:none;opacity:.55}
+
+    /* desenfoques a la mitad: por encima de 45px el ojo apenas distingue */
+    .aurora span{filter:blur(46px)}
+    .aurora span:nth-child(3){display:none}
+    .plate-aura span,.plate-horizon span,.wipe-halo,.halo,.zoom-pulse,.iris-pulse{filter:blur(44px)}
+    .plate-halo{filter:blur(30px)}
+    .plate-aura span:nth-child(2){display:none}
+    .plate-horizon span:nth-child(2){display:none}
+
+    /* el grano es una capa fija del cuadruple del viewport repintandose
+       en bucle; en movil aporta poco y cuesta mucho */
+    .grain{display:none}
+
+    /* los barridos superpuestos obligan a recomponer toda la escena */
+    .sweep,.plate-sweep,.zoom-sweep{display:none}
+  }
+
   /* ============ pie ============ */
   .disclosure{
     border-top:1px solid var(--hair);
@@ -805,6 +1578,7 @@
 
   a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
   .skip{position:absolute;left:-9999px;top:0;z-index:70;background:var(--blue);color:#fff;padding:12px 18px;font-size:12px}
   .skip:focus{left:var(--pad);top:10px}
 
@@ -895,13 +1669,13 @@
     <main class="hero">
       <div>
         <p class="eyebrow mono lift" style="--d:.05s"><i></i>Official publication · Sectora Foundation, Illinois US</p>
-        <h1 id="title">Whitepaper Official <span class="b">Sectora Foundation</span></h1>
+        <h1 id="title">Website Official <span class="b">Sectora Foundation</span></h1>
         <div class="rule"></div>
         <p class="lede lift" style="--d:.6s">
-          This document is published by Sectora Foundation for informational and
-          technical purposes only. It is not a prospectus, an offer of securities or
-          a solicitation to invest, and it has not been reviewed or approved by any
-          financial regulator in any jurisdiction.
+          Sectora builds the security layer for tokenized real-world assets:
+          independent contract auditing, institutional custody controls and
+          continuous on-chain monitoring — governed by a foundation incorporated
+          in Illinois, United States.
         </p>
         <div class="actions mono lift" style="--d:.72s">
           <a class="btn btn-primary" href="https://sectoraorg.com/whitepaper/"><span>Download the whitepaper</span><span class="arrow">→</span></a>
@@ -961,7 +1735,8 @@
     <div class="halo b"></div>
   </div>
   <div class="m-inner">
-    <div class="m-sticky">
+    <div class="m-col">
+      <div class="m-sticky">
       <p class="eyebrow mono reveal"><i></i>Verification</p>
       <h2 class="reveal" style="--d:.06s">Security you can verify, not take on trust.</h2>
       <p class="m-lede reveal" style="--d:.12s">
@@ -969,7 +1744,7 @@
         checked without asking the foundation for anything.
       </p>
       <p class="m-count mono reveal" style="--d:.18s">03 records</p>
-    </div>
+    </div></div>
 
     <div class="m-list">
       <article class="m-card reveal" style="--d:.10s">
@@ -1013,7 +1788,7 @@
     </div>
 
     <div class="wipe-hud" aria-hidden="true">
-      <span class="wipe-state" id="wipe-state"><span class="led"></span>Scanning</span>
+      <span class="wipe-state" id="wipe-state"><span class="led"></span><span id="wipe-state-t">Scanning</span></span>
       <span class="wipe-rail"><i id="wipe-fill"></i></span>
       <span class="wipe-pct"><b id="wipe-pct">0</b>%</span>
     </div>
@@ -1024,7 +1799,8 @@
   <div class="p-glow" aria-hidden="true"></div>
   <div class="p-thread" aria-hidden="true"></div>
   <div class="p-inner">
-    <div class="p-sticky">
+    <div class="p-col">
+      <div class="p-sticky">
       <p class="eyebrow mono reveal"><i></i>Developments</p>
       <h2 class="reveal" style="--d:.06s">Five products on one security layer.</h2>
       <p class="p-lede reveal" style="--d:.12s">
@@ -1038,7 +1814,7 @@
         <span class="p-rail" id="p-rail"><i class="on"></i><i></i><i></i><i></i><i></i></span>
         <span class="p-index-name" id="p-index-name">Blockchain Layer 3</span>
       </div>
-    </div>
+    </div></div>
 
     <div class="p-list">
       <div class="p-row reveal" style="--d:0.06s">
@@ -1090,12 +1866,297 @@
   </div>
 </section>
 
+
+
+
+
+<section class="plate" id="plate">
+  <div class="plate-pin">
+    <div class="plate-grid" aria-hidden="true"></div>
+    <div class="plate-aura" aria-hidden="true"><span></span><span></span></div>
+    <div class="plate-halo" aria-hidden="true"></div>
+    <div class="plate-horizon" aria-hidden="true"><span></span><span></span></div>
+    <canvas id="plate-canvas"></canvas>
+    <div class="plate-sweep" aria-hidden="true"></div>
+    <div class="plate-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+    <div class="plate-meta tl">Sectora Foundation IL<br><b>Roadmap 2026 — 2027</b></div>
+    <div class="plate-meta tr">Plate<br><b id="plate-n">01</b> / 06</div>
+    <div class="plate-meta bl">Engraved series<br><b id="plate-code">SF·RM·Q1·26</b></div>
+    <div class="plate-meta br">Verification layer<br><b>Sectora Protocol</b></div>
+
+    <div class="plate-card">
+      <p class="plate-q" id="plate-q">Q1 2026</p>
+      <div class="plate-rule"></div>
+      <h2 class="plate-name" id="plate-name">Security audit completion</h2>
+      <p class="plate-sub" id="plate-sub">Contracts · Custody logic · Verification layer</p>
+    </div>
+  </div>
+</section>
+
+<section class="rsm" id="roadmap">
+  <div class="rsm-glow" aria-hidden="true"></div>
+  <div class="rsm-inner">
+    <div class="rsm-col">
+      <div class="rsm-sticky">
+      <p class="eyebrow mono reveal"><i></i>Roadmap</p>
+      <h2 class="reveal" style="--d:.06s">From audit to mainnet.</h2>
+      <p class="rsm-lede reveal" style="--d:.12s">
+        Six milestones between the security audit and cross-chain expansion.
+        Each one gates the next: nothing ships before the layer below it is verified.
+      </p>
+      <p class="rsm-count mono reveal" style="--d:.18s">06 milestones · Q1 2026 — Q2 2027</p>
+    </div></div>
+
+    <div class="tl">
+      <div class="tl-item reveal" style="--d:.06s">
+        <span class="tl-q">Q1 2026</span>
+        <h3>Security audit completion</h3>
+        <p>Third-party audit cycle covering smart contracts, custody logic and the verification layer.</p>
+      </div>
+      <div class="tl-item reveal" style="--d:.12s">
+        <span class="tl-q">Q2 2026</span>
+        <h3>Testnet launch</h3>
+        <p>The testnet opens to security researchers and early partners to stress-test custody and tokenization flows.</p>
+      </div>
+      <div class="tl-item reveal" style="--d:.18s">
+        <span class="tl-q">Q3 2026</span>
+        <h3>Custody network genesis</h3>
+        <p>First wave of validators and custody nodes, moving from development to an active distributed network.</p>
+      </div>
+      <div class="tl-item reveal" style="--d:.24s">
+        <span class="tl-q">Q4 2026</span>
+        <h3>Mainnet launch</h3>
+        <p>Verifiable tokenization and institutional-grade custody in production. Supply reduces to 25,000,000.</p>
+      </div>
+      <div class="tl-item reveal" style="--d:.30s">
+        <span class="tl-q">Q1 2027</span>
+        <h3>Institutional integrations</h3>
+        <p>First integrations with custody partners and exchanges, expanding access to tokenized real-world assets.</p>
+      </div>
+      <div class="tl-item reveal" style="--d:.36s">
+        <span class="tl-q">Q2 2027</span>
+        <h3>Cross-chain expansion</h3>
+        <p>Verification and custody coverage extended across additional chains, under the same audited model.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="zoom" id="zoom">
+  <div class="zoom-pin">
+    <div class="zoom-pulse" aria-hidden="true"></div>
+    <div class="zoom-rings" aria-hidden="true"></div>
+    <div class="zoom-rings b" aria-hidden="true"></div>
+    <canvas id="zoom-canvas"></canvas>
+    <p class="zoom-cap" id="zoom-cap">Circulating supply</p>
+    <div class="zoom-note" id="zoom-note">
+      <span>Reduction · December 2026</span>
+      <span id="zoom-tag">50,000,000 · pre-reduction</span>
+    </div>
+  </div>
+</section>
+
+<section class="supply" id="supply">
+  <div class="sp-inner">
+    <div class="sp-col">
+      <div class="sp-sticky">
+      <p class="eyebrow mono reveal"><i></i>Supply &amp; market cap</p>
+      <h2 class="reveal" style="--d:.06s">A supply that only moves once.</h2>
+      <p class="sp-lede reveal" style="--d:.12s">
+        One scheduled reduction, no mint function and a renounced contract.
+        After December 2026 the figure below is fixed.
+      </p>
+    </div></div>
+
+    <dl class="ledger">
+      <div class="lg-row reveal" style="--d:.06s">
+        <dt>Initial supply</dt><dd>50,000,000</dd>
+      </div>
+      <div class="lg-row key reveal" style="--d:.12s">
+        <dt>Supply after reduction</dt><dd>25,000,000<small>December 2026</small></dd>
+      </div>
+      <div class="lg-row reveal" style="--d:.18s">
+        <dt>Reduction</dt><dd>50%<small>One-time, scheduled</small></dd>
+      </div>
+      <div class="lg-row reveal" style="--d:.24s">
+        <dt>Transfer tax</dt><dd>0%</dd>
+      </div>
+      <div class="lg-row reveal" style="--d:.30s">
+        <dt>Contract</dt><dd>Renounced<small>No mint · No owner</small></dd>
+      </div>
+      <div class="lg-row reveal" style="--d:.36s">
+        <dt>Initial liquidity</dt><dd>$1,000,000<small>Locked</small></dd>
+      </div>
+      <div class="lg-row reveal" style="--d:.42s">
+        <dt>Reference valuation</dt><dd>$5,000,000<small>Fully diluted, at listing</small></dd>
+      </div>
+    </dl>
+
+    <p class="sp-fine reveal" style="--d:.48s">
+      Figures describe token supply and initial parameters only. They are not a
+      price forecast, a valuation, or investment advice. Live market data is
+      published on Dexscreener; nothing here should be read as a projection.
+    </p>
+
+    <div class="cap" id="cap">
+      <div class="cap-head">
+        <div>
+          <p class="eyebrow mono reveal"><i></i>Comparative scenario</p>
+          <h3 class="reveal" style="--d:.06s">What #SECT would be priced at with a fraction of these networks.</h3>
+          <p class="cap-lede reveal" style="--d:.12s">
+            Each row takes the reference network's market capitalisation, applies the
+            selected share, and divides it by Sectora's fixed supply of 25,000,000 #SECT.
+            Prices and market caps update live. Bars are logarithmic — on a linear
+            scale everything below Bitcoin would be invisible.
+          </p>
+        </div>
+        <div class="cap-tools reveal" style="--d:.18s">
+          <div class="cap-seg" id="cap-seg">
+            <button type="button" data-pct="1">1%</button>
+            <button type="button" data-pct="5" class="on">5%</button>
+            <button type="button" data-pct="10">10%</button>
+          </div>
+          <span class="cap-live"><i class="led"></i><span id="cap-stamp">Reference snapshot</span></span>
+        </div>
+      </div>
+
+      <div class="cap-grid" id="cap-grid">
+        <div class="cap-row head">
+          <span>Asset</span>
+          <span class="r hide-s">Price</span>
+          <span class="r hide-s">Circulating</span>
+          <span class="r">Market cap</span>
+          <span class="r">#SECT @ <b id="cap-pct">5%</b></span>
+        </div>
+      </div>
+
+      <p class="cap-fine reveal">
+        Illustrative only. Not a price prediction, a valuation or investment advice.
+        The scenario assumes valuation parity with each network, which is not guaranteed,
+        and ignores differences in token utility, unlock schedules and liquidity depth.
+        Market data is fetched live from CoinGecko and refreshed while this table is
+        on screen; if the request fails, the last good reading is kept.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section class="rwa" id="rwa">
+  <div class="rwa-pin" id="rwa-pin">
+    <div class="rwa-grid" aria-hidden="true"></div>
+    <div class="rwa-inner">
+
+      <div>
+        <p class="rwa-eyebrow">Market opportunity</p>
+        <h2 class="rwa-title">RWA industry projected growth</h2>
+
+        <div class="rwa-rows" id="rwa-rows">
+        <div class="rwa-row" data-v="3.1"><span class="rwa-year">2025</span><span class="rwa-track"><i></i></span><span class="rwa-val">$3.1T</span></div>
+        <div class="rwa-row" data-v="5.2"><span class="rwa-year">2026</span><span class="rwa-track"><i></i></span><span class="rwa-val">$5.2T</span></div>
+        <div class="rwa-row" data-v="7.5"><span class="rwa-year">2027</span><span class="rwa-track"><i></i></span><span class="rwa-val">$7.5T</span></div>
+        <div class="rwa-row" data-v="10.2"><span class="rwa-year">2028</span><span class="rwa-track"><i></i></span><span class="rwa-val">$10.2T</span></div>
+        <div class="rwa-row" data-v="13.0"><span class="rwa-year">2029</span><span class="rwa-track"><i></i></span><span class="rwa-val">$13.0T</span></div>
+        <div class="rwa-row last" data-v="16.1"><span class="rwa-year">2030</span><span class="rwa-track"><i></i></span><span class="rwa-val">$16.1T</span></div>
+        </div>
+
+        <div class="rwa-axis" aria-hidden="true">
+          <span></span>
+          <span class="rwa-ticks"><span>0</span><span>4</span><span>8</span><span>12</span><span>16</span></span>
+          <span></span>
+        </div>
+
+        <p class="rwa-src">Source · Boston Consulting Group</p>
+      </div>
+
+      <aside class="rwa-stat">
+        <p class="rwa-big"><span id="rwa-big">$3.1</span> Trillion</p>
+        <p class="rwa-copy">
+          Projected value of tokenized real-world assets by 2030 — the market
+          Sectora is built to secure.
+        </p>
+        <p class="rwa-note"><span id="rwa-yr">2025</span> · Projected</p>
+      </aside>
+
+    </div>
+    <p class="rwa-hint"><i></i>Keep scrolling<i></i></p>
+  </div>
+</section>
+
+
+<section class="jiris" id="jiris">
+  <div class="jiris-pin">
+    <canvas id="jb-canvas" aria-hidden="true"></canvas>
+    <div class="jiris-grid" aria-hidden="true"></div>
+    <div class="jiris-rings" aria-hidden="true"></div>
+    <div class="jiris-rings b" aria-hidden="true"></div>
+    <div class="jiris-panel" id="jiris-panel" aria-hidden="true">
+      <div class="jiris-panel-grid"></div>
+    </div>
+    <div class="jiris-edge" id="jiris-edge" aria-hidden="true"></div>
+    <div class="jiris-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="jiris-card">
+      <p>The network is open</p>
+      <h2>Join <b>Sectora</b></h2>
+    </div>
+  </div>
+</section>
+
+<section class="join" id="join">
+  <div class="join-thread" aria-hidden="true"></div>
+  <div class="join-inner">
+    <p class="eyebrow mono reveal"><i></i>Community</p>
+    <h2 class="reveal" style="--d:.06s">Build with us on <b>Sectora</b>.</h2>
+    <p class="join-lede reveal" style="--d:.12s">
+      Audit reports, testnet releases and protocol announcements are published
+      to the community first. No private groups, no paid signals.
+    </p>
+
+    <div class="join-cards">
+      <!-- sustituir por el enlace real de X -->
+      <a class="jc reveal" style="--d:.18s" href="#" target="_blank" rel="noopener noreferrer">
+        <span class="jc-i" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="jc-num">01</span>
+        <span class="jc-row">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2.2h3.4l-7.5 8.5 8.8 11.1h-6.9l-5.4-6.7-6.2 6.7H1.7l8-8.6L1.3 2.2h7l4.9 6.1zM17.7 20h1.9L7.3 4.1H5.3z"/></svg>
+          <b>X</b>
+        </span>
+        <p>Releases, audits and protocol updates as they ship.</p>
+        <span class="jc-go">Follow <em>↗</em></span>
+      </a>
+
+      <!-- sustituir por el enlace real de Telegram -->
+      <a class="jc reveal" style="--d:.26s" href="#" target="_blank" rel="noopener noreferrer">
+        <span class="jc-i" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="jc-num">02</span>
+        <span class="jc-row">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 3.3 2.9 10.6c-1.1.4-1.1 1.1-.2 1.4l4.8 1.5 1.8 5.6c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.3 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.2-.5-1.8-1.1-1.5zM7.9 13.2l10.4-6.6c.5-.3 1-.1.6.2l-8.9 8-.3 3.6z"/></svg>
+          <b>Telegram</b>
+        </span>
+        <p>Direct line to the team and the builder community.</p>
+        <span class="jc-go">Join <em>↗</em></span>
+      </a>
+    </div>
+
+    <p class="join-fine reveal" style="--d:.34s">Sectora Foundation · Illinois, United States</p>
+  </div>
+</section>
+
 <p class="disclosure">
   Information on this page is provided for general purposes and does not constitute an offer to sell,
   a solicitation to buy, or investment, legal or tax advice. Digital assets carry risk, including total
   loss of capital. Availability may be restricted in certain jurisdictions.
 </p>
 
+<script>
+/* tope de densidad de pixeles: en telefonos, ocho lienzos a pantalla
+   completa por dpr 2 rondan los 42 MB de textura y el navegador acaba
+   descartando la pagina. A 1.5 baja a 24 MB sin perdida apreciable. */
+window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
+                                 window.innerWidth < 900 ? 1.5 : 2);
+</script>
 <script>
 (function(){
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1133,7 +2194,7 @@
     h1El.innerHTML = lines.map((ln, i) =>
       '<span class="ln" style="--i:' + i + '"><span>' +
       ln.map(sp => {
-        const c = sp.className.replace('w','').trim();
+        const c = (sp.className || '').replace('w','').trim();
         return c ? '<span class="' + c + '">' + sp.textContent + '</span>' : sp.textContent;
       }).join(' ') +
       '</span></span>'
@@ -1261,7 +2322,7 @@
     // el lienzo de lineas a 0x0 y drawImage fallaria en cada fotograma
     if(w < 1 || h < 1) return;
     W = w; H = h;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr = window.SECT_DPR();
     canvas.width = W*dpr; canvas.height = H*dpr;
     ctx.setTransform(dpr,0,0,dpr,0,0);
     cols = Math.ceil(W/CELL); rows = Math.ceil(H/CELL);
@@ -1373,6 +2434,17 @@
   window.addEventListener('pointermove', e => {
     if(reduce || !heat) return;
     const rect = canvas.getBoundingClientRect();
+
+    // fuera de la portada no hay instrumento: si no, las hairlines azules
+    // cruzan las secciones claras y parecen un error de maquetacion
+    const dentro = e.clientX >= rect.left && e.clientX <= rect.right
+                && e.clientY >= rect.top  && e.clientY <= rect.bottom;
+    if(!dentro){
+      reticle.classList.remove('on');
+      readout.classList.remove('on');
+      return;
+    }
+
     const c = ((e.clientX - rect.left)/CELL)|0;
     const r = ((e.clientY - rect.top)/CELL)|0;
     if(c>=0 && r>=0 && c<cols && r<rows) heat[idx(c,r)] = 1;
@@ -1383,8 +2455,12 @@
     rx.style.transform = 'translate3d(0,' + gy + 'px,0)';
     ry.style.transform = 'translate3d(' + gx + 'px,0,0)';
     reticle.classList.add('on');
+    readout.classList.add('on');
   }, {passive:true});
-  window.addEventListener('pointerleave', () => reticle.classList.remove('on'));
+  window.addEventListener('pointerleave', () => {
+    reticle.classList.remove('on');
+    readout.classList.remove('on');
+  });
 
   function draw(){
     ctx.clearRect(0,0,W,H);
@@ -1400,15 +2476,21 @@
         }
       }
     }
-    ctx.drawImage(lineLayer, 0, 0, W, H);
+    if(lineLayer.width > 1) ctx.drawImage(lineLayer, 0, 0, W, H);
   }
 
-  let last = 0, tabVisible = true;
+  let last = 0, tabVisible = true, heroVisible = true;
   document.addEventListener('visibilitychange', () => { tabVisible = !document.hidden; });
+
+  /* sin esta guarda, la rejilla de la cubierta seguia repintandose a
+     pantalla completa durante todo el documento, incluso a diez
+     secciones de distancia */
+  new IntersectionObserver(es => { heroVisible = es[0].isIntersecting; },
+    {rootMargin:'10% 0px'}).observe(document.getElementById('stage'));
 
   function frame(t){
     requestAnimationFrame(frame);
-    if(!tabVisible){ last = t; return; }
+    if(!tabVisible || !heroVisible){ last = t; return; }
     // vuelve a medir si aun no hay lienzo: cubre el caso de arrancar oculto
     if(!lineLayer.width){ resize(); if(!lineLayer.width){ last = t; return; } }
     const dt = Math.min(t-last, 50); last = t;
@@ -1448,7 +2530,7 @@
     const w = pin.clientWidth, h = pin.clientHeight;
     if(w < 1 || h < 1) return;
     W = w; H = h;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = window.SECT_DPR();
     [cd, cl].forEach((c, i) => {
       c.width = W*dpr; c.height = H*dpr;
       (i ? lx : dx).setTransform(dpr,0,0,dpr,0,0);
@@ -1565,7 +2647,7 @@
     const w = pin.clientWidth, h = pin.clientHeight;
     if(w < 1 || h < 1) return;
     W = w; H = h;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = window.SECT_DPR();
     cv.width = W*dpr; cv.height = H*dpr;
     ctx.setTransform(dpr,0,0,dpr,0,0);
 
@@ -1641,7 +2723,8 @@
       if(done !== stateDone){
         stateDone = done;
         state.classList.toggle('done', done);
-        state.lastChild.nodeValue = done ? 'Complete' : 'Scanning';
+        const lbl = document.getElementById('wipe-state-t');
+        if(lbl) lbl.textContent = done ? 'Complete' : 'Scanning';
       }
     }
 
@@ -1698,6 +2781,948 @@
 
   rows.forEach(r => io.observe(r));
   setActive(0);
+})();
+
+
+
+/* ===== lamina grabada =====
+   guilloche: la curva es un epitrocoide, la misma familia que se usa en
+   grabado de seguridad para billetes y certificados. Cada hito tiene su
+   propia firma de parametros; el scroll los interpola y traza la roseta
+   progresivamente, como una maquina de tornear. */
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sec = document.getElementById('plate');
+  const pin = sec ? sec.querySelector('.plate-pin') : null;
+  const cv  = document.getElementById('plate-canvas');
+  if(!sec || !pin || !cv) return;
+
+  const ctx = cv.getContext('2d');
+  const qEl = document.getElementById('plate-q');
+  const nEl = document.getElementById('plate-name');
+  const sEl = document.getElementById('plate-sub');
+  const numEl = document.getElementById('plate-n');
+  const codeEl = document.getElementById('plate-code');
+
+  const M = [
+    {q:'Q1 2026', n:'Security audit completion',  s:'Contracts · Custody logic · Verification layer', c:'SF·RM·Q1·26', k:5.07,  d:1.35, l:3},
+    {q:'Q2 2026', n:'Testnet launch',             s:'Researchers · Early partners · Stress testing',  c:'SF·RM·Q2·26', k:7.11,  d:1.20, l:3},
+    {q:'Q3 2026', n:'Custody network genesis',    s:'Validators · Custody nodes · Distribution',      c:'SF·RM·Q3·26', k:9.05,  d:1.05, l:4},
+    {q:'Q4 2026', n:'Mainnet launch',             s:'Production · Institutional custody',             c:'SF·RM·Q4·26', k:11.09, d:0.92, l:4},
+    {q:'Q1 2027', n:'Institutional integrations', s:'Custody partners · Exchanges',                   c:'SF·RM·Q1·27', k:13.07, d:0.80, l:5},
+    {q:'Q2 2027', n:'Cross-chain expansion',      s:'Additional chains · Same audited model',         c:'SF·RM·Q2·27', k:15.03, d:0.70, l:5}
+  ];
+  const N = M.length;
+
+  let W=0, H=0, R=0, cx=0, cy=0, last=-1;
+
+  function resize(){
+    const w = pin.clientWidth, h = pin.clientHeight;
+    if(w < 1 || h < 1) return;
+    W = w; H = h;
+    const dpr = window.SECT_DPR();
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    cx = W/2; cy = H/2;
+    R = Math.min(W, H) * (W < 700 ? .40 : .36);
+    paint();
+  }
+
+  function progress(){
+    const r = sec.getBoundingClientRect();
+    const run = r.height - window.innerHeight;
+    if(run <= 0) return 0;
+    const p = (-r.top) / run;
+    return p < 0 ? 0 : p > 1 ? 1 : p;
+  }
+
+  const lerp = (a,b,t) => a + (b-a)*t;
+  const ease = t => t<.5 ? 2*t*t : 1 - Math.pow(-2*t+2,2)/2;
+
+  /* hipotrocoide: circulo rodando dentro de otro. El numero de petalos es
+     el cociente de radios; al usar un cociente NO entero la curva no cierra
+     y precesa vuelta tras vuelta, que es exactamente como se teje el
+     guilloche de un billete. */
+  function rosette(k, amp, radius, turns, frac, alpha, width, tint){
+    const r = radius / k;              // radio del circulo rodante
+    const d = r * amp;                 // excentricidad del punto trazador
+    const freq = (radius - r) / r;     // = k - 1 petalos por vuelta
+    const total = Math.floor(300 * turns);
+    const steps = Math.floor(total * frac);
+    if(steps < 2) return;
+    ctx.beginPath();
+    for(let i=0;i<=steps;i++){
+      const t = (i / total) * Math.PI * 2 * turns;
+      const x = cx + (radius - r)*Math.cos(t) + d*Math.cos(freq*t);
+      const y = cy + (radius - r)*Math.sin(t) - d*Math.sin(freq*t);
+      i ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
+    }
+    // el trazo no lleva un color plano: se apaga hacia el borde, como en
+    // una plancha entintada de verdad
+    const gr = ctx.createRadialGradient(cx, cy, radius*0.12, cx, cy, radius*1.06);
+    const base = tint || 'rgba(198,204,216,A)';
+    gr.addColorStop(0,   base.replace('A', (alpha*1.5).toFixed(3)));
+    gr.addColorStop(.55, base.replace('A', alpha.toFixed(3)));
+    gr.addColorStop(1,   base.replace('A', (alpha*.35).toFixed(3)));
+    ctx.strokeStyle = gr;
+    ctx.lineWidth = width;
+    ctx.stroke();
+  }
+
+  function bezel(p, idx){
+    // aro exterior con marcas cada 5 grados
+    ctx.save();
+    ctx.shadowColor = 'rgba(21,105,255,.9)';
+    ctx.shadowBlur = 18;
+    ctx.strokeStyle = 'rgba(150,190,255,.22)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, R*1.14, 0, Math.PI*2); ctx.stroke();
+    ctx.restore();
+
+    for(let a=0;a<360;a+=5){
+      const rad = (a-90) * Math.PI/180;
+      const long = a % 60 === 0;
+      const r0 = R*1.14, r1 = R*1.14 + (long ? 12 : 5);
+      ctx.strokeStyle = 'rgba(255,255,255,' + (long ? .3 : .13) + ')';
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(rad)*r0, cy + Math.sin(rad)*r0);
+      ctx.lineTo(cx + Math.cos(rad)*r1, cy + Math.sin(rad)*r1);
+      ctx.stroke();
+    }
+
+    // las seis marcas de hito, a 60 grados
+    ctx.font = "500 9.5px 'IBM Plex Mono', monospace";
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    for(let i=0;i<N;i++){
+      const rad = (i*60 - 90) * Math.PI/180;
+      const done = i <= idx;
+      const rr = R*1.14 + 26;
+      ctx.fillStyle = done ? 'rgba(21,105,255,.95)' : 'rgba(255,255,255,.22)';
+      ctx.fillText(M[i].q, cx + Math.cos(rad)*rr, cy + Math.sin(rad)*rr);
+
+      ctx.beginPath();
+      ctx.arc(cx + Math.cos(rad)*R*1.14, cy + Math.sin(rad)*R*1.14, done ? 3 : 2, 0, Math.PI*2);
+      ctx.fillStyle = done ? '#1569ff' : 'rgba(255,255,255,.3)';
+      ctx.fill();
+    }
+
+    // arco de avance
+    ctx.save();
+    ctx.shadowColor = 'rgba(21,105,255,.95)';
+    ctx.shadowBlur = 14;
+    ctx.strokeStyle = 'rgba(90,160,255,.95)';
+    ctx.lineWidth = 1.8;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R*1.14, -Math.PI/2, -Math.PI/2 + Math.PI*2*p);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function paint(){
+    if(!W) return;
+    const p = progress();
+    const t = p * (N - 1);
+    const k = Math.min(N-2, Math.floor(t));
+    const raw = t - k;
+
+    // meseta: la lamina se sostiene antes de tornear la siguiente
+    let f = (raw - .26) / .52;
+    f = f < 0 ? 0 : f > 1 ? 1 : f;
+    const e = ease(f);
+
+    const A = M[k], B = M[k+1];
+    const kk = lerp(A.k, B.k, e);
+    const dd = lerp(A.d, B.d, e);
+    const ll = Math.round(lerp(A.l, B.l, e));
+
+    ctx.clearRect(0,0,W,H);
+
+    // trazado progresivo dentro de cada lamina
+    const frac = reduce ? 1 : Math.min(1, .18 + raw*1.9);
+
+    // la plancha gira despacio, como sobre el plato del torno
+    ctx.save();
+    ctx.translate(cx, cy); ctx.rotate(p * 0.62); ctx.translate(-cx, -cy);
+
+    // capas concentricas: es lo que da el aspecto de torneado
+    for(let i=0;i<ll;i++){
+      const s = 1 - i*0.13;
+      // la capa exterior en plata; las interiores viran a azul
+      const tint = i === 0 ? 'rgba(214,222,236,A)'
+                 : i === 1 ? 'rgba(150,186,255,A)'
+                           : 'rgba(96,152,255,A)';
+      rosette(kk, dd, R*s, 9, frac, .34 - i*0.045, i === 0 ? 0.9 : 0.6, tint);
+    }
+    // contratrazo mas fino, girado: la trama cruzada del grabado
+    ctx.save();
+    ctx.translate(cx, cy); ctx.rotate(Math.PI/N); ctx.translate(-cx, -cy);
+    for(let i=0;i<Math.max(1,ll-2);i++){
+      const s = .94 - i*0.13;
+      rosette(kk*1.13, dd*.92, R*s, 9, frac, .20 - i*0.03, 0.55, 'rgba(120,170,255,A)');
+    }
+    ctx.restore();
+
+    // pasada de resplandor: pocas vueltas, con halo, sobre la trama fina
+    ctx.save();
+    ctx.shadowColor = 'rgba(21,105,255,.85)';
+    ctx.shadowBlur = 16;
+    rosette(kk, dd, R*0.995, 3, frac, .22, 1.1, 'rgba(150,190,255,A)');
+    ctx.restore();
+    ctx.restore();
+
+    const idx = Math.min(N-1, Math.round(t));
+    bezel(p, idx);
+
+    if(idx !== last){
+      last = idx;
+      qEl.textContent = M[idx].q;
+      nEl.textContent = M[idx].n;
+      sEl.textContent = M[idx].s;
+      numEl.textContent = String(idx+1).padStart(2,'0');
+      codeEl.textContent = M[idx].c;
+    }
+  }
+
+  let queued = false;
+  function onScroll(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; paint(); });
+  }
+
+  let rt;
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 140); });
+  resize();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
+})();
+
+/* ===== zoom tipografico =====
+   la cifra se amplia hacia un punto que sabemos que es tinta: se rasteriza
+   el numero, se busca el pixel con mas materia alrededor y se usa como foco.
+   Al ampliar, ese trazo acaba cubriendo el encuadre, y el blanco resultante
+   ya es el fondo de la seccion siguiente. */
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sec = document.getElementById('zoom');
+  const pin = sec ? sec.querySelector('.zoom-pin') : null;
+  const cv  = document.getElementById('zoom-canvas');
+  if(!sec || !pin || !cv) return;
+
+  const ctx  = cv.getContext('2d');
+  const cap  = document.getElementById('zoom-cap');
+  const note = document.getElementById('zoom-note');
+  const tag  = document.getElementById('zoom-tag');
+
+  const BEFORE = '50,000,000', AFTER = '25,000,000';
+  const SWAP = .34;                 // donde ocurre la reduccion
+  let W=0, H=0, base=0, focus={x:.5,y:.5}, lastTxt='';
+
+  // localiza un punto que sea tinta: el de mayor densidad cerca del centro
+  function findFocus(txt, size){
+    const o = document.createElement('canvas');
+    const c = o.getContext('2d', {willReadFrequently:true});
+    o.width = 600; o.height = 200;
+    c.fillStyle = '#fff';
+    c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.font = '200 120px "IBM Plex Sans", sans-serif';
+    c.fillText(txt, 300, 100);
+    const d = c.getImageData(0,0,600,200).data;
+
+    let best = null, bestScore = -1;
+    for(let y=40;y<160;y+=2){
+      for(let x=60;x<540;x+=2){
+        if(d[(y*600+x)*4+3] < 200) continue;
+        // densidad: cuanta tinta hay en una ventana alrededor
+        let n = 0;
+        for(let dy=-9;dy<=9;dy+=3)
+          for(let dx=-9;dx<=9;dx+=3)
+            if(d[(((y+dy)*600)+(x+dx))*4+3] > 200) n++;
+        const dist = Math.abs(x-300)/300;
+        const score = n - dist*6;      // prefiere el centro, exige materia
+        if(score > bestScore){ bestScore = score; best = {x, y}; }
+      }
+    }
+    if(!best) return {x:.5, y:.5};
+    return {x: best.x/600, y: best.y/200};
+  }
+
+  function resize(){
+    const w = pin.clientWidth, h = pin.clientHeight;
+    if(w < 1 || h < 1) return;
+    W = w; H = h;
+    const dpr = window.SECT_DPR();
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    base = Math.min(W*.10, H*.16);
+    paint();
+  }
+
+  function progress(){
+    const r = sec.getBoundingClientRect();
+    const run = r.height - window.innerHeight;
+    if(run <= 0) return 0;
+    const p = (-r.top) / run;
+    return p < 0 ? 0 : p > 1 ? 1 : p;
+  }
+
+  function paint(){
+    if(!W) return;
+    const p = progress();
+    const txt = p < SWAP ? BEFORE : AFTER;
+
+    if(txt !== lastTxt){
+      lastTxt = txt;
+      focus = findFocus(txt, base);
+      if(tag) tag.textContent = txt + (p < SWAP ? ' · pre-reduction' : ' · fixed');
+    }
+
+    ctx.clearRect(0,0,W,H);   // el negro lo pone el fondo; asi se ven los aros
+
+    // ampliacion exponencial: lenta al principio, imparable al final
+    const s = Math.pow(2, p * 9.4);
+
+    ctx.font = '200 ' + base + 'px "IBM Plex Sans", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    const w0 = ctx.measureText(txt).width;
+    const h0 = base;
+
+    // el foco, en coordenadas del texto dibujado a tamano base
+    const fx = W/2 + (focus.x - .5) * w0;
+    const fy = H/2 + (focus.y - .5) * h0 * 1.34;
+
+    ctx.save();
+    ctx.translate(W/2, H/2);
+    ctx.scale(s, s);
+    ctx.translate(-fx, -fy);
+
+    // destello azul en el instante de la reduccion
+    const flash = Math.max(0, 1 - Math.abs(p - SWAP) * 26);
+    ctx.fillStyle = flash > .01
+      ? 'rgb(' + (255 - 150*flash).toFixed(0) + ',' + (255 - 90*flash).toFixed(0) + ',255)'
+      : '#fff';
+    ctx.fillText(txt, W/2, H/2);
+    ctx.restore();
+
+    // garantia de blanco pleno en el ultimo tramo
+    const w = Math.max(0, (p - .88) / .12);
+    if(w > 0){
+      ctx.fillStyle = 'rgba(242,242,239,' + Math.min(1,w).toFixed(3) + ')';
+      ctx.fillRect(0,0,W,H);
+    }
+
+    // la rotulacion se retira cuando el numero deja de leerse
+    const fade = 1 - Math.max(0, Math.min(1, (p - .30) / .18));
+    if(cap)  cap.style.opacity = fade.toFixed(2);
+    if(note) note.style.opacity = fade.toFixed(2);
+  }
+
+  let queued = false;
+  function onScroll(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; paint(); });
+  }
+
+  let rt;
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 140); });
+  resize();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(() => { lastTxt=''; resize(); });
+})();
+
+/* ===== tabla comparativa con datos en vivo =====
+   fuente: CoinGecko /coins/markets, una sola llamada para precio, market
+   cap y supply circulante de los ocho activos. Funciona sin clave; si
+   pones una clave Demo en CG_KEY se anade como parametro y sube el limite.
+   Si la peticion falla se mantiene la ultima lectura buena y, si no hay
+   ninguna, la instantanea de reserva. */
+(function(){
+  const grid  = document.getElementById('cap-grid');
+  const seg   = document.getElementById('cap-seg');
+  const pctEl = document.getElementById('cap-pct');
+  const stamp = document.getElementById('cap-stamp');
+  const led   = document.querySelector('.cap-live .led');
+  if(!grid || !seg) return;
+
+  const CG_KEY  = '';                 // <-- clave Demo de CoinGecko, opcional
+  const SUPPLY  = 25000000;           // supply fijo de #SECT tras la reduccion
+  const REFRESH = 45000;              // la via sin clave esta muy limitada
+
+  const COINS = [
+    {id:'bitcoin',      n:'Bitcoin',      t:'BTC'},
+    {id:'ethereum',     n:'Ethereum',     t:'ETH'},
+    {id:'ripple',       n:'XRP',          t:'XRP'},
+    {id:'solana',       n:'Solana',       t:'SOL'},
+    {id:'hyperliquid',  n:'Hyperliquid',  t:'HYPE'},
+    {id:'bitcoin-cash', n:'Bitcoin Cash', t:'BCH'},
+    {id:'sui',          n:'Sui',          t:'SUI'},
+    {id:'litecoin',     n:'Litecoin',     t:'LTC'}
+  ];
+  // reserva: ultima instantanea conocida, por si la API no responde
+  const FALLBACK = {
+    bitcoin:{price:63534.00, cap:1.2775e12, sup:20.1e6},
+    ethereum:{price:1862.79, cap:223.53e9,  sup:120e6},
+    ripple:{price:1.02,      cap:59.88e9,   sup:59.0e9},
+    solana:{price:75.17,     cap:43.67e9,   sup:581e6},
+    hyperliquid:{price:54.23,cap:24.40e9,   sup:450e6},
+    'bitcoin-cash':{price:211.89, cap:4.21e9, sup:19.9e6},
+    sui:{price:0.68,         cap:3.87e9,    sup:5.7e9},
+    litecoin:{price:45.23,   cap:3.50e9,    sup:77.5e6}
+  };
+  const SELF = {n:'Sectora', t:'#SECT', price:0.10, sup:'50.0M → 25.0M', cap:5.00e6};
+
+  let pct = 5, live = false, rows = [];
+  let data = COINS.map(c => Object.assign({}, c, FALLBACK[c.id]));
+
+  const money = v => v >= 1000
+    ? '$' + v.toLocaleString('en-US',{maximumFractionDigits:0})
+    : v >= 1
+      ? '$' + v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})
+      : '$' + v.toLocaleString('en-US',{minimumFractionDigits:4,maximumFractionDigits:4});
+
+  const big = v =>
+    v >= 1e12 ? '$' + (v/1e12).toFixed(2) + 'T' :
+    v >= 1e9  ? '$' + (v/1e9 ).toFixed(2) + 'B' :
+    v >= 1e6  ? '$' + (v/1e6 ).toFixed(2) + 'M' : money(v);
+
+  const units = v =>
+    v >= 1e9 ? (v/1e9).toFixed(1) + 'B' :
+    v >= 1e6 ? (v/1e6).toFixed(1) + 'M' :
+    v >= 1e3 ? (v/1e3).toFixed(1) + 'K' : String(Math.round(v));
+
+  function barScale(){
+    const caps = data.map(d => d.cap).filter(Boolean);
+    const lo = Math.log10(Math.min(...caps)) - .6;
+    const hi = Math.log10(Math.max(...caps));
+    return c => Math.max(.04, Math.min(1, (Math.log10(c) - lo) / (hi - lo)));
+  }
+
+  function build(){
+    grid.querySelectorAll('.cap-row:not(.head)').forEach(el => el.remove());
+    rows = [];
+    const list = data.slice().sort((a,b) => b.cap - a.cap).concat([SELF]);
+
+    list.forEach((a, i) => {
+      const self = a === SELF;
+      const el = document.createElement('div');
+      el.className = 'cap-row' + (self ? ' self' : '');
+      el.innerHTML =
+        '<span class="cap-name"><i class="dot"></i><b>' + a.n + '</b><span>' + a.t + '</span></span>' +
+        '<span class="cap-num hide-s" data-price></span>' +
+        '<span class="cap-num hide-s" data-sup></span>' +
+        '<span class="cap-cell"><b class="cap-capv" data-cap></b>' +
+          '<span class="cap-bar"><i></i></span></span>' +
+        '<span class="cap-out" data-out></span>';
+      grid.appendChild(el);
+      rows.push({el, a, self});
+    });
+  }
+
+  function render(fill){
+    if(pctEl) pctEl.textContent = pct + '%';
+    const bar = barScale();
+
+    rows.forEach(({el, a, self}) => {
+      el.querySelector('[data-price]').textContent = money(a.price);
+      el.querySelector('[data-sup]').textContent   = self ? a.sup : units(a.sup);
+      el.querySelector('[data-cap]').textContent   = big(a.cap);
+      el.querySelector('.cap-bar i').style.transform =
+        'scaleX(' + (fill ? bar(a.cap) : 0) + ')';
+      el.querySelector('[data-out]').textContent =
+        self ? '—' : money(a.cap * (pct/100) / SUPPLY);
+    });
+  }
+
+  function setStatus(){
+    if(!stamp) return;
+    if(live){
+      const t = new Date().toLocaleTimeString('en-US',{hour12:false});
+      stamp.textContent = 'Live · CoinGecko · ' + t;
+      if(led) led.style.background = '#25d366';
+    } else {
+      stamp.textContent = 'Reference snapshot';
+      if(led) led.style.background = '#9aa0ab';
+    }
+  }
+
+  async function fetchLive(){
+    const url = 'https://api.coingecko.com/api/v3/coins/markets'
+      + '?vs_currency=usd&ids=' + COINS.map(c => c.id).join(',')
+      + '&order=market_cap_desc&per_page=10&page=1&sparkline=false'
+      + (CG_KEY ? '&x_cg_demo_api_key=' + CG_KEY : '');
+    try{
+      const r = await fetch(url, {cache:'no-store'});
+      if(!r.ok) throw new Error(r.status);
+      const j = await r.json();
+      if(!Array.isArray(j) || !j.length) throw new Error('vacio');
+
+      data = COINS.map(c => {
+        const m = j.find(x => x.id === c.id);
+        const fb = FALLBACK[c.id];
+        return Object.assign({}, c, m ? {
+          price: m.current_price,
+          cap:   m.market_cap,
+          sup:   m.circulating_supply || fb.sup
+        } : fb);
+      });
+      live = true;
+    }catch(e){
+      live = false;               // se conserva la ultima lectura buena
+    }
+    setStatus();
+    build();
+    render(true);
+  }
+
+  seg.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if(!b) return;
+    pct = parseFloat(b.dataset.pct);
+    [...seg.querySelectorAll('button')].forEach(x => x.classList.toggle('on', x === b));
+    render(true);
+  });
+
+  build();
+  render(false);
+  setStatus();
+
+  // solo consulta cuando la tabla esta en pantalla y la pestana activa
+  let timer = null, seen = false;
+  function start(){
+    if(timer) return;
+    fetchLive();
+    timer = setInterval(() => { if(!document.hidden) fetchLive(); }, REFRESH);
+  }
+  function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+
+  new IntersectionObserver(es => {
+    if(es[0].isIntersecting){
+      if(!seen){ seen = true; render(true); }
+      start();
+    } else stop();
+  }, {threshold:.1, rootMargin:'200px'}).observe(grid);
+})();
+
+/* ===== oportunidad de mercado: RWA =====
+   una sola variable de scroll gobierna tres cosas a la vez: el color del
+   fondo (blanco hueso -> negro), el llenado escalonado de las seis barras
+   y la cifra grande. El contenido no cambia de color por codigo: va con
+   mezcla difference y se invierte solo conforme el fondo se oscurece. */
+(function(){
+  const sec  = document.getElementById('rwa');
+  const pin  = document.getElementById('rwa-pin');
+  const wrap = document.getElementById('rwa-rows');
+  const bigEl= document.getElementById('rwa-big');
+  const yrEl = document.getElementById('rwa-yr');
+  if(!sec || !pin || !wrap) return;
+
+  const rows = [...wrap.querySelectorAll('.rwa-row')];
+
+  const vals = rows.map(r => parseFloat(r.dataset.v));
+  const MAX  = 16.1;                     // el valor de 2030 llena la pista exacta
+  const FROM = [242,242,239], TO = [0,0,0];
+
+  const ease = t => t<.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+  const clamp = t => t<0 ? 0 : t>1 ? 1 : t;
+
+  function progress(){
+    const r = sec.getBoundingClientRect();
+    const run = r.height - window.innerHeight;
+    if(run <= 0) return 0;
+    return clamp((-r.top) / run);
+  }
+
+  let queued = false, lastYr = '';
+
+  function paint(){
+    const p = progress();
+
+    // el fondo vira en el tramo central: al principio se lee en claro y al
+    // final ya esta en negro, listo para el pie
+    const g = ease(clamp((p - .12) / .72));
+    const c = FROM.map((f,i) => Math.round(f + (TO[i]-f)*g));
+    pin.style.backgroundColor = 'rgb(' + c.join(',') + ')';
+
+    // barras escalonadas: cada ano entra en su turno
+    let alcanzado = 0;
+    rows.forEach((row, i) => {
+      const k = clamp((p - .06 - i*.108) / .30);
+      const e = ease(k);
+      row.querySelector('i').style.transform = 'scaleX(' + (e * vals[i]/MAX).toFixed(4) + ')';
+      row.classList.toggle('on', k > .12);
+      if(k > .5) alcanzado = i;
+    });
+
+    // la cifra sigue al ano alcanzado, interpolando entre valores
+    const t = clamp((p - .06) / .70) * (vals.length - 1);
+    const k = Math.min(vals.length - 2, Math.floor(t));
+    const v = vals[k] + (vals[k+1] - vals[k]) * ease(t - k);
+    if(bigEl) bigEl.textContent = '$' + v.toFixed(1);
+
+    const yr = rows[alcanzado].querySelector('.rwa-year').textContent;
+    if(yrEl && yr !== lastYr){ lastYr = yr; yrEl.textContent = yr; }
+  }
+
+  function onScroll(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(() => { queued = false; paint(); });
+  }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', paint);
+
+  window.addEventListener('resize', paint);
+  paint();
+
+})();
+
+
+
+/* ===== haces verticales (WebGL) =====
+   nueve haces resueltos por pixel en un fragment shader propio. Cada uno
+   tiene posicion, ancho, tono y pulso deterministas, mas deriva lenta.
+   Tres reglas: el centro se despeja para que el titular se lea, la
+   intensidad sigue al scroll, y la luz se suma en vez de taparse.
+   Si el navegador no da WebGL, cae a un dibujado equivalente en 2D. */
+(function(){
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sec = document.getElementById('jiris');
+  const pin = sec ? sec.querySelector('.jiris-pin') : null;
+  const cv  = document.getElementById('jb-canvas');
+  if(!sec || !pin || !cv) return;
+
+  let W = 0, H = 0;
+
+  function scrollProg(){
+    const r = sec.getBoundingClientRect();
+    const run = r.height - window.innerHeight;
+    if(run <= 0) return 0;
+    const p = (-r.top) / run;
+    return p < 0 ? 0 : p > 1 ? 1 : p;
+  }
+  const suave = t => { t = t<0?0:t>1?1:t; return t*t*(3-2*t); };
+  // las cortinas se abren en la primera mitad y se apagan al terminar
+  const apertura   = p => suave((p - .04) / .46);
+  const intensidad = p => Math.min(1, p/.10) * Math.max(0, 1 - Math.max(0, (p-.44)/.16));
+
+  /* ---------------- WebGL ---------------- */
+  const VERT = `attribute vec2 a;varying vec2 vUv;
+    void main(){vUv=a*0.5+0.5;gl_Position=vec4(a,0.0,1.0);}`;
+
+  const FRAG = `precision highp float;
+    uniform vec2  uRes;
+    uniform float uTime, uInt, uOpen, uQual;
+    varying vec2 vUv;
+
+    float hash(float p){ return fract(sin(p*127.1)*43758.5453); }
+    float hash2(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
+    float noise(float x){
+      float i=floor(x), f=fract(x);
+      f=f*f*(3.0-2.0*f);
+      return mix(hash(i), hash(i+1.0), f);
+    }
+    float noise2(vec2 p){
+      vec2 i=floor(p), f=fract(p);
+      f=f*f*(3.0-2.0*f);
+      return mix(mix(hash2(i),hash2(i+vec2(1,0)),f.x),
+                 mix(hash2(i+vec2(0,1)),hash2(i+vec2(1,1)),f.x),f.y);
+    }
+
+    /* una capa de bandas. Devuelve intensidad (x) y tono (y).
+       'sig' controla el arrastre: al acelerar hacia fuera, el relieve
+       interno se ablanda y las bandas se leen barridas por el movimiento */
+    vec2 capa(float s, float lado, float dens, float sem, float y, float sig){
+      float sw  = s + 0.055 * noise(s * 7.0 + lado * 4.3 + sem);
+      float pos = sw * dens + hash(lado * 2.7 + sem) * 3.0;
+      float id  = floor(pos);
+      float fr  = fract(pos);
+
+      float h1 = hash2(vec2(id, lado + sem));
+      float h2 = hash2(vec2(id, lado + sem + 9.1));
+
+      // relieve interno; el exponente cae con el arrastre
+      float shade = 0.28 + 0.72 * pow(sin(fr * 3.14159), mix(0.55, 1.5, sig));
+
+      // titileo vertical: luz atravesando polvo, no columnas planas
+      float sh = 0.80 + 0.20 * noise2(vec2(id * 3.1, y * 3.4 - uTime * 0.13));
+
+      float viva = 0.72 + 0.28 * sin(uTime * (0.5 + h1 * 1.2) + id * 1.7);
+      float caida = 0.30 + 1.55 * exp(-s * 3.6);
+
+      return vec2(shade * sh * viva * caida * (0.35 + 0.65 * h2), h1 + h2 * 0.001);
+    }
+
+    void main(){
+      vec2 uv = vUv;
+      float lado = uv.x < 0.5 ? -1.0 : 1.0;
+      float u    = abs(uv.x - 0.5);
+      float hueco = uOpen * 0.5;
+
+      float vf = smoothstep(0.0, 0.14, uv.y) * smoothstep(1.0, 0.86, uv.y);
+      vec3  col = vec3(0.0);
+      float alpha = 0.0;
+
+      // --- resplandor que se derrama dentro del vacio ---
+      float dist = hueco - u;                       // >0 dentro del hueco
+      if(dist > 0.0){
+        float g = exp(-dist * 26.0) * 0.85 * uInt * vf;
+        if(g < 0.004) discard;
+        gl_FragColor = vec4(vec3(0.55,0.82,1.0) * g, g);
+        return;
+      }
+
+      float s = u - hueco;
+      float sig = clamp(uOpen * 1.2, 0.0, 1.0);     // arrastre por velocidad
+
+      // --- capa de fondo: mas suelta, se abre con retraso, da profundidad ---
+      if(uQual > 0.5){
+        float sB = u - hueco * 0.82;
+        if(sB > 0.0){
+          vec2 b = capa(sB, lado, 19.0, 3.3, uv.y, sig);
+          vec3 cB = mix(vec3(0.02,0.16,0.62), vec3(0.16,0.48,0.95), b.y);
+          float aB = b.x * 0.42;
+          col   += cB * aB;
+          alpha += aB;
+        }
+      }
+
+      // --- capa frontal, con dispersion cromatica en el filo ---
+      float dens = uQual > 0.5 ? 34.0 : 22.0;
+      float rim  = exp(-s * 22.0);                  // solo cerca del vacio
+      float disp = 0.0035 * rim * (0.4 + sig);
+
+      vec2 fR = capa(s + disp, lado, dens, 0.0, uv.y, sig);
+      vec2 fG = capa(s,        lado, dens, 0.0, uv.y, sig);
+      vec2 fB = uQual > 0.5 ? capa(s - disp, lado, dens, 0.0, uv.y, sig) : fG;
+
+      vec3 base = mix(vec3(0.04,0.28,0.92), vec3(0.42,0.80,1.00), fG.y);
+      base = mix(base, vec3(1.0), smoothstep(0.82, 1.0, fract(fG.y*7.3)) * 0.85);
+      base = mix(base, vec3(1.0), smoothstep(0.05, 0.0, s) * 0.7);
+
+      // cada canal toma su propia muestra: el filo se descompone en prisma
+      vec3 cF = base * vec3(fR.x, fG.x, fB.x);
+      float aF = max(fG.x, max(fR.x, fB.x));
+
+      col   += cF;
+      alpha += aF;
+
+      // costura: linea viva justo en el borde del vacio
+      float seam = exp(-s * 190.0) * (0.6 + 0.4 * sin(uTime * 2.1));
+      col   += vec3(0.75,0.92,1.0) * seam * 0.9;
+      alpha += seam * 0.9;
+
+      alpha = clamp(alpha, 0.0, 1.0) * vf * uInt;
+      col   = col * vf * uInt;
+      if(alpha < 0.004) discard;
+      gl_FragColor = vec4(col, alpha);
+    }`;
+
+
+
+  let gl = null, prog = null, U = {};
+
+  function initGL(){
+    gl = cv.getContext('webgl', {alpha:true, premultipliedAlpha:false, antialias:false})
+      || cv.getContext('experimental-webgl', {alpha:true});
+    if(!gl) return false;
+    const sh = (t, src) => {
+      const o = gl.createShader(t);
+      gl.shaderSource(o, src); gl.compileShader(o);
+      return gl.getShaderParameter(o, gl.COMPILE_STATUS) ? o : null;
+    };
+    const vs = sh(gl.VERTEX_SHADER, VERT), fs = sh(gl.FRAGMENT_SHADER, FRAG);
+    if(!vs || !fs) return false;
+    prog = gl.createProgram();
+    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+    if(!gl.getProgramParameter(prog, gl.LINK_STATUS)) return false;
+    gl.useProgram(prog);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, 'a');
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+    ['uRes','uTime','uInt','uOpen','uQual'].forEach(n => U[n] = gl.getUniformLocation(prog, n));
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);   // color premultiplicado
+    return true;
+  }
+
+  /* ---------------- reserva en 2D ---------------- */
+  let ctx = null;
+  function initFallback(){ ctx = cv.getContext('2d'); }
+  function draw2D(t, inten){
+    ctx.clearRect(0,0,W,H);
+    if(inten <= .01) return;
+    const abierto = apertura(scrollProg());
+    const hueco = abierto * 0.5 * W;
+    const dens = W < 700 ? 22 : 34;
+    const paso = (W/2) / dens;
+
+    for(let lado = -1; lado <= 1; lado += 2){
+      for(let i = 0; i < dens; i++){
+        const s0 = i * paso;
+        const x = W/2 + lado * (hueco + s0);
+        if(x < -paso || x > W + paso) continue;
+        const h1 = Math.abs(Math.sin((i + (lado>0?7:0)) * 12.9898) * 43758.5453 % 1);
+        const caida = .30 + 1.55 * Math.exp(-(s0/(W/2)) * 3.6);
+        const a = Math.min(1, (.35 + .65*h1) * caida * inten * .55);
+        const c = h1 > .82 ? '255,255,255' : (h1 > .5 ? '107,204,255' : '10,71,235');
+        ctx.fillStyle = 'rgba(' + c + ',' + a.toFixed(3) + ')';
+        ctx.fillRect(lado > 0 ? x : x - paso, 0, paso*0.92, H);
+      }
+    }
+  }
+
+  const ok = initGL();
+
+  function resize(){
+    const w = pin.clientWidth, h = pin.clientHeight;
+    if(w < 1 || h < 1) return;
+    W = w; H = h;
+    const dpr = window.SECT_DPR();
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    if(ok) gl.viewport(0,0,cv.width,cv.height);
+    else initFallback();
+  }
+
+  let raf = 0, visible = false, t0 = performance.now();
+  new IntersectionObserver(es => {
+    visible = es[0].isIntersecting;
+    if(visible && !raf) raf = requestAnimationFrame(loop);
+  }, {rootMargin:'15% 0px'}).observe(sec);
+
+  function loop(now){
+    raf = visible ? requestAnimationFrame(loop) : 0;
+    if(!visible || document.hidden || !W) return;
+    if(cv.width <= 1 || cv.height <= 1) return;   // lienzo liberado
+
+    const inten = intensidad(scrollProg());
+    const t = (now - t0) / 1000;
+
+    if(ok){
+      gl.useProgram(prog);
+      gl.uniform2f(U.uRes, cv.width, cv.height);
+      gl.uniform1f(U.uTime, t);
+      gl.uniform1f(U.uInt, inten);
+      gl.uniform1f(U.uOpen, apertura(scrollProg()));
+      gl.uniform1f(U.uQual, W >= 700 ? 1 : 0);
+      gl.clearColor(0,0,0,0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    } else {
+      draw2D(now, inten);
+    }
+  }
+
+  let rt;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 140); });
+  resize();
+  if(reduce && !ok) draw2D(0, .5);
+})();
+
+
+/* ===== apertura a blanco de Join us: mismo motor que el iris ===== */
+(function(){
+  const sec   = document.getElementById('jiris');
+  const panel = document.getElementById('jiris-panel');
+  const edge  = document.getElementById('jiris-edge');
+  if(!sec || !panel) return;
+
+  let queued = false;
+  function paint(){
+    if(queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      const r = sec.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const span = r.height - vh;
+      if(span <= 0) return;
+
+      let p = (-r.top) / span;
+      p = p < 0 ? 0 : p > 1 ? 1 : p;
+
+      // arranca en el 55%: primero se abren las cortinas de luz, y solo
+      // despues el circulo blanco toma la pantalla
+      let k = (p - .55) / .42;
+      k = k < 0 ? 0 : k > 1 ? 1 : k;
+      k = k*k*(3 - 2*k);
+
+      const rad = k * Math.hypot(window.innerWidth, vh) * .58;
+      panel.style.clipPath = 'circle(' + rad.toFixed(1) + 'px at 50% 50%)';
+
+      const d = (rad*2).toFixed(1);
+      edge.style.width = d + 'px';
+      edge.style.height = d + 'px';
+      edge.style.opacity = (k > .004 && k < .985) ? '1' : '0';
+    });
+  }
+
+  window.addEventListener('scroll', paint, {passive:true});
+  window.addEventListener('resize', paint);
+  paint();
+})();
+
+
+/* ===== liberacion de lienzos =====
+   un lienzo a pantalla completa reserva su textura aunque no se dibuje.
+   Con ocho secciones animadas eso son decenas de MB permanentes. Aqui se
+   libera el buffer de los que quedan lejos (ancho y alto a cero) y se
+   reconstruye al volver, disparando el mismo evento de resize que ya
+   escuchan todos los modulos. */
+(function(){
+  const pares = [
+    ['#stage',  '#grid'],
+    ['#iris',   '#cells-dark'],
+    ['#iris',   '#cells-light'],
+    ['#wipe',   '#wipe-canvas'],
+    ['#plate',  '#plate-canvas'],
+    ['#zoom',   '#zoom-canvas'],
+    ['#jiris',  '#jb-canvas']
+  ];
+
+  let pendiente = null;
+  function reconstruir(){
+    clearTimeout(pendiente);
+    pendiente = setTimeout(() => window.dispatchEvent(new Event('resize')), 60);
+  }
+
+  pares.forEach(([ss, cs]) => {
+    const sec = document.querySelector(ss);
+    const cv  = document.querySelector(cs);
+    if(!sec || !cv) return;
+
+    let liberado = false;
+    new IntersectionObserver(es => {
+      const cerca = es[0].isIntersecting;
+      if(!cerca && !liberado){
+        // 1x1, no 0x0: un lienzo de tamano cero hace que WebGL registre
+        // errores de framebuffer y que drawImage falle en los de 2D.
+        // La memoria liberada es practicamente la misma.
+        cv.width = 1; cv.height = 1;
+        liberado = true;
+      } else if(cerca && liberado){
+        liberado = false;
+        reconstruir();
+      }
+    }, {rootMargin:'70% 0px'}).observe(sec);
+  });
+})();
+
+/* ===== hitos cumplidos: el punto se rellena al entrar en pantalla ===== */
+(function(){
+  const items = [...document.querySelectorAll('.tl-item')];
+  if(!items.length) return;
+  const io = new IntersectionObserver(es => {
+    for(const e of es) if(e.isIntersecting){ e.target.classList.add('done'); io.unobserve(e.target); }
+  }, {threshold:.5, rootMargin:'0px 0px -20% 0px'});
+  items.forEach(el => io.observe(el));
 })();
 </script>
 </body>
