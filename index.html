@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#000000">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231569ff'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23fff' stroke-width='11'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <title>Website Official Sectora Foundation</title>
 <meta name="description" content="Sectora Foundation — security infrastructure for tokenized real-world assets: contract auditing, custody controls and continuous on-chain monitoring.">
 <meta property="og:type" content="website">
@@ -109,7 +112,19 @@
     background:rgba(0,0,0,.72);
     backdrop-filter:blur(10px);
   }
-  .brand{font-weight:500;font-size:17px;letter-spacing:.24em}
+  /* el logo va como SVG en linea: escala sin perder filo, no pide un
+     archivo aparte y hereda el color en el estado activo */
+  .brand{display:inline-flex;align-items:center;line-height:0}
+  .brand a{display:block;line-height:0;border-radius:2px;
+    transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+  .brand svg{display:block;width:38px;height:38px;border-radius:2px}
+  .brand a:hover,.brand a:focus-visible{
+    transform:translateY(-1px);
+    box-shadow:0 0 0 1px rgba(21,105,255,.5), 0 6px 22px -8px rgba(21,105,255,.9);
+  }
+  .brand .ring{transform-origin:50% 50%;transition:transform .5s var(--ease)}
+  .brand a:hover .ring{transform:rotate(90deg) scale(1.04)}
+  @media (max-width:520px){ .brand svg{width:32px;height:32px} }
 
   .menu{display:flex;gap:clamp(16px,2.4vw,34px)}
   .menu a{
@@ -1699,6 +1714,67 @@
     .sweep,.plate-sweep,.zoom-sweep{display:none}
   }
 
+
+
+  /* ============ intro ============
+     arranque tecnico: la rejilla de la portada se enciende sobre azul, el
+     aro se ensambla celda a celda y despues resuelve a trazo continuo.
+     El azul es la sombra solida de un circulo que crece, no un fondo. */
+  .intro{position:fixed;inset:0;z-index:200;overflow:hidden;display:grid;place-items:center}
+  .intro-hole{
+    position:absolute;left:50%;top:50%;width:0;height:0;border-radius:50%;
+    transform:translate(-50%,-50%);box-shadow:0 0 0 100vmax #1569ff;
+    will-change:width,height;
+  }
+  #intro-grid{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+
+  /* marco de registro, como en la cubierta */
+  .intro-frame{position:absolute;inset:clamp(16px,2.4vw,30px);z-index:3;
+    border:1px solid rgba(255,255,255,.16);pointer-events:none}
+  .intro-frame i{position:absolute;width:11px;height:11px}
+  .intro-frame i::before,.intro-frame i::after{content:'';position:absolute;background:#fff;opacity:.7}
+  .intro-frame i::before{left:50%;top:0;bottom:0;width:1px;transform:translateX(-.5px)}
+  .intro-frame i::after{top:50%;left:0;right:0;height:1px;transform:translateY(-.5px)}
+  .intro-frame i:nth-child(1){left:-6px;top:-6px}
+  .intro-frame i:nth-child(2){right:-6px;top:-6px}
+  .intro-frame i:nth-child(3){left:-6px;bottom:-6px}
+  .intro-frame i:nth-child(4){right:-6px;bottom:-6px}
+
+  .intro-hud{
+    position:absolute;inset:clamp(30px,4vw,48px);z-index:4;pointer-events:none;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:rgba(255,255,255,.72);
+  }
+  .intro-hud span{position:absolute;white-space:nowrap}
+  .intro-hud .tl{left:0;top:0}
+  .intro-hud .tr{right:0;top:0}
+  .intro-hud .bl{left:0;bottom:0;display:inline-flex;align-items:center;gap:9px}
+  .intro-hud .br{right:0;bottom:0;font-variant-numeric:tabular-nums}
+  .intro-hud .led{width:5px;height:5px;border-radius:50%;background:#fff;
+    animation:introBlink 1s steps(2) infinite}
+  @keyframes introBlink{0%,49%{opacity:1}50%,100%{opacity:.2}}
+  .intro-hud .ok .led{animation:none}
+  /* barra de progreso, pegada al filete inferior */
+  .intro-bar{position:absolute;left:0;right:0;bottom:-9px;height:1px;
+    background:rgba(255,255,255,.22);z-index:4}
+  .intro-bar i{position:absolute;left:0;top:-1px;height:3px;width:100%;background:#fff;
+    transform:scaleX(0);transform-origin:0 50%}
+
+  /* el trazo continuo se superpone exactamente sobre el aro de celdas:
+     por eso el texto va posicionado, no apilado bajo el svg */
+  .intro-stack{position:absolute;inset:0;z-index:5;display:grid;place-items:center}
+  .intro-word{position:absolute;left:50%;top:calc(50% + 34vmin);transform:translateX(-50%)}
+  .intro-ring{width:88.2vmin;height:88.2vmin;max-width:none;
+    display:block;transform-origin:50% 50%;opacity:0}
+  .intro-ring circle{fill:none;stroke:#fff;stroke-width:6.1;stroke-linecap:round}
+  .intro-word{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.42em;
+    text-transform:uppercase;color:rgba(255,255,255,.92);text-indent:.42em;
+    opacity:0;white-space:nowrap;
+  }
+  .intro-lock{overflow:hidden!important}
+  @media (prefers-reduced-motion:reduce){ .intro{display:none} }
+
   /* ============ pie ============ */
   .disclosure{
     border-top:1px solid var(--hair);
@@ -1766,6 +1842,210 @@
 </head>
 <body>
 
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-hole" id="intro-hole"></div>
+  <canvas id="intro-grid"></canvas>
+  <div class="intro-frame"><i></i><i></i><i></i><i></i></div>
+  <div class="intro-hud">
+    <span class="tl">Sectora Foundation IL</span>
+    <span class="tr">Security layer · Build 1.0</span>
+    <span class="bl" id="intro-state"><i class="led"></i>Initializing</span>
+    <span class="br"><b id="intro-pct">00</b>%</span>
+    <span class="intro-bar"><i id="intro-fill"></i></span>
+  </div>
+  <div class="intro-stack">
+    <svg class="intro-ring" id="intro-ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="27.2"/></svg>
+    <p class="intro-word" id="intro-word">Sectora Foundation</p>
+  </div>
+</div>
+
+<script>
+/* ===== intro =====
+   cuatro actos: la rejilla de la portada se enciende en barrido diagonal,
+   el aro se ensambla celda a celda siguiendo el reloj, resuelve a trazo
+   continuo, y se abre hasta convertirse en la pagina. El contador solo
+   llega a 100 cuando las fuentes y la pagina estan realmente listas. */
+(function(){
+  const el   = document.getElementById('intro');
+  const hole = document.getElementById('intro-hole');
+  const cv   = document.getElementById('intro-grid');
+  const ring = document.getElementById('intro-ring');
+  const word = document.getElementById('intro-word');
+  const est  = document.getElementById('intro-state');
+  const pctE = document.getElementById('intro-pct');
+  const fill = document.getElementById('intro-fill');
+
+  let listo;
+  window.SECT_INTRO = new Promise(r => { listo = r; });
+  if(!el || !cv){ if(el) el.remove(); listo(); return; }
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){ el.remove(); listo(); return; }
+
+  let corto = false;
+  try{ corto = sessionStorage.getItem('sect_intro') === '1'; }catch(e){}
+  const F = corto ? .42 : 1;              // las visitas repetidas se acortan
+
+  const T_SWEEP = 760*F, T_RING = 900*F, T_SNAP = 380*F, T_OPEN = 900*F;
+  const T_TOTAL = T_SWEEP*.7 + T_RING + T_SNAP;
+
+  document.documentElement.classList.add('intro-lock');
+  document.body.classList.add('intro-lock');
+  if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0,0);
+
+  /* ---------- rejilla ---------- */
+  const ctx = cv.getContext('2d');
+  let W=0, H=0, CELL=54, cols=0, rows=0, celdas=[], R=0, SW=0;
+
+  function medir(){
+    W = window.innerWidth; H = window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, W < 900 ? 1.5 : 2);
+    cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+
+    CELL = W < 700 ? 26 : 40;   // celda mas fina: el aro necesita resolucion
+    cols = Math.ceil(W/CELL); rows = Math.ceil(H/CELL);
+
+    // el aro, a la misma escala que el del logo
+    const lado = Math.min(W, H);
+    R  = lado * .24;            // con menos radio el aro no llega a leerse
+    SW = R * .224;                        // 6.1/27.2, la proporcion del logo
+
+    const cx = W/2, cy = H/2;
+    const diag = (cols-1) + (rows-1) || 1;
+    celdas = [];
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const x = c*CELL, y = r*CELL;
+        const dx = x + CELL/2 - cx, dy = y + CELL/2 - cy;
+        const d = Math.hypot(dx, dy);
+        const enAro = Math.abs(d - R) <= SW/2 + CELL*.36;
+        // angulo desde arriba, en sentido horario, normalizado 0..1
+        let a = Math.atan2(dx, -dy); if(a < 0) a += Math.PI*2;
+        celdas.push({
+          x, y,
+          diag: ((c + r) / diag),
+          sem: (Math.sin(c*12.9898 + r*78.233) * 43758.5453) % 1,
+          aro: enAro,
+          ang: a / (Math.PI*2)
+        });
+      }
+    }
+  }
+
+  const cl = t => t<0?0:t>1?1:t;
+  const sw = t => { t=cl(t); return t*t*(3-2*t); };
+
+  function pintar(t){
+    ctx.clearRect(0,0,W,H);
+
+    const pS = cl(t / T_SWEEP);                       // barrido diagonal
+    const pR = cl((t - T_SWEEP*.7) / T_RING);         // ensamblado del aro
+    const pN = cl((t - T_SWEEP*.7 - T_RING) / T_SNAP);// resolucion
+
+    const enc = sw(pR) ;                              // frente angular del aro
+    const meng = 1 - pN*.66;                          // las celdas se contraen
+
+    for(let i=0;i<celdas.length;i++){
+      const q = celdas[i];
+      let a = 0, blanco = false;
+
+      // barrido: frente diagonal con umbral propio por celda
+      const k = (pS - q.diag*.82 + Math.abs(q.sem)*.06) / .16;
+      if(k > 0) a = Math.max(0, (1 - Math.abs(k-1)) * .22);
+
+      // el aro se enciende siguiendo el reloj y se queda
+      if(q.aro && enc > q.ang){
+        const recien = cl((enc - q.ang) * 14);        // destello al llegar
+        a = Math.max(a, (.55 + .45*recien) * (1 - pN*.72));
+        blanco = true;
+      }
+
+      if(a < .012) continue;
+      const m = blanco ? meng : 1;
+      const s = CELL * m;
+      const off = (CELL - s) / 2;
+      ctx.fillStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
+      ctx.fillRect(q.x + off, q.y + off, s - 1, s - 1);
+    }
+
+    // trazo continuo apareciendo: el aro deja de ser pixeles
+    if(pN > 0){
+      ring.style.opacity = sw(pN).toFixed(3);
+      ring.style.transform = 'scale(' + (.94 + .06*sw(pN)).toFixed(3) + ')';
+      if(word){ word.style.opacity = sw(cl((pN-.3)/.7)).toFixed(3);
+                word.style.transform = 'translateX(-50%) translateY(' + ((1-sw(pN))*8).toFixed(1) + 'px)'; }
+    }
+  }
+
+  /* ---------- estado real de carga ---------- */
+  let cargado = false;
+  const fuentes = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  const pagina  = document.readyState === 'complete'
+    ? Promise.resolve()
+    : new Promise(r => window.addEventListener('load', r, {once:true}));
+  Promise.all([fuentes, pagina]).then(() => { cargado = true; });
+
+  medir();
+  window.addEventListener('resize', medir);
+
+  const t0 = performance.now();
+  let abriendo = false, tAbre = 0;
+
+  function ciclo(now){
+    const t = now - t0;
+
+    if(!abriendo){
+      pintar(t);
+
+      // el contador no alcanza 100 hasta que la carga ha terminado de verdad
+      const porTiempo = cl(t / T_TOTAL);
+      const p = cargado ? porTiempo : Math.min(porTiempo, .96);
+      if(pctE) pctE.textContent = String(Math.round(p*100)).padStart(2,'0');
+      if(fill) fill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      if(est && p >= 1 && !est.classList.contains('ok')){
+        est.classList.add('ok');
+        est.lastChild.nodeValue = 'Ready';
+      }
+
+      if(t >= T_TOTAL && cargado){ abriendo = true; tAbre = now; }
+      if(t > 6000){ abriendo = true; tAbre = now; }   // salvaguarda
+    } else {
+      let k = (now - tAbre) / T_OPEN;
+      k = cl(k);
+      const e = Math.pow(k, 2.1);                      // acelera, como un diafragma
+      const maxR = Math.hypot(W, H) * .58;
+      const r = e * maxR;
+
+      hole.style.width  = (r*2).toFixed(1) + 'px';
+      hole.style.height = (r*2).toFixed(1) + 'px';
+
+      cv.style.opacity = (1 - cl(k*2.4)).toFixed(3);
+      const rBase = ring.getBoundingClientRect().width * .272;
+      ring.style.transform = 'scale(' + Math.max(1, r/Math.max(rBase,1)).toFixed(3) + ')';
+      ring.style.opacity = (1 - cl((k-.4)/.45)).toFixed(3);
+      if(word) word.style.opacity = (1 - cl(k*3)).toFixed(3);
+      el.querySelector('.intro-frame').style.opacity = (1 - cl(k*2.2)).toFixed(3);
+      el.querySelector('.intro-hud').style.opacity   = (1 - cl(k*2.2)).toFixed(3);
+
+      if(k >= 1){ fin(); return; }
+    }
+    requestAnimationFrame(ciclo);
+  }
+
+  function fin(){
+    document.documentElement.classList.remove('intro-lock');
+    document.body.classList.remove('intro-lock');
+    el.remove();
+    try{ sessionStorage.setItem('sect_intro','1'); }catch(e){}
+    listo();
+  }
+
+  requestAnimationFrame(ciclo);
+})();
+</script>
+
 <a class="skip" href="#iris">Skip to content</a>
 <div class="grain" aria-hidden="true"></div>
 <div class="progress" id="progress"></div>
@@ -1778,7 +2058,14 @@
     <span class="status"><span class="dot"></span><span>Protocol status: operational</span></span>
   </div>
   <nav>
-    <div class="brand">SECTORA</div>
+    <div class="brand">
+      <a href="#" aria-label="Sectora Foundation — inicio">
+        <svg viewBox="0 0 100 100" role="img" aria-hidden="true">
+          <rect width="100" height="100" fill="var(--blue)"/>
+          <circle class="ring" cx="50" cy="50" r="27.2" fill="none" stroke="#fff" stroke-width="6.1"/>
+        </svg>
+      </a>
+    </div>
     <div class="menu mono">
       <a href="https://sectoraorg.com/#protocol">Protocol</a>
       <a href="https://sectoraorg.com/#roadmap">Roadmap</a>
@@ -2380,10 +2667,11 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     requestAnimationFrame(() => document.body.classList.add('played'));
   }
 
-  if(document.fonts && document.fonts.ready){
-    document.fonts.ready.then(play);
-    setTimeout(play, 1800);
-  } else { play(); }
+  /* el titular no se revela debajo de la intro: espera a que abra */
+  const arranque = window.SECT_INTRO || Promise.resolve();
+  const fuentes  = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  Promise.all([fuentes, arranque]).then(play);
+  setTimeout(play, 6000);
 
   let titleRT;
   window.addEventListener('resize', () => {
