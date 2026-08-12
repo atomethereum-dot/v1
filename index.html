@@ -241,7 +241,11 @@
   /* ============ cursor de coordenadas ============ */
   .reticle{position:fixed;z-index:44;pointer-events:none;opacity:0;transition:opacity .5s var(--ease)}
   .reticle.on{opacity:1}
-  .reticle .rx,.reticle .ry{position:fixed;background:var(--blue);opacity:.22}
+  .reticle .rx,.reticle .ry{position:fixed;background:var(--blue);opacity:.22;
+    transition:background .3s var(--ease),opacity .3s var(--ease)}
+  /* sobre secciones claras el azul de marca se apaga: se usa el tono
+     profundo y algo mas de opacidad para que siga leyendose */
+  .reticle.on-light .rx,.reticle.on-light .ry{background:#0d4fd8;opacity:.3}
   .reticle .rx{left:0;right:0;height:1px;
     -webkit-mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent);
     mask-image:linear-gradient(90deg,transparent,#000 22%,#000 78%,transparent)}
@@ -260,7 +264,11 @@
   .readout::before{
     content:'';position:absolute;left:0;top:0;width:9px;height:9px;
     border-left:1px solid var(--blue);border-top:1px solid var(--blue);opacity:.9;
+    transition:border-color .3s var(--ease);
   }
+  .readout{transition:opacity .35s var(--ease),color .3s var(--ease)}
+  .readout.on-light{color:#6b7280}
+  .readout.on-light::before{border-left-color:#0d4fd8;border-top-color:#0d4fd8}
   @media (pointer:coarse){.reticle,.readout{display:none}}
 
   /* ============ iris ligado al scroll ============ */
@@ -1022,7 +1030,7 @@
      la cifra del supply se amplia hasta que uno de sus trazos cubre el
      encuadre. No hay cortina ni recorte: el blanco de la seccion
      siguiente sale de dentro del propio numero. */
-  .zoom{position:relative;height:360vh;background:#000}
+  .zoom{position:relative;height:250vh;background:#000}
   .zoom-pin{
     position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;background:#000;
   }
@@ -1053,6 +1061,93 @@
     text-transform:uppercase;color:var(--ink-3);
     transition:opacity .3s var(--ease);
   }
+  /* aterrizaje: al salir del interior de la cifra, el dato aparece
+     asentado sobre el blanco. Antes quedaba una pantalla de blanco liso
+     entre el final de la ampliacion y la seccion siguiente. */
+  /* aterrizaje: al salir del interior de la cifra, el dato se enfoca y
+     encaja. Cada pieza tiene su turno, ligado al scroll. */
+  .zoom-land{
+    position:absolute;left:0;right:0;top:50%;z-index:3;
+    transform:translateY(-50%);
+    text-align:center;pointer-events:none;padding:0 var(--pad);
+    color:#07080a;opacity:0;
+  }
+  .zoom-land .k{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.3em;
+    text-transform:uppercase;color:#6b7280;
+  }
+
+  /* cifra anterior, tachada por una linea que se traza */
+  .zoom-land .was{
+    display:inline-block;position:relative;margin-top:14px;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;
+    color:#9aa0ab;font-variant-numeric:tabular-nums;
+  }
+  .zoom-land .was i{
+    position:absolute;left:-2px;right:-2px;top:52%;height:1px;
+    background:#b04a4a;transform:scaleX(0);transform-origin:0 50%;
+  }
+
+  /* halo azul que respira detras de la cifra: la saca del blanco plano */
+  .zoom-land .aura{
+    position:absolute;left:50%;top:50%;z-index:-1;
+    width:min(760px,92vw);height:min(300px,42vh);
+    margin:-1px 0 0 0;transform:translate(-50%,-50%) scale(.7);
+    border-radius:50%;pointer-events:none;opacity:0;
+    background:radial-gradient(circle,rgba(21,105,255,.16),rgba(21,105,255,.05) 46%,transparent 70%);
+    filter:blur(34px);
+  }
+  /* barrido de luz que cruza la cifra al encajar */
+  .zoom-land .n-wrap{position:relative;display:inline-block}
+  .zoom-land .n-wrap::after{
+    content:'';position:absolute;inset:-6% -12%;pointer-events:none;
+    background:linear-gradient(104deg,transparent 40%,rgba(255,255,255,.85) 50%,transparent 60%);
+    mix-blend-mode:overlay;
+    opacity:calc(var(--sw,0) * (1 - var(--sw,0)) * 3.4);
+    transform:translateX(calc(var(--sw,0) * 240% - 120%));
+  }
+  .zoom-land .n{
+    display:block;margin:10px 0 0;
+    font-size:clamp(38px,7vw,104px);font-weight:200;letter-spacing:-.045em;
+    line-height:1.06;font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+  }
+  /* cada caracter en su ventana: encaja desde abajo, uno tras otro */
+  .zoom-land .n .d{display:inline-block;overflow:hidden;vertical-align:bottom}
+  .zoom-land .n .d b{display:block;font-weight:inherit;will-change:transform}
+
+  .zoom-land .u{
+    display:block;margin-top:14px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.24em;
+    text-transform:uppercase;color:#0d4fd8;
+  }
+
+  /* regla graduada: la marca central en azul es la mitad exacta */
+  .zoom-land .scale{
+    position:relative;width:min(430px,74vw);height:22px;
+    margin:clamp(24px,4vh,38px) auto 0;
+  }
+  .zoom-land .scale .bar{
+    position:absolute;left:0;right:0;top:0;height:1px;background:rgba(0,0,0,.24);
+    transform:scaleX(0);transform-origin:50% 50%;
+  }
+  .zoom-land .scale u{
+    position:absolute;top:0;width:1px;height:6px;background:rgba(0,0,0,.26);
+    text-decoration:none;opacity:0;
+  }
+  .zoom-land .scale u.mid{height:13px;background:#0d4fd8;opacity:0}
+  .zoom-land .scale em{
+    position:absolute;top:17px;left:50%;transform:translateX(-50%);
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;
+    font-style:normal;color:#0d4fd8;opacity:0;white-space:nowrap;
+  }
+
+  .zoom-land .rule{
+    width:1px;height:clamp(30px,5vh,54px);margin:clamp(22px,3.4vh,34px) auto 0;
+    background:linear-gradient(180deg,rgba(0,0,0,.28),transparent);
+    transform-origin:50% 0;transform:scaleY(0);
+  }
+
   .zoom-note{
     position:absolute;left:var(--pad);right:var(--pad);bottom:clamp(26px,4vh,44px);
     z-index:2;display:flex;justify-content:space-between;gap:20px;pointer-events:none;
@@ -1064,7 +1159,8 @@
   /* ============ supply y market cap ============ */
   .supply{
     position:relative;background:#f2f2ef;color:#07080a;
-    padding:clamp(80px,13vh,150px) var(--pad) clamp(90px,14vh,160px);
+    /* poco aire arriba: el aterrizaje de la transicion ya hace de entrada */
+    padding:clamp(30px,5vh,64px) var(--pad) clamp(90px,14vh,160px);
   }
   .supply::before{
     content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
@@ -1470,9 +1566,16 @@
 
   /* tarjetas con escuadras de registro, como el resto de la pieza */
   .join-cards{
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
     gap:16px;margin-top:clamp(38px,6vh,64px);text-align:left;
   }
+  @media (max-width:760px){
+    .join-cards{grid-template-columns:1fr}
+  }
+  /* las dos primeras son acciones sobre el token: fondo mas denso y
+     numeracion en azul, para separarlas de los canales de comunidad */
+  .jc.key{background:rgba(13,79,216,.05);border-color:rgba(13,79,216,.22)}
+  .jc.key .jc-num{color:#0d4fd8}
   .jc{
     position:relative;display:block;text-decoration:none;color:#07080a;
     padding:26px 24px 24px;
@@ -1510,6 +1613,33 @@
   .jc-go em{font-style:normal;transition:transform .38s var(--ease)}
   .jc:hover .jc-go{color:#0d4fd8}
   .jc:hover .jc-go em{transform:translate(3px,-3px)}
+
+  /* en escritorio el titular es un bloque normal; en movil se fija arriba
+     y las cuatro tarjetas pasan por debajo */
+  .join-head{position:relative}
+
+  @media (max-width:760px){
+    .join{--sticky-bg:rgba(242,242,239,.97)}
+    .join-inner{text-align:left}
+    .join .eyebrow{justify-content:flex-start;margin-bottom:16px}
+    .join-head{
+      position:sticky;top:0;z-index:2;
+      margin:0 calc(var(--pad) * -1) 22px;
+      padding:18px var(--pad) 16px;
+      background:var(--sticky-bg);
+      backdrop-filter:blur(16px) saturate(1.3);
+      -webkit-backdrop-filter:blur(16px) saturate(1.3);
+      border-bottom:1px solid rgba(0,0,0,.12);
+    }
+    .join-head h2{font-size:clamp(28px,8.6vw,42px)}
+    .join-lede{margin:0 0 4px;max-width:none}
+    .join-actions{justify-content:flex-start}
+    .join-fine{text-align:left}
+    /* sin difuminado de fondo la banda deja pasar las tarjetas */
+    @supports not (backdrop-filter: blur(1px)){
+      .join-head{background:#f2f2ef}
+    }
+  }
 
   .join-fine{
     margin-top:clamp(34px,5vh,54px);
@@ -1951,6 +2081,21 @@
     <div class="zoom-rings b" aria-hidden="true"></div>
     <canvas id="zoom-canvas"></canvas>
     <p class="zoom-cap" id="zoom-cap">Circulating supply</p>
+    <div class="zoom-land" id="zoom-land" aria-hidden="true">
+      <p class="k">Fixed after December 2026</p>
+      <span class="was">50,000,000<i></i></span>
+      <span class="aura" id="zoom-aura" aria-hidden="true"></span>
+      <span class="n-wrap" id="zoom-wrap"><b class="n" id="zoom-num">25,000,000</b></span>
+      <span class="u">#SECT · Total supply</span>
+      <div class="scale">
+        <span class="bar"></span>
+        <u style="left:0"></u><u style="left:25%"></u>
+        <u class="mid" style="left:50%"></u>
+        <u style="left:75%"></u><u style="left:100%"></u>
+        <em>−50% of initial supply</em>
+      </div>
+      <div class="rule"></div>
+    </div>
     <div class="zoom-note" id="zoom-note">
       <span>Reduction · December 2026</span>
       <span id="zoom-tag">50,000,000 · pre-reduction</span>
@@ -2107,18 +2252,44 @@
 <section class="join" id="join">
   <div class="join-thread" aria-hidden="true"></div>
   <div class="join-inner">
-    <p class="eyebrow mono reveal"><i></i>Community</p>
-    <h2 class="reveal" style="--d:.06s">Build with us on <b>Sectora</b>.</h2>
+    <div class="join-head">
+      <p class="eyebrow mono reveal"><i></i>Community</p>
+      <h2 class="reveal" style="--d:.06s">Build with us on <b>Sectora</b>.</h2>
+    </div>
     <p class="join-lede reveal" style="--d:.12s">
-      Audit reports, testnet releases and protocol announcements are published
-      to the community first. No private groups, no paid signals.
+      Read the protocol documentation, acquire #SECT on-chain, and follow
+      releases and audit reports as they ship. No private groups, no paid signals.
     </p>
 
     <div class="join-cards">
-      <!-- sustituir por el enlace real de X -->
-      <a class="jc reveal" style="--d:.18s" href="#" target="_blank" rel="noopener noreferrer">
+      <!-- el whitepaper ya vive en sectoraorg.com/whitepaper/ -->
+      <a class="jc key reveal" style="--d:.18s" href="https://sectoraorg.com/whitepaper/">
         <span class="jc-i" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <span class="jc-num">01</span>
+        <span class="jc-row">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm0 1.5L18.5 8H14zM8 12h8v1.6H8zm0 3.4h8V17H8zm0-6.8h4v1.6H8z"/></svg>
+          <b>Whitepaper</b>
+        </span>
+        <p>Protocol architecture, security model and token parameters.</p>
+        <span class="jc-go">Read <em>&rarr;</em></span>
+      </a>
+
+      <!-- sustituir por el enlace real del pool de Uniswap -->
+      <a class="jc key reveal" style="--d:.22s" href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer">
+        <span class="jc-i" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="jc-num">02</span>
+        <span class="jc-row">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.6 3.4 12 12 22.4 20.6 12zm0 2.9 5.6 6.8-5.6 2.6-5.6-2.6zm0 12.1 5.2-2.4-5.2 6.3-5.2-6.3z"/></svg>
+          <b>Buy #SECT</b>
+        </span>
+        <p>Ethereum ERC-20. Verify the contract address before trading.</p>
+        <span class="jc-go">Uniswap <em>&#8599;</em></span>
+      </a>
+
+      <!-- sustituir por el enlace real de X -->
+      <a class="jc reveal" style="--d:.26s" href="#" target="_blank" rel="noopener noreferrer">
+        <span class="jc-i" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="jc-num">03</span>
         <span class="jc-row">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2.2h3.4l-7.5 8.5 8.8 11.1h-6.9l-5.4-6.7-6.2 6.7H1.7l8-8.6L1.3 2.2h7l4.9 6.1zM17.7 20h1.9L7.3 4.1H5.3z"/></svg>
           <b>X</b>
@@ -2128,9 +2299,9 @@
       </a>
 
       <!-- sustituir por el enlace real de Telegram -->
-      <a class="jc reveal" style="--d:.26s" href="#" target="_blank" rel="noopener noreferrer">
+      <a class="jc reveal" style="--d:.30s" href="#" target="_blank" rel="noopener noreferrer">
         <span class="jc-i" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        <span class="jc-num">02</span>
+        <span class="jc-num">04</span>
         <span class="jc-row">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.9 3.3 2.9 10.6c-1.1.4-1.1 1.1-.2 1.4l4.8 1.5 1.8 5.6c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.3 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.2-.5-1.8-1.1-1.5zM7.9 13.2l10.4-6.6c.5-.3 1-.1.6.2l-8.9 8-.3 3.6z"/></svg>
           <b>Telegram</b>
@@ -2140,7 +2311,7 @@
       </a>
     </div>
 
-    <p class="join-fine reveal" style="--d:.34s">Sectora Foundation · Illinois, United States</p>
+    <p class="join-fine reveal" style="--d:.38s">Sectora Foundation · Illinois, United States</p>
   </div>
 </section>
 
@@ -2431,32 +2602,65 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
   const rx = reticle.querySelector('.rx');
   const ry = reticle.querySelector('.ry');
 
-  window.addEventListener('pointermove', e => {
-    if(reduce || !heat) return;
-    const rect = canvas.getBoundingClientRect();
+  /* ---- instrumento de coordenadas, en todo el documento ----
+     se ancla a la celda de 54px y cambia de color segun la luminancia del
+     fondo que tenga debajo, para leerse igual en las secciones claras */
+  let claro = false, ultimaLum = 0;
 
-    // fuera de la portada no hay instrumento: si no, las hairlines azules
-    // cruzan las secciones claras y parecen un error de maquetacion
-    const dentro = e.clientX >= rect.left && e.clientX <= rect.right
-                && e.clientY >= rect.top  && e.clientY <= rect.bottom;
-    if(!dentro){
-      reticle.classList.remove('on');
-      readout.classList.remove('on');
-      return;
+  function fondoClaro(x, y){
+    // se comprueba de vez en cuando, no en cada movimiento
+    if(performance.now() - ultimaLum < 140) return claro;
+    ultimaLum = performance.now();
+    let el = document.elementFromPoint(x, y);
+    let n = 0;
+    while(el && n < 6){
+      const bg = getComputedStyle(el).backgroundColor;
+      const m = bg && bg.match(/rgba?\(([^)]+)\)/);
+      if(m){
+        const v = m[1].split(',').map(parseFloat);
+        const a = v.length > 3 ? v[3] : 1;
+        if(a > .35){
+          // luminancia relativa aproximada
+          const L = (0.2126*v[0] + 0.7152*v[1] + 0.0722*v[2]) / 255;
+          claro = L > .5;
+          return claro;
+        }
+      }
+      el = el.parentElement; n++;
     }
+    return claro;
+  }
 
-    const c = ((e.clientX - rect.left)/CELL)|0;
-    const r = ((e.clientY - rect.top)/CELL)|0;
-    if(c>=0 && r>=0 && c<cols && r<rows) heat[idx(c,r)] = 1;
+  window.addEventListener('pointermove', e => {
+    if(reduce) return;
 
-    const gx = c*CELL + rect.left, gy = r*CELL + rect.top;
+    // celda global: la retitula encaja con la rejilla de cualquier seccion
+    const gx = Math.floor((e.clientX + window.scrollX) / CELL) * CELL - window.scrollX;
+    const gy = Math.floor((e.clientY + window.scrollY) / CELL) * CELL - window.scrollY;
+    const cc = Math.floor((e.clientX + window.scrollX) / CELL);
+    const cr = Math.floor((e.clientY + window.scrollY) / CELL);
+
     readout.style.transform = 'translate3d(' + gx + 'px,' + gy + 'px,0)';
-    readout.textContent = String(Math.max(c,0)).padStart(2,'0') + ' · ' + String(Math.max(r,0)).padStart(2,'0');
+    readout.textContent = String(Math.abs(cc)%100).padStart(2,'0') + ' · ' + String(Math.abs(cr)%100).padStart(2,'0');
     rx.style.transform = 'translate3d(0,' + gy + 'px,0)';
     ry.style.transform = 'translate3d(' + gx + 'px,0,0)';
     reticle.classList.add('on');
     readout.classList.add('on');
+
+    const cl2 = fondoClaro(e.clientX, e.clientY);
+    reticle.classList.toggle('on-light', cl2);
+    readout.classList.toggle('on-light', cl2);
+
+    // las celdas de la cubierta solo se encienden sobre la cubierta
+    if(heat){
+      const rect = canvas.getBoundingClientRect();
+      const c = ((e.clientX - rect.left)/CELL)|0;
+      const r = ((e.clientY - rect.top)/CELL)|0;
+      if(c>=0 && r>=0 && c<cols && r<rows &&
+         e.clientY >= rect.top && e.clientY <= rect.bottom) heat[idx(c,r)] = 1;
+    }
   }, {passive:true});
+
   window.addEventListener('pointerleave', () => {
     reticle.classList.remove('on');
     readout.classList.remove('on');
@@ -3013,6 +3217,25 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
   const cap  = document.getElementById('zoom-cap');
   const note = document.getElementById('zoom-note');
   const tag  = document.getElementById('zoom-tag');
+  const land = document.getElementById('zoom-land');
+
+  /* cada caracter de la cifra vive en su propia ventana para poder
+     encajarlos por turnos. Se construye una sola vez. */
+  const numEl = document.getElementById('zoom-num');
+  let digitos = [], tacha = null, barra = null, ticks = [], etiq = null, filete = null;
+  if(land && numEl){
+    numEl.innerHTML = [...numEl.textContent].map(
+      c => '<span class="d"><b>' + c + '</b></span>').join('');
+    digitos = [...numEl.querySelectorAll('.d b')];
+    tacha  = land.querySelector('.was i');
+    barra  = land.querySelector('.scale .bar');
+    ticks  = [...land.querySelectorAll('.scale u')];
+    etiq   = land.querySelector('.scale em');
+    filete = land.querySelector('.rule');
+  }
+  let blurAnt = -1, cifraAnt = '';
+  const aura = document.getElementById('zoom-aura');
+  const wrap = document.getElementById('zoom-wrap');
 
   const BEFORE = '50,000,000', AFTER = '25,000,000';
   const SWAP = .34;                 // donde ocurre la reduccion
@@ -3105,8 +3328,9 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     ctx.fillText(txt, W/2, H/2);
     ctx.restore();
 
-    // garantia de blanco pleno en el ultimo tramo
-    const w = Math.max(0, (p - .88) / .12);
+    // el blanco pleno llega en el 72%: el resto del recorrido lo ocupa
+    // el aterrizaje, en lugar de quedarse en vacio
+    const w = Math.max(0, (p - .60) / .12);
     if(w > 0){
       ctx.fillStyle = 'rgba(242,242,239,' + Math.min(1,w).toFixed(3) + ')';
       ctx.fillRect(0,0,W,H);
@@ -3116,6 +3340,75 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     const fade = 1 - Math.max(0, Math.min(1, (p - .30) / .18));
     if(cap)  cap.style.opacity = fade.toFixed(2);
     if(note) note.style.opacity = fade.toFixed(2);
+
+    /* el dato aterriza por partes: primero el bloque se enfoca, luego los
+       digitos encajan uno a uno, despues la tacha, la regla y el filete */
+    if(land){
+      const cl = t => t < 0 ? 0 : t > 1 ? 1 : t;
+      const sw = t => { t = cl(t); return t*t*(3-2*t); };
+
+      let l = cl((p - .66) / .26);
+
+      const ent = sw(cl(l / .22));                   // el bloque entra rapido
+      land.style.opacity = ent.toFixed(3);
+      land.style.transform = 'translateY(calc(-50% + ' + ((1-ent)*22).toFixed(1) + 'px))';
+
+      // enfoque: sale de la ampliacion desenfocado y resuelve. Se cuantiza
+      // a medio pixel para no forzar un recalculo en cada fotograma
+      if(numEl && W >= 700){
+        const b = Math.round((1-sw(cl(l/.5))) * 12 * 2) / 2;
+        if(b !== blurAnt){
+          blurAnt = b;
+          numEl.style.filter = b > .1 ? 'blur(' + b + 'px)' : 'none';
+        }
+      }
+
+      /* la cifra recorre de 50M a 25M mientras encaja: no aparece el
+         resultado, se ve llegar. Solo se reescribe cuando cambia el texto */
+      const cnt = sw(cl((l - .08) / .52));
+      const val = Math.round(50000000 - 25000000 * cnt);
+      const txtC = val.toLocaleString('en-US');
+      if(txtC !== cifraAnt && digitos.length){
+        cifraAnt = txtC;
+        for(let i=0;i<digitos.length;i++){
+          const c = txtC[i];
+          if(c !== undefined && digitos[i].textContent !== c) digitos[i].textContent = c;
+        }
+      }
+
+      // digitos: cada uno con su turno, de izquierda a derecha
+      for(let i=0;i<digitos.length;i++){
+        const k = sw(cl((l - i*.042) / .40));
+        digitos[i].style.transform = 'translateY(' + ((1-k)*106).toFixed(1) + '%)';
+      }
+
+      // halo detras de la cifra
+      if(aura){
+        const a = sw(cl((l - .12) / .40));
+        aura.style.opacity = a.toFixed(3);
+        aura.style.transform = 'translate(-50%,-50%) scale(' + (.7 + a*.3).toFixed(3) + ')';
+      }
+
+      // barrido de luz justo cuando el ultimo digito encaja
+      if(wrap){
+        const sw2 = cl((l - .52) / .26);
+        // una sola escritura: el CSS deriva posicion y opacidad de este valor
+        wrap.style.cssText = '--sw:' + sw2.toFixed(3);
+      }
+
+      // la tacha cruza la cifra anterior
+      if(tacha) tacha.style.transform = 'scaleX(' + sw(cl((l-.30)/.26)).toFixed(3) + ')';
+
+      // la regla se abre desde el centro y aparecen sus marcas
+      if(barra) barra.style.transform = 'scaleX(' + sw(cl((l-.46)/.34)).toFixed(3) + ')';
+      const tk = cl((l-.62)/.24);
+      for(let i=0;i<ticks.length;i++){
+        const o = cl((tk - i*.10) / .5);
+        ticks[i].style.opacity = o.toFixed(3);
+      }
+      if(etiq) etiq.style.opacity = sw(cl((l-.76)/.22)).toFixed(3);
+      if(filete) filete.style.transform = 'scaleY(' + sw(cl((l-.82)/.18)).toFixed(3) + ')';
+    }
   }
 
   let queued = false;
@@ -3148,7 +3441,11 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
 
   const CG_KEY  = '';                 // <-- clave Demo de CoinGecko, opcional
   const SUPPLY  = 25000000;           // supply fijo de #SECT tras la reduccion
-  const REFRESH = 45000;              // la via sin clave esta muy limitada
+  const BASE_MS = 90000;              // sin clave, la via publica limita mucho
+  const MAX_MS  = 600000;             // techo del retroceso ante fallos
+  const MAX_FAIL= 3;                  // tras esto se deja de insistir
+  const CACHE_K = 'sect_mkt_v1';
+  const CACHE_MS= 300000;             // 5 min: una recarga no vuelve a pedir
 
   const COINS = [
     {id:'bitcoin',      n:'Bitcoin',      t:'BTC'},
@@ -3175,6 +3472,22 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
 
   let pct = 5, live = false, rows = [];
   let data = COINS.map(c => Object.assign({}, c, FALLBACK[c.id]));
+  let espera = BASE_MS, fallos = 0, timer = null;
+
+  /* cache de sesion: sin esto, cada recarga lanza una peticion nueva y la
+     via sin clave devuelve 429, que el navegador registra en consola como
+     error aunque el codigo lo capture */
+  function leerCache(){
+    try{
+      const raw = sessionStorage.getItem(CACHE_K);
+      if(!raw) return null;
+      const o = JSON.parse(raw);
+      return (Date.now() - o.t < CACHE_MS) ? o : null;
+    }catch(e){ return null; }
+  }
+  function guardarCache(d){
+    try{ sessionStorage.setItem(CACHE_K, JSON.stringify({t:Date.now(), d})); }catch(e){}
+  }
 
   const money = v => v >= 1000
     ? '$' + v.toLocaleString('en-US',{maximumFractionDigits:0})
@@ -3268,12 +3581,28 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
         } : fb);
       });
       live = true;
+      fallos = 0;
+      espera = BASE_MS;
+      guardarCache(data.map(d => ({id:d.id, price:d.price, cap:d.cap, sup:d.sup})));
     }catch(e){
-      live = false;               // se conserva la ultima lectura buena
+      live = false;                    // se conserva la ultima lectura buena
+      fallos++;
+      espera = Math.min(espera * 2, MAX_MS);   // retroceso exponencial
+      if(fallos >= MAX_FAIL) stop();           // deja de insistir en esta sesion
+      else reprograma();
+      setStatus(); build(); render(true);
+      return;
     }
+    reprograma();
     setStatus();
     build();
     render(true);
+  }
+
+  function reprograma(){
+    stop();
+    if(fallos >= MAX_FAIL) return;
+    timer = setTimeout(() => { if(!document.hidden && verTabla) fetchLive(); }, espera);
   }
 
   seg.addEventListener('click', e => {
@@ -3289,16 +3618,31 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
   setStatus();
 
   // solo consulta cuando la tabla esta en pantalla y la pestana activa
-  let timer = null, seen = false;
+  let seen = false, verTabla = false, arrancado = false;
+  function stop(){ if(timer){ clearTimeout(timer); timer = null; } }
+
   function start(){
-    if(timer) return;
+    if(arrancado || fallos >= MAX_FAIL) return;
+    arrancado = true;
+
+    const c = leerCache();
+    if(c){
+      // lectura reciente en la propia sesion: nada de red
+      data = COINS.map(x => {
+        const m = c.d.find(y => y.id === x.id) || FALLBACK[x.id];
+        return Object.assign({}, x, m);
+      });
+      live = true;
+      setStatus(); build(); render(true);
+      reprograma();
+      return;
+    }
     fetchLive();
-    timer = setInterval(() => { if(!document.hidden) fetchLive(); }, REFRESH);
   }
-  function stop(){ if(timer){ clearInterval(timer); timer = null; } }
 
   new IntersectionObserver(es => {
-    if(es[0].isIntersecting){
+    verTabla = es[0].isIntersecting;
+    if(verTabla){
       if(!seen){ seen = true; render(true); }
       start();
     } else stop();
