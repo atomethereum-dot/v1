@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#000000">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231569ff'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23fff' stroke-width='11'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='9' ry='9' fill='%231569ff'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23fff' stroke-width='11'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
-<title>Website Official Sectora Foundation</title>
+<title>Official Website Sectora Foundation</title>
 <meta name="description" content="Sectora Foundation — security infrastructure for tokenized real-world assets: contract auditing, custody controls and continuous on-chain monitoring.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Website Official Sectora Foundation">
+<meta property="og:title" content="Official Website Sectora Foundation">
 <meta property="og:description" content="Security infrastructure for tokenized real-world assets. Informational document, not an offer of securities.">
 <link rel="preload" href="fonts/IBMPlexSans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/IBMPlexMono-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -115,9 +115,10 @@
   /* el logo va como SVG en linea: escala sin perder filo, no pide un
      archivo aparte y hereda el color en el estado activo */
   .brand{display:inline-flex;align-items:center;line-height:0}
-  .brand a{display:block;line-height:0;border-radius:2px;
+  .brand a{display:block;line-height:0;border-radius:3.4px;
     transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
-  .brand svg{display:block;width:38px;height:38px;border-radius:2px}
+  /* el redondeo va en el propio rect; aqui solo para el recorte del enlace */
+  .brand svg{display:block;width:38px;height:38px;border-radius:3.4px}
   .brand a:hover,.brand a:focus-visible{
     transform:translateY(-1px);
     box-shadow:0 0 0 1px rgba(21,105,255,.5), 0 6px 22px -8px rgba(21,105,255,.9);
@@ -1720,19 +1721,14 @@
      arranque tecnico: la rejilla de la portada se enciende sobre azul, el
      aro se ensambla celda a celda y despues resuelve a trazo continuo.
      El azul es la sombra solida de un circulo que crece, no un fondo. */
-  .intro{position:fixed;inset:0;z-index:200;overflow:hidden;display:grid;place-items:center}
-  .intro-hole{
-    position:absolute;left:50%;top:50%;width:0;height:0;border-radius:50%;
-    transform:translate(-50%,-50%);box-shadow:0 0 0 100vmax #1569ff;
-    will-change:width,height;
-  }
+  .intro{position:fixed;inset:0;z-index:200;overflow:hidden;display:grid;place-items:center;background:#1569ff}
   #intro-grid{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
 
   /* marco de registro, como en la cubierta */
   .intro-frame{position:absolute;inset:clamp(16px,2.4vw,30px);z-index:3;
     border:1px solid rgba(255,255,255,.16);pointer-events:none}
   .intro-frame i{position:absolute;width:11px;height:11px}
-  .intro-frame i::before,.intro-frame i::after{content:'';position:absolute;background:#fff;opacity:.7}
+  .intro-frame i::before,.intro-frame i::after{content:'';position:absolute;background:#34e7ff;opacity:.9;box-shadow:0 0 8px rgba(52,231,255,.9)}
   .intro-frame i::before{left:50%;top:0;bottom:0;width:1px;transform:translateX(-.5px)}
   .intro-frame i::after{top:50%;left:0;right:0;height:1px;transform:translateY(-.5px)}
   .intro-frame i:nth-child(1){left:-6px;top:-6px}
@@ -1749,24 +1745,38 @@
   .intro-hud .tl{left:0;top:0}
   .intro-hud .tr{right:0;top:0}
   .intro-hud .bl{left:0;bottom:0;display:inline-flex;align-items:center;gap:9px}
+  /* registro de arranque: lineas que van apareciendo, como una consola */
+  .intro-log{
+    position:absolute;left:0;bottom:22px;z-index:4;pointer-events:none;
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;
+    text-transform:uppercase;line-height:1.85;
+  }
+  .intro-log span{display:block;opacity:0;color:rgba(255,255,255,.55);
+    transform:translateY(4px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
+  .intro-log span.on{opacity:1;transform:none}
+  .intro-log span.hi{color:rgba(52,231,255,.95)}
+  @media (max-width:700px){ .intro-log{display:none} }
   .intro-hud .br{right:0;bottom:0;font-variant-numeric:tabular-nums}
-  .intro-hud .led{width:5px;height:5px;border-radius:50%;background:#fff;
+  .intro-hud .led{width:5px;height:5px;border-radius:50%;background:#34e7ff;box-shadow:0 0 9px rgba(52,231,255,.95);
     animation:introBlink 1s steps(2) infinite}
   @keyframes introBlink{0%,49%{opacity:1}50%,100%{opacity:.2}}
   .intro-hud .ok .led{animation:none}
   /* barra de progreso, pegada al filete inferior */
   .intro-bar{position:absolute;left:0;right:0;bottom:-9px;height:1px;
     background:rgba(255,255,255,.22);z-index:4}
-  .intro-bar i{position:absolute;left:0;top:-1px;height:3px;width:100%;background:#fff;
+  .intro-bar i{position:absolute;left:0;top:-1px;height:3px;width:100%;background:#34e7ff;box-shadow:0 0 10px rgba(52,231,255,.9);
     transform:scaleX(0);transform-origin:0 50%}
 
   /* el trazo continuo se superpone exactamente sobre el aro de celdas:
      por eso el texto va posicionado, no apilado bajo el svg */
   .intro-stack{position:absolute;inset:0;z-index:5;display:grid;place-items:center}
   .intro-word{position:absolute;left:50%;top:calc(50% + 34vmin);transform:translateX(-50%)}
-  .intro-ring{width:88.2vmin;height:88.2vmin;max-width:none;
+  /* sin filter: Safari recorta la salida del filtro contra la caja del
+     elemento y ese corte se ve como un cuadro. El resplandor se dibuja
+     en el lienzo, que ocupa toda la pantalla y no tiene ese limite. */
+  .intro-ring{width:54.5vmin;height:54.5vmin;max-width:none;
     display:block;transform-origin:50% 50%;opacity:0}
-  .intro-ring circle{fill:none;stroke:#fff;stroke-width:6.1;stroke-linecap:round}
+  .intro-ring circle{fill:none;stroke:#fff;stroke-width:9.87;stroke-linecap:round}
   .intro-word{
     font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.42em;
     text-transform:uppercase;color:rgba(255,255,255,.92);text-indent:.42em;
@@ -1843,31 +1853,35 @@
 <body>
 
 <div class="intro" id="intro" aria-hidden="true">
-  <div class="intro-hole" id="intro-hole"></div>
   <canvas id="intro-grid"></canvas>
   <div class="intro-frame"><i></i><i></i><i></i><i></i></div>
   <div class="intro-hud">
     <span class="tl">Sectora Foundation IL</span>
     <span class="tr">Security layer · Build 1.0</span>
+    <div class="intro-log" id="intro-log">
+      <span data-t="0">Grid 54px · raster ok</span>
+      <span data-t="1">Assembling mark · 360°</span>
+      <span data-t="2" class="hi">Vector solve 0.998</span>
+      <span data-t="3" class="hi">Lock confirmed</span>
+    </div>
     <span class="bl" id="intro-state"><i class="led"></i>Initializing</span>
     <span class="br"><b id="intro-pct">00</b>%</span>
     <span class="intro-bar"><i id="intro-fill"></i></span>
   </div>
   <div class="intro-stack">
-    <svg class="intro-ring" id="intro-ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="27.2"/></svg>
+    <svg class="intro-ring" id="intro-ring" viewBox="0 0 100 100" overflow="visible"><circle cx="50" cy="50" r="44"/></svg>
     <p class="intro-word" id="intro-word">Sectora Foundation</p>
   </div>
 </div>
 
 <script>
 /* ===== intro =====
-   cuatro actos: la rejilla de la portada se enciende en barrido diagonal,
-   el aro se ensambla celda a celda siguiendo el reloj, resuelve a trazo
-   continuo, y se abre hasta convertirse en la pagina. El contador solo
-   llega a 100 cuando las fuentes y la pagina estan realmente listas. */
+   barrido de la rejilla, ensamblado del aro, pulso de cierre, convergencia
+   sobre la circunferencia, enganche con escuadras, y salida: el aro estalla
+   en fragmentos y el campo azul se deshace en celdas hasta descubrir la
+   portada. El azul lo pinta el propio lienzo, para poder disolverlo. */
 (function(){
   const el   = document.getElementById('intro');
-  const hole = document.getElementById('intro-hole');
   const cv   = document.getElementById('intro-grid');
   const ring = document.getElementById('intro-ring');
   const word = document.getElementById('intro-word');
@@ -1884,19 +1898,32 @@
 
   let corto = false;
   try{ corto = sessionStorage.getItem('sect_intro') === '1'; }catch(e){}
-  const F = corto ? .42 : 1;              // las visitas repetidas se acortan
+  const F = corto ? .45 : 1;
 
-  const T_SWEEP = 760*F, T_RING = 900*F, T_SNAP = 380*F, T_OPEN = 900*F;
-  const T_TOTAL = T_SWEEP*.7 + T_RING + T_SNAP;
+  const T_SWEEP = 600*F, T_RING = 980*F, T_LAP = 340*F,
+        T_SNAP = 600*F, T_LOCK = 430*F, T_HOLD = 270*F, T_EXIT = 940*F;
+  const T0_RING = T_SWEEP*.7;
+  const T0_LAP  = T0_RING + T_RING;
+  const T0_SNAP = T0_LAP  + T_LAP;
+  const T0_LOCK = T0_SNAP + T_SNAP;
+  const T0_HOLD = T0_LOCK + T_LOCK;
+  const T_TOTAL = T0_HOLD + T_HOLD;
+
+  const AZUL  = '#1569ff';
+  const ARO_PIXEL = false;        // <- true recupera el aro ensamblado en celdas
+  const CIAN  = '52,231,255';     // neon principal: filos, haz, descargas
+  const VIOL  = '168,85,247';     // contrapunto en la separacion cromatica
+  const SCAN_T = 1730;                  // una pasada completa, de abajo arriba
+  // el haz recorre algo mas que la pantalla para entrar y salir fuera de cuadro
+  const scanY = t => H*1.12 - ((t % SCAN_T)/SCAN_T) * (H*1.24);
 
   document.documentElement.classList.add('intro-lock');
   document.body.classList.add('intro-lock');
   if('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0,0);
 
-  /* ---------- rejilla ---------- */
   const ctx = cv.getContext('2d');
-  let W=0, H=0, CELL=54, cols=0, rows=0, celdas=[], R=0, SW=0;
+  let W=0, H=0, CELL=40, todas=[], sweep=[], aro=[], R=0, cxG=0, cyG=0, MONO='', diagMax=1;
 
   function medir(){
     W = window.innerWidth; H = window.innerHeight;
@@ -1904,131 +1931,381 @@
     cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
     ctx.setTransform(dpr,0,0,dpr,0,0);
 
-    CELL = W < 700 ? 26 : 40;   // celda mas fina: el aro necesita resolucion
-    cols = Math.ceil(W/CELL); rows = Math.ceil(H/CELL);
+    CELL = W < 700 ? 26 : 40;
+    R = Math.min(W, H) * .24;
+    cxG = W/2; cyG = H/2;
+    MONO = "500 " + (W < 700 ? 8.5 : 9.5) + "px 'IBM Plex Mono', monospace";
+    diagMax = Math.hypot(W, H) / 2;
 
-    // el aro, a la misma escala que el del logo
-    const lado = Math.min(W, H);
-    R  = lado * .24;            // con menos radio el aro no llega a leerse
-    SW = R * .224;                        // 6.1/27.2, la proporcion del logo
+    const nX = Math.ceil(W/CELL/2)+2, nY = Math.ceil(H/CELL/2)+2;
+    const diag = (nX*2)+(nY*2) || 1;
+    todas = []; sweep = []; aro = [];
 
-    const cx = W/2, cy = H/2;
-    const diag = (cols-1) + (rows-1) || 1;
-    celdas = [];
-    for(let r=0;r<rows;r++){
-      for(let c=0;c<cols;c++){
-        const x = c*CELL, y = r*CELL;
-        const dx = x + CELL/2 - cx, dy = y + CELL/2 - cy;
-        const d = Math.hypot(dx, dy);
-        const enAro = Math.abs(d - R) <= SW/2 + CELL*.36;
-        // angulo desde arriba, en sentido horario, normalizado 0..1
-        let a = Math.atan2(dx, -dy); if(a < 0) a += Math.PI*2;
-        celdas.push({
-          x, y,
-          diag: ((c + r) / diag),
-          sem: (Math.sin(c*12.9898 + r*78.233) * 43758.5453) % 1,
-          aro: enAro,
-          ang: a / (Math.PI*2)
-        });
+    for(let j=-nY;j<nY;j++){
+      for(let i=-nX;i<nX;i++){
+        const dx=(i+.5)*CELL, dy=(j+.5)*CELL;
+        const x=cxG+i*CELL, y=cyG+j*CELL;
+        if(x>W || y>H || x<-CELL || y<-CELL) continue;
+        const d = Math.hypot(dx,dy);
+        const esAro = Math.abs(d-R) <= CELL*.7;
+        let a = Math.atan2(dx,-dy); if(a<0) a += Math.PI*2;
+        const sem = Math.abs((Math.sin(i*12.9898+j*78.233)*43758.5453)%1);
+
+        const q = {x, y, cx:x+CELL/2, cy:y+CELL/2, rad:d, sem,
+                   ang:a/(Math.PI*2),
+                   diag:((i+nX)+(j+nY))/diag,
+                   // umbral de disolucion: del centro hacia fuera, con azar
+                   muerte: (d/diagMax)*.62 + sem*.34};
+        todas.push(q);
+        if(esAro){
+          const t = Math.atan2(dy,dx);
+          q.tx = cxG + Math.cos(t)*R;
+          q.ty = cyG + Math.sin(t)*R;
+          q.dir = t;
+          aro.push(q);
+        } else sweep.push(q);
       }
     }
   }
 
   const cl = t => t<0?0:t>1?1:t;
   const sw = t => { t=cl(t); return t*t*(3-2*t); };
+  const io = t => { t=cl(t); return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; };
+  const out= t => { t=cl(t); return 1-Math.pow(1-t,3); };
+  const dAng = (a,b) => { const d=Math.abs(a-b)%1; return d>.5 ? 1-d : d; };
 
+  /* ---------- fase de montaje ---------- */
   function pintar(t){
     ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = AZUL;
+    ctx.fillRect(0,0,W,H);
 
-    const pS = cl(t / T_SWEEP);                       // barrido diagonal
-    const pR = cl((t - T_SWEEP*.7) / T_RING);         // ensamblado del aro
-    const pN = cl((t - T_SWEEP*.7 - T_RING) / T_SNAP);// resolucion
+    const pS = cl(t/T_SWEEP);
+    const pR = cl((t-T0_RING)/T_RING);
+    const pL = cl((t-T0_LAP )/T_LAP );
+    const pN = cl((t-T0_SNAP)/T_SNAP);
+    const pK = cl((t-T0_LOCK)/T_LOCK);
+    const pH = cl((t-T0_HOLD)/T_HOLD);
 
-    const enc = sw(pR) ;                              // frente angular del aro
-    const meng = 1 - pN*.66;                          // las celdas se contraen
+    const enc  = sw(pR);
+    const conv = io(pN);
+    const glitch = (pN>.02 && pN<.14) ? (Math.random()-.5)*CELL*.5 : 0;
 
-    for(let i=0;i<celdas.length;i++){
-      const q = celdas[i];
-      let a = 0, blanco = false;
+    const sy = scanY(t);
+    const ALC = CELL*2.4;               // alcance del haz sobre las celdas
 
-      // barrido: frente diagonal con umbral propio por celda
-      const k = (pS - q.diag*.82 + Math.abs(q.sem)*.06) / .16;
-      if(k > 0) a = Math.max(0, (1 - Math.abs(k-1)) * .22);
+    const huida = sw(cl((pN-.05)/.55));
+    if(huida < .995){
+      for(let k=0;k<sweep.length;k++){
+        const q = sweep[k];
+        const kk = (pS - q.diag*.82 + q.sem*.06)/.16;
+        const base = kk > 0 ? Math.max(0,(1-Math.abs(kk-1))*.2) : 0;
+        // el haz enciende la fila por la que pasa, aunque el barrido ya se apagara
+        const db = Math.abs(q.cy + CELL/2 - sy);
+        const luz = db < ALC ? (1 - db/ALC) * .30 : 0;
+        const a = (base + luz) * (1-huida);
+        if(a < .012) continue;
+        const emp = huida*huida*90*(.5+q.sem);
+        const ux=(q.cx-cxG)/(q.rad||1), uy=(q.cy-cyG)/(q.rad||1);
+        const px = q.x+ux*emp, py = q.y+uy*emp;
 
-      // el aro se enciende siguiendo el reloj y se queda
-      if(q.aro && enc > q.ang){
-        const recien = cl((enc - q.ang) * 14);        // destello al llegar
-        a = Math.max(a, (.55 + .45*recien) * (1 - pN*.72));
-        blanco = true;
+        // una de cada quince celdas muestra un valor en lugar de un bloque
+        if(q.sem > .935){
+          ctx.font = MONO;
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillStyle = 'rgba('+CIAN+','+Math.min(1,a*3).toFixed(3)+')';
+          const hex = ((q.sem*65535)|0).toString(16).toUpperCase().padStart(4,'0');
+          ctx.fillText(hex, px+CELL/2, py+CELL/2);
+        } else {
+          ctx.fillStyle = 'rgba(255,255,255,'+a.toFixed(3)+')';
+          ctx.fillRect(px, py, CELL-1, CELL-1);
+        }
       }
-
-      if(a < .012) continue;
-      const m = blanco ? meng : 1;
-      const s = CELL * m;
-      const off = (CELL - s) / 2;
-      ctx.fillStyle = 'rgba(255,255,255,' + a.toFixed(3) + ')';
-      ctx.fillRect(q.x + off, q.y + off, s - 1, s - 1);
     }
 
-    // trazo continuo apareciendo: el aro deja de ser pixeles
-    if(pN > 0){
-      ring.style.opacity = sw(pN).toFixed(3);
-      ring.style.transform = 'scale(' + (.94 + .06*sw(pN)).toFixed(3) + ')';
-      if(word){ word.style.opacity = sw(cl((pN-.3)/.7)).toFixed(3);
-                word.style.transform = 'translateX(-50%) translateY(' + ((1-sw(pN))*8).toFixed(1) + 'px)'; }
+    ctx.save();
+    if(conv > 0 && conv < 1){
+      ctx.translate(cxG,cyG); ctx.rotate((1-conv)*.20); ctx.translate(-cxG,-cyG);
+    }
+    for(let k=0; ARO_PIXEL && k<aro.length; k++){
+      const q = aro[k];
+      if(enc <= q.ang && pN <= 0) continue;
+      const recien = cl((enc-q.ang)*14);
+      let a = .55 + .45*recien;
+      if(pL > 0 && pL < 1){
+        const f = 1 - cl(dAng(q.ang,pL)/.09);
+        a += f*f*.9;
+      }
+      const dbA = Math.abs(q.cy - sy);
+      if(dbA < ALC) a += (1 - dbA/ALC) * .45;
+      a *= (1 - pN*.2);
+      if(a < .02) continue;
+      const s  = CELL*(1-conv) + Math.max(3,CELL*.14)*conv;
+      const px = q.cx*(1-conv) + q.tx*conv + glitch;
+      const py = q.cy*(1-conv) + q.ty*conv;
+      if(conv > .02 && conv < .96){
+        ctx.strokeStyle = 'rgba(255,255,255,'+(a*.28*(1-conv)).toFixed(3)+')';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(q.cx,q.cy); ctx.lineTo(px,py); ctx.stroke();
+      }
+      if(glitch !== 0){
+        ctx.fillStyle = 'rgba('+CIAN+','+(a*.55).toFixed(3)+')';
+        ctx.fillRect(px-s/2-4, py-s/2, s, s);
+        ctx.fillStyle = 'rgba('+VIOL+','+(a*.45).toFixed(3)+')';
+        ctx.fillRect(px-s/2+4, py-s/2, s, s);
+      }
+      // resplandor por celda: es lo que hace que el neon se lea como luz
+      ctx.save();
+      ctx.shadowColor = 'rgba('+CIAN+',.95)';
+      ctx.shadowBlur = 10 + 14*Math.min(1,a);
+      ctx.fillStyle = 'rgba(255,255,255,'+Math.min(1,a).toFixed(3)+')';
+      ctx.fillRect(px-s/2, py-s/2, s-(conv<.5?1:0), s-(conv<.5?1:0));
+      ctx.restore();
+    }
+    ctx.restore();
+
+    /* descargas: mientras el pulso da la vuelta, saltan arcos quebrados
+       entre puntos opuestos del aro, pasando cerca del centro */
+    if(pL > .05 && pL < .95 && aro.length){
+      const nArcos = 2;
+      for(let n=0;n<nArcos;n++){
+        const a1 = (pL + n*.5) * Math.PI*2;
+        const a2 = a1 + Math.PI*(.7 + Math.sin(pL*9+n)*.25);
+        const x1 = cxG+Math.cos(a1)*R, y1 = cyG+Math.sin(a1)*R;
+        const x2 = cxG+Math.cos(a2)*R, y2 = cyG+Math.sin(a2)*R;
+        ctx.save();
+        ctx.shadowColor = 'rgba('+CIAN+',1)';
+        ctx.shadowBlur = 16;
+        ctx.strokeStyle = 'rgba('+CIAN+','+(.25+.5*Math.random()).toFixed(2)+')';
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(x1,y1);
+        const seg = 7;
+        for(let i=1;i<seg;i++){
+          const u = i/seg;
+          const mx = x1+(x2-x1)*u, my = y1+(y2-y1)*u;
+          const d = (Math.random()-.5) * R*.30 * Math.sin(u*Math.PI);
+          ctx.lineTo(mx + d, my - d*.6);
+        }
+        ctx.lineTo(x2,y2);
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    if(pK > 0 && pK < 1){
+      for(let n=0;n<2;n++){
+        const o = cl((pK-n*.16)/.62);
+        if(o <= 0 || o >= 1) continue;
+        ctx.save();
+        ctx.shadowColor = 'rgba('+CIAN+',.9)';
+        ctx.shadowBlur = 18*(1-o);
+        ctx.strokeStyle = n===0 ? 'rgba(255,255,255,'+((1-o)*.55).toFixed(3)+')'
+                                : 'rgba('+VIOL+','+((1-o)*.4).toFixed(3)+')';
+        ctx.lineWidth = 2*(1-o)+.4;
+        ctx.beginPath(); ctx.arc(cxG,cyG,R*(1+o*1.7),0,Math.PI*2); ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    if(pK > 0){
+      const e = out(pK);
+      const half = R*(2.5-1.08*e), L = R*.30, o = Math.min(1,pK*2.4);
+      ctx.save();
+      ctx.shadowColor = 'rgba('+CIAN+',.9)'; ctx.shadowBlur = 12;
+      ctx.strokeStyle = 'rgba(255,255,255,'+(o*.95).toFixed(3)+')';
+      ctx.lineWidth = 1.4;
+      for(const [sx,sy] of [[-1,-1],[1,-1],[-1,1],[1,1]]){
+        const x=cxG+sx*half, y=cyG+sy*half;
+        ctx.beginPath();
+        ctx.moveTo(x, y+sy*-L); ctx.lineTo(x,y); ctx.lineTo(x+sx*-L, y);
+        ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    /* inversion de un instante en el enganche: dos fotogramas y fuera */
+    if(pK > .04 && pK < .13){
+      ctx.save();
+      ctx.globalCompositeOperation = 'difference';
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0,0,W,H);
+      ctx.restore();
+    }
+
+    if(pH > 0 || pK >= 1){
+      const gir = (t/1100)%1, rr = R*1.17;
+      ctx.save();
+      ctx.shadowColor = 'rgba('+CIAN+',1)'; ctx.shadowBlur = 14;
+      ctx.strokeStyle = 'rgba('+CIAN+',.85)';
+      ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.arc(cxG,cyG,rr, gir*Math.PI*2, gir*Math.PI*2+.5); ctx.stroke();
+      ctx.restore();
+
+      const o = sw(cl(pH/.7));
+      if(o > .02){
+        ctx.font = MONO; ctx.textBaseline='middle';
+        ctx.strokeStyle = 'rgba(255,255,255,'+(o*.4).toFixed(3)+')';
+        ctx.fillStyle   = 'rgba(255,255,255,'+(o*.75).toFixed(3)+')';
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(cxG+R*1.34,cyG); ctx.lineTo(cxG+R*1.62,cyG); ctx.stroke();
+        ctx.textAlign='left';  ctx.fillText('R 27.2', cxG+R*1.70, cyG);
+        ctx.beginPath(); ctx.moveTo(cxG-R*1.34,cyG); ctx.lineTo(cxG-R*1.62,cyG); ctx.stroke();
+        ctx.textAlign='right'; ctx.fillText('SW 6.1', cxG-R*1.70, cyG);
+      }
+    }
+
+    /* haz de escaneo: nucleo claro para que se lea sobre el campo azul,
+       con halo del azul de la seccion de Sectora Foundation */
+    if(sy > -60 && sy < H + 60){
+      const halo = CELL*2.6;
+      const g = ctx.createLinearGradient(0, sy-halo, 0, sy+halo);
+      g.addColorStop(0,   'rgba('+CIAN+',0)');
+      g.addColorStop(.38, 'rgba('+CIAN+',.20)');
+      g.addColorStop(.5,  'rgba('+CIAN+',.45)');
+      g.addColorStop(.62, 'rgba('+CIAN+',.20)');
+      g.addColorStop(1,   'rgba('+CIAN+',0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, sy-halo, W, halo*2);
+
+      ctx.save();
+      ctx.shadowColor = 'rgba('+CIAN+',1)'; ctx.shadowBlur = 16;
+      ctx.fillStyle = 'rgba(235,252,255,.95)';
+      ctx.fillRect(0, sy-1, W, 2);
+      ctx.restore();
+      // marcas en los extremos, como una regla que avanza
+      ctx.fillStyle = 'rgba(224,238,255,.9)';
+      ctx.fillRect(0, sy-6, 2, 12);
+      ctx.fillRect(W-2, sy-6, 2, 12);
+    }
+
+    const apar = ARO_PIXEL ? sw(cl((pN-.45)/.55))
+                           : sw(cl((pR-.06)/.62));   // aparece ya en el ensamblado
+
+    // halo del aro, dibujado aqui para que no quede recortado en ninguna caja
+    if(apar > .02){
+      const g2 = ctx.createRadialGradient(cxG,cyG, R*.52, cxG,cyG, R*1.58);
+      g2.addColorStop(0,    'rgba('+CIAN+',0)');
+      g2.addColorStop(.34,  'rgba('+CIAN+','+(apar*.16).toFixed(3)+')');
+      g2.addColorStop(.47,  'rgba('+CIAN+','+(apar*.40).toFixed(3)+')');
+      g2.addColorStop(.60,  'rgba('+CIAN+','+(apar*.16).toFixed(3)+')');
+      g2.addColorStop(1,    'rgba('+CIAN+',0)');
+      ctx.fillStyle = g2;
+      ctx.fillRect(cxG-R*1.6, cyG-R*1.6, R*3.2, R*3.2);
+    }
+
+    ring.style.opacity = apar.toFixed(3);
+    ring.style.transform = 'scale('+(1+(1-apar)*.02).toFixed(4)+')';
+
+    if(word){
+      const wv = sw(cl((pK-.2)/.8));
+      word.style.opacity = wv.toFixed(3);
+      word.style.letterSpacing = (.9-.48*wv).toFixed(3)+'em';
+      word.style.transform = 'translateX(-50%) translateY('+((1-wv)*8).toFixed(1)+'px)';
     }
   }
 
-  /* ---------- estado real de carga ---------- */
+  /* ---------- salida: el aro estalla y el azul se deshace ---------- */
+  let trozos = [];
+  function estallar(){
+    trozos = aro.map(q => ({
+      x: q.tx, y: q.ty,
+      vx: Math.cos(q.dir) * (8.2 + q.sem*5.4),
+      vy: Math.sin(q.dir) * (8.2 + q.sem*5.4),
+      s: Math.max(3, CELL*.16) * (.8 + q.sem*1.1),
+      rot: q.sem*6.28,
+      vr: (q.sem-.5)*.34
+    }));
+  }
+
+  function salir(k){
+    ctx.clearRect(0,0,W,H);
+
+    // el campo azul se deshace de dentro hacia fuera; las celdas que estan
+    // a punto de morir destellan antes de irse
+    const dis = cl((k - .30) / .70);
+    const frente = dis * 1.34;
+    for(let i=0;i<todas.length;i++){
+      const q = todas[i];
+      const m = q.muerte;
+      if(frente > m + .10) continue;                 // ya desaparecida
+      if(frente > m){
+        // filo de combustion: azul -> cian -> blanco antes de desaparecer
+        const b = 1 - (frente - m)/.10;
+        const r2 = (21 + 214*b)|0, g2 = (105 + 147*b)|0;
+        ctx.fillStyle = 'rgb('+r2+','+g2+',255)';
+      } else {
+        ctx.fillStyle = AZUL;
+      }
+      ctx.fillRect(q.x, q.y, CELL+1, CELL+1);
+    }
+
+    // fragmentos del aro
+    const f = cl(k/.62);
+    for(let i=0;i<trozos.length;i++){
+      const p = trozos[i];
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      p.vx *= 1.030; p.vy *= 1.030;
+      const a = 1 - f;
+      if(a <= .02) continue;
+      ctx.save();
+      ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.shadowColor = 'rgba('+CIAN+',1)';
+      ctx.shadowBlur = 14*a;
+      ctx.fillStyle = 'rgba(255,255,255,'+a.toFixed(3)+')';
+      ctx.fillRect(-p.s/2, -p.s/2, p.s, p.s);
+      ctx.restore();
+    }
+  }
+
+  /* ---------- carga real ---------- */
   let cargado = false;
   const fuentes = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
   const pagina  = document.readyState === 'complete'
     ? Promise.resolve()
     : new Promise(r => window.addEventListener('load', r, {once:true}));
-  Promise.all([fuentes, pagina]).then(() => { cargado = true; });
+  Promise.all([fuentes,pagina]).then(() => { cargado = true; });
 
   medir();
   window.addEventListener('resize', medir);
 
   const t0 = performance.now();
-  let abriendo = false, tAbre = 0;
+  let saliendo=false, tSal=0, estado=0, preparado=false;
+
+  function rotulo(txt){ if(est && est.lastChild) est.lastChild.nodeValue = txt; }
+
+  // el registro se va escribiendo al ritmo de las fases
+  const logEls = [...document.querySelectorAll('#intro-log span')];
+  const logT = [T_SWEEP*.4, T0_RING + T_RING*.35, T0_SNAP + T_SNAP*.5, T0_LOCK + T_LOCK*.4];
+  let logN = 0;
 
   function ciclo(now){
     const t = now - t0;
 
-    if(!abriendo){
+    if(!saliendo){
       pintar(t);
-
-      // el contador no alcanza 100 hasta que la carga ha terminado de verdad
-      const porTiempo = cl(t / T_TOTAL);
-      const p = cargado ? porTiempo : Math.min(porTiempo, .96);
+      const porTiempo = cl(t/T_TOTAL);
+      const p = cargado ? porTiempo : Math.min(porTiempo,.96);
       if(pctE) pctE.textContent = String(Math.round(p*100)).padStart(2,'0');
-      if(fill) fill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-      if(est && p >= 1 && !est.classList.contains('ok')){
-        est.classList.add('ok');
-        est.lastChild.nodeValue = 'Ready';
-      }
+      if(fill) fill.style.transform = 'scaleX('+p.toFixed(4)+')';
+      while(logN < logEls.length && t > logT[logN]){ logEls[logN].classList.add('on'); logN++; }
+      if(estado===0 && t > T0_LOCK){ estado=1; rotulo('Signal locked'); }
+      if(estado===1 && p >= 1){ estado=2; rotulo('Ready'); if(est) est.classList.add('ok'); }
 
-      if(t >= T_TOTAL && cargado){ abriendo = true; tAbre = now; }
-      if(t > 6000){ abriendo = true; tAbre = now; }   // salvaguarda
+      if((t >= T_TOTAL && cargado) || t > 6600){ saliendo = true; tSal = now; }
     } else {
-      let k = (now - tAbre) / T_OPEN;
-      k = cl(k);
-      const e = Math.pow(k, 2.1);                      // acelera, como un diafragma
-      const maxR = Math.hypot(W, H) * .58;
-      const r = e * maxR;
-
-      hole.style.width  = (r*2).toFixed(1) + 'px';
-      hole.style.height = (r*2).toFixed(1) + 'px';
-
-      cv.style.opacity = (1 - cl(k*2.4)).toFixed(3);
-      const rBase = ring.getBoundingClientRect().width * .272;
-      ring.style.transform = 'scale(' + Math.max(1, r/Math.max(rBase,1)).toFixed(3) + ')';
-      ring.style.opacity = (1 - cl((k-.4)/.45)).toFixed(3);
-      if(word) word.style.opacity = (1 - cl(k*3)).toFixed(3);
-      el.querySelector('.intro-frame').style.opacity = (1 - cl(k*2.2)).toFixed(3);
-      el.querySelector('.intro-hud').style.opacity   = (1 - cl(k*2.2)).toFixed(3);
-
+      if(!preparado){
+        preparado = true;
+        estallar();
+        el.style.background = 'transparent';   // el azul lo pinta ya el lienzo
+        ring.style.opacity = 0;                // el trazo cede a los fragmentos
+        if(typeof window.SECT_IGNITE === 'function') window.SECT_IGNITE();
+      }
+      const k = cl((now - tSal) / T_EXIT);
+      salir(k);
+      if(word) word.style.opacity = (1 - cl(k*2.6)).toFixed(3);
+      el.querySelector('.intro-frame').style.opacity = (1-cl(k*2.0)).toFixed(3);
+      el.querySelector('.intro-hud').style.opacity   = (1-cl(k*2.0)).toFixed(3);
       if(k >= 1){ fin(); return; }
     }
     requestAnimationFrame(ciclo);
@@ -2061,7 +2338,7 @@
     <div class="brand">
       <a href="#" aria-label="Sectora Foundation — inicio">
         <svg viewBox="0 0 100 100" role="img" aria-hidden="true">
-          <rect width="100" height="100" fill="var(--blue)"/>
+          <rect width="100" height="100" rx="9" ry="9" fill="var(--blue)"/>
           <circle class="ring" cx="50" cy="50" r="27.2" fill="none" stroke="#fff" stroke-width="6.1"/>
         </svg>
       </a>
@@ -2086,7 +2363,7 @@
     <main class="hero">
       <div>
         <p class="eyebrow mono lift" style="--d:.05s"><i></i>Official publication · Sectora Foundation, Illinois US</p>
-        <h1 id="title">Website Official <span class="b">Sectora Foundation</span></h1>
+        <h1 id="title">Official Website <span class="b">Sectora Foundation</span></h1>
         <div class="rule"></div>
         <p class="lede lift" style="--d:.6s">
           Sectora builds the security layer for tokenized real-world assets:
@@ -2573,8 +2850,7 @@
         <span class="jc-go">Uniswap <em>&#8599;</em></span>
       </a>
 
-      <!-- sustituir por el enlace real de X -->
-      <a class="jc reveal" style="--d:.26s" href="#" target="_blank" rel="noopener noreferrer">
+      <a class="jc reveal" style="--d:.26s" href="https://x.com/sectoraorg" target="_blank" rel="noopener noreferrer">
         <span class="jc-i" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <span class="jc-num">03</span>
         <span class="jc-row">
@@ -2671,7 +2947,7 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
   const arranque = window.SECT_INTRO || Promise.resolve();
   const fuentes  = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
   Promise.all([fuentes, arranque]).then(play);
-  setTimeout(play, 6000);
+  setTimeout(play, 7500);
 
   let titleRT;
   window.addEventListener('resize', () => {
@@ -2971,6 +3247,12 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     if(lineLayer.width > 1) ctx.drawImage(lineLayer, 0, 0, W, H);
   }
 
+  /* la intro llama a esto al abrirse: la rejilla de la cubierta se
+     enciende en un frente circular desde el centro, de modo que la energia
+     de la intro no se corta, pasa a la pagina */
+  let ignicion = -1;
+  window.SECT_IGNITE = () => { ignicion = performance.now(); };
+
   let last = 0, tabVisible = true, heroVisible = true;
   document.addEventListener('visibilitychange', () => { tabVisible = !document.hidden; });
 
@@ -2989,6 +3271,29 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     if(!startT){ startT = t; sweepStart = t + INTRO_MS + 4500; }
     const intoIntro = (t - startT) < INTRO_MS;
     intro(t);
+
+    // frente circular heredado de la intro
+    if(ignicion > 0){
+      const e = (performance.now() - ignicion) / 620;
+      if(e >= 1.2) ignicion = -1;
+      else {
+        const rect = canvas.getBoundingClientRect();
+        const ccx = (W/2)/CELL, ccy = (rect.height/2)/CELL;
+        const frente = e * (Math.hypot(cols, rows) * .62);
+        for(let r=0;r<rows;r++){
+          for(let c=0;c<cols;c++){
+            const d = Math.hypot(c-ccx, r-ccy);
+            const v = 1 - Math.abs(d - frente) / 1.6;
+            if(v > 0){
+              const i = idx(c,r);
+              const a = v * (1 - e*.55);
+              if(heat[i] < a) heat[i] = a;
+            }
+          }
+        }
+      }
+    }
+
     stepWalkers(t, intoIntro);
     if(!intoIntro) pops(t);
     sweep(t);
