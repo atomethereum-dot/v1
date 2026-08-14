@@ -1,3 +1,33 @@
+<!--
+  SECTORA FOUNDATION — sitio completo en un solo archivo
+  ------------------------------------------------------
+  Autonomo: no necesita build, ni dependencias, ni archivos externos.
+  Lo unico que carga de fuera son las fuentes de Google.
+  Los iconos (favicon y apple-touch-icon) van incrustados aqui dentro.
+
+  PARA PUBLICAR
+    Renombrar a index.html y subirlo. Nada mas.
+
+  PENDIENTE (buscar href="#" y los comentarios "pendiente:")
+    · Telegram
+    · Legal documents
+    · Audit report
+    · Illinois registry
+    · Testnet de tokenizacion de activos
+    · Testnet de la stablecoin USD-SEC
+
+  DATOS EN VIVO
+    La tabla comparativa consulta CoinGecko. Sin clave funciona pero se
+    limita rapido. Pegar una clave Demo gratuita en la constante CG_KEY
+    (buscar "const CG_KEY") sube el limite a 10.000 llamadas al mes.
+
+  AJUSTES RAPIDOS
+    · Velocidad de las transiciones: la altura en vh de .iris, .wipe,
+      .plate, .zoom, .rwa y .jiris. Mas alto = mas lento.
+    · Ritmo de la intro: las constantes T_SWEEP, T_RING, T_LAP, T_SNAP,
+      T_LOCK, T_HOLD y T_EXIT.
+    · Tacto del scroll en escritorio: FACTOR y SUAVE.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,8 +36,7 @@
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='9' ry='9' fill='%231569ff'/%3E%3Ccircle cx='50' cy='50' r='30' fill='none' stroke='%23fff' stroke-width='11'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="manifest" href="site.webmanifest">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
 <title>Official Website Sectora Foundation</title>
 <meta name="description" content="Sectora Foundation — security infrastructure for tokenized real-world assets: contract auditing, custody controls and continuous on-chain monitoring.">
 <meta property="og:type" content="website">
@@ -85,14 +114,7 @@
   /* cabecera estatica: forma parte del flujo y se va con el scroll */
   .top{position:relative;z-index:50}
 
-  .utility{
-    display:flex;justify-content:space-between;align-items:center;gap:20px;
-    padding:9px var(--pad);
-    border-bottom:1px solid var(--hair-soft);
-    color:var(--ink-3);
-    background:rgba(0,0,0,.72);
-    backdrop-filter:blur(10px);
-  }
+  
   .status{display:flex;align-items:center;gap:9px}
   .dot{width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;position:relative}
   .dot::after{
@@ -288,7 +310,7 @@
   @media (pointer:coarse){.reticle,.readout{display:none}}
 
   /* ============ iris ligado al scroll ============ */
-  .iris{position:relative;height:340vh;background:#000}
+  .iris{position:relative;height:560vh;background:#000}
   .iris-pin{
     /* dvh sigue a las barras del navegador; svh dejaba una franja negra
        al ocultarse la barra inferior en movil */
@@ -458,8 +480,7 @@
     font-size:clamp(15px,1.5vw,22px);font-weight:300;line-height:1.5;
     letter-spacing:-.01em;text-align:center;text-wrap:balance;
   }
-  .iris-hint{position:absolute;left:50%;bottom:34px;transform:translateX(-50%);z-index:3;
-    mix-blend-mode:difference;color:#fff;opacity:.45}
+  
 
   /* ============ mandatos, tarjetas de cristal ============ */
   .mandates{
@@ -559,7 +580,7 @@
      mismo lenguaje que la rejilla, mecanica distinta a la del iris:
      los cuadros se llenan de negro en un frente diagonal ligado al
      scroll, con el filo encendido en azul */
-  .wipe{position:relative;height:280vh;background:#000}
+  .wipe{position:relative;height:460vh;background:#000}
   .wipe-pin{
     position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;
     display:grid;place-items:center;isolation:isolate;
@@ -844,7 +865,7 @@
     .p-sticky .eyebrow{margin-bottom:14px}
   }
   @media (max-width:820px){
-    .wipe{height:210vh}          /* menos recorrido muerto en pantalla pequena */
+    .wipe{height:300vh}          /* menos recorrido muerto en pantalla pequena */
     .p-row{grid-template-columns:44px minmax(0,1fr);row-gap:10px}
   }
 
@@ -856,7 +877,7 @@
      el roadmap como plancha de grabado de seguridad: rosetas guilloche
      trazadas con el scroll, bisel con las seis marcas y cartela
      tipografica. Sin efectos: precision. */
-  .plate{position:relative;height:520vh;background:#000}
+  .plate{position:relative;height:820vh;background:#000}
   .plate-pin{
     position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;isolation:isolate;
     background:
@@ -954,7 +975,7 @@
   .plate-meta b{font-weight:500;color:var(--ink-3);font-variant-numeric:tabular-nums}
 
   @media (max-width:700px){
-    .plate{height:460vh}
+    .plate{height:640vh}
     .plate-meta.tr,.plate-meta.br{display:none}
   }
 
@@ -1007,7 +1028,7 @@
     font-family:'IBM Plex Mono',monospace;color:var(--ink-4);margin-top:6px}
 
   /* --- linea de tiempo --- */
-  .tl{position:relative;padding-left:30px}
+  .tl-list .tl,.plate .tl,.rsm .tl{position:relative;padding-left:30px}
   .tl::before{
     content:'';position:absolute;left:0;top:6px;bottom:6px;width:1px;
     background:linear-gradient(180deg,var(--blue),rgba(21,105,255,.12));
@@ -1046,7 +1067,7 @@
      la cifra del supply se amplia hasta que uno de sus trazos cubre el
      encuadre. No hay cortina ni recorte: el blanco de la seccion
      siguiente sale de dentro del propio numero. */
-  .zoom{position:relative;height:250vh;background:#000}
+  .zoom{position:relative;height:400vh;background:#000}
   .zoom-pin{
     position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;background:#000;
   }
@@ -1176,7 +1197,7 @@
   .supply{
     position:relative;background:#f2f2ef;color:#07080a;
     /* poco aire arriba: el aterrizaje de la transicion ya hace de entrada */
-    padding:clamp(30px,5vh,64px) var(--pad) clamp(90px,14vh,160px);
+    padding:clamp(30px,5vh,64px) var(--pad) clamp(34px,5vh,62px);
   }
   .supply::before{
     content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
@@ -1325,16 +1346,36 @@
   }
 
 
+  /* costura entre supply y RWA: las dos comparten fondo, asi que sin una
+     marca el salto se lee como un hueco vacio */
+  .seam{
+    position:relative;background:#f2f2ef;
+    display:grid;justify-items:center;gap:14px;
+    padding:clamp(20px,3vh,40px) var(--pad) clamp(24px,4vh,48px);
+  }
+  .seam span{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;
+    text-transform:uppercase;color:#9aa0ab;
+  }
+  .seam i{
+    display:block;width:1px;height:clamp(30px,5vh,58px);
+    background:linear-gradient(180deg,rgba(0,0,0,.24),rgba(0,0,0,0));
+  }
+  .seam i::after{
+    content:'';position:absolute;left:50%;margin-left:-2.5px;
+    width:5px;height:5px;background:#0d4fd8;transform:translateY(-2px);
+  }
+
   /* ============ oportunidad de mercado: RWA ============
      el fondo recorre de blanco hueso a negro con el scroll. Todo el
      contenido va en blanco con mezcla difference, asi que se invierte
      solo: negro sobre el blanco inicial, blanco sobre el negro final.
      Un unico valor animado gobierna toda la escena. */
-  .rwa{position:relative;height:420vh;background:#f2f2ef}
+  .rwa{position:relative;height:680vh;background:#f2f2ef}
   .rwa-pin{
     position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;
-    display:flex;align-items:center;
-    padding:clamp(40px,7vh,90px) var(--pad);
+    display:flex;align-items:stretch;
+    padding:clamp(34px,5.4vh,74px) var(--pad);
     background:#f2f2ef;isolation:isolate;
   }
   /* misma reticula de 54px que en Our projects; con mezcla difference se
@@ -1367,7 +1408,7 @@
   .rwa-inner{
     position:relative;z-index:1;width:100%;max-width:1320px;margin:0 auto;
     display:grid;grid-template-columns:minmax(0,1.62fr) minmax(0,1fr);
-    gap:clamp(30px,5vw,88px);align-items:start;
+    gap:clamp(30px,5vw,88px);align-items:stretch;
     mix-blend-mode:difference;color:#fff;
   }
 
@@ -1380,7 +1421,12 @@
     letter-spacing:-.03em;margin:14px 0 clamp(30px,5vh,52px);max-width:14ch;
   }
 
-  .rwa-rows{display:flex;flex-direction:column;gap:clamp(9px,1.5vh,15px)}
+  /* la columna se reparte de arriba abajo: titular, grafico y fuente
+     quedan repartidos en toda la altura en lugar de agrupados al centro */
+  .rwa-left{display:flex;flex-direction:column;justify-content:space-between;min-height:0}
+  .rwa-rows{display:flex;flex-direction:column;justify-content:space-evenly;
+    flex:1;min-height:0;gap:clamp(8px,1.4vh,15px);padding:clamp(10px,2vh,22px) 0}
+  .rwa-stat{display:flex;flex-direction:column;justify-content:center}
   .rwa-row{
     display:grid;grid-template-columns:58px minmax(0,1fr) 78px;
     gap:clamp(12px,2vw,22px);align-items:center;
@@ -1435,8 +1481,13 @@
   }
 
   @media (max-width:900px){
-    .rwa{height:380vh}
-    .rwa-inner{grid-template-columns:1fr;gap:34px}
+    .rwa{height:520vh}
+    .rwa-pin{padding:clamp(20px,3.4vh,52px) var(--pad)}
+    .rwa-left{justify-content:center;gap:22px}
+    .rwa-rows{flex:0 1 auto;justify-content:flex-start;padding:0}
+    .rwa-inner{grid-template-columns:1fr;gap:26px}
+    .rwa-title{margin:12px 0 clamp(20px,3.4vh,34px)}
+    .rwa-stat{padding-top:clamp(20px,3.6vh,44px)}
     .rwa-row{grid-template-columns:46px minmax(0,1fr) 66px}
     .rwa-axis{grid-template-columns:46px minmax(0,1fr) 66px}
     .rwa-copy{display:none}
@@ -1446,7 +1497,7 @@
   /* ============ apertura a blanco: Join us ============
      misma mecanica que el iris de la cubierta: un circulo claro que se
      abre desde el centro con el scroll y desemboca en la seccion final. */
-  .jiris{position:relative;height:300vh;background:#000}
+  .jiris{position:relative;height:490vh;background:#000}
   .jiris-pin{
     position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;
     display:grid;place-items:center;isolation:isolate;
@@ -1747,15 +1798,17 @@
   .intro-hud .bl{left:0;bottom:0;display:inline-flex;align-items:center;gap:9px}
   /* registro de arranque: lineas que van apareciendo, como una consola */
   .intro-log{
-    position:absolute;left:0;bottom:22px;z-index:4;pointer-events:none;
+    position:absolute;left:0;bottom:26px;z-index:4;pointer-events:none;
     font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;
     text-transform:uppercase;line-height:1.85;
   }
-  .intro-log span{display:block;opacity:0;color:rgba(255,255,255,.55);
+  /* position:static anula el absolute que heredan de .intro-hud span:
+     sin esto las cuatro lineas se apilan en el mismo punto */
+  .intro-log span{position:static;display:block;opacity:0;color:rgba(255,255,255,.55);
     transform:translateY(4px);transition:opacity .3s var(--ease),transform .3s var(--ease)}
   .intro-log span.on{opacity:1;transform:none}
   .intro-log span.hi{color:rgba(52,231,255,.95)}
-  @media (max-width:700px){ .intro-log{display:none} }
+  @media (max-width:700px){ /* el registro tambien se ve en movil: reglas propias mas abajo */ }
   .intro-hud .br{right:0;bottom:0;font-variant-numeric:tabular-nums}
   .intro-hud .led{width:5px;height:5px;border-radius:50%;background:#34e7ff;box-shadow:0 0 9px rgba(52,231,255,.95);
     animation:introBlink 1s steps(2) infinite}
@@ -1785,7 +1838,217 @@
   .intro-lock{overflow:hidden!important}
   @media (prefers-reduced-motion:reduce){ .intro{display:none} }
 
-  /* ============ pie ============ */
+  /* ============ pie ============
+     negro, con la reticula de la pagina y la marca en la esquina. Todo el
+     movimiento nace del scroll o del puntero: nada gira porque si. */
+  .ft{
+    position:relative;color:var(--ink);overflow:hidden;
+    /* el negro deja de ser plano: se aclara ligeramente hacia la costura */
+    background:
+      radial-gradient(120% 70% at 50% 0%, rgba(21,105,255,.07), transparent 62%),
+      linear-gradient(180deg, #05070c 0%, #000 46%);
+    padding:clamp(64px,10vh,110px) var(--pad) clamp(26px,4vh,44px);
+    border-top:1px solid rgba(255,255,255,.10);
+  }
+  .ft::before{
+    content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.032) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.032) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(90% 78% at 50% 8%,#000,transparent 88%);
+    mask-image:radial-gradient(90% 78% at 50% 8%,#000,transparent 88%);
+  }
+  /* luz que se derrama desde la costura superior */
+  /* rejilla viva: las mismas celdas de la cubierta, aqui muy contenidas
+     para que no compitan con los enlaces */
+  #ft-cells{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.85}
+
+  /* masas de luz derivando bajo la costura */
+  .ft-aurora{position:absolute;left:0;right:0;top:-14vh;height:46vh;z-index:0;
+    pointer-events:none;overflow:hidden}
+  .ft-aurora span{position:absolute;top:0;border-radius:50%;filter:blur(80px)}
+  .ft-aurora span:nth-child(1){left:-6%;width:52vw;height:34vh;background:rgba(21,105,255,.16);
+    animation:driftIzq 26s ease-in-out infinite}
+  .ft-aurora span:nth-child(2){right:-6%;width:52vw;height:34vh;background:rgba(21,105,255,.16);
+    animation:driftDer 26s ease-in-out infinite}
+
+  /* puntos en los cruces de la reticula: textura fina, no ruido */
+  .ft-dots{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,.10) 1px, transparent 1px);
+    background-size:54px 54px;background-position:27px 27px;
+    -webkit-mask-image:radial-gradient(88% 74% at 50% 14%,#000,transparent 86%);
+    mask-image:radial-gradient(88% 74% at 50% 14%,#000,transparent 86%);
+  }
+  /* anillos concentricos muy tenues, el mismo motivo del iris */
+  .ft-rings{
+    position:absolute;left:50%;top:8%;width:min(120vw,1500px);height:min(120vw,1500px);
+    margin-left:min(-60vw,-750px);z-index:0;pointer-events:none;
+    background:repeating-radial-gradient(circle at 50% 50%,
+      transparent 0 96px, rgba(110,170,255,.055) 96px 97px);
+    -webkit-mask-image:radial-gradient(50% 50% at 50% 50%,#000,transparent 74%);
+    mask-image:radial-gradient(50% 50% at 50% 50%,#000,transparent 74%);
+    animation:ftRings 14s ease-in-out infinite;
+  }
+  @keyframes ftRings{
+    0%,100%{transform:scale(1);opacity:1}
+    50%{transform:scale(1.06);opacity:.6}
+  }
+  /* cruces de registro, como en la cubierta */
+  .ft-marks{position:absolute;inset:clamp(16px,2.2vw,30px);z-index:1;pointer-events:none}
+  .ft-marks i{position:absolute;width:10px;height:10px;opacity:.5}
+  .ft-marks i::before,.ft-marks i::after{content:'';position:absolute;background:#7c8496}
+  .ft-marks i::before{left:50%;top:0;bottom:0;width:1px;transform:translateX(-.5px)}
+  .ft-marks i::after{top:50%;left:0;right:0;height:1px;transform:translateY(-.5px)}
+  .ft-marks i:nth-child(1){left:0;top:0}
+  .ft-marks i:nth-child(2){right:0;top:0}
+  .ft-marks i:nth-child(3){left:0;bottom:0}
+  .ft-marks i:nth-child(4){right:0;bottom:0}
+
+  .ft-glow{
+    position:absolute;top:-16vh;left:0;right:0;height:36vh;z-index:0;pointer-events:none;
+    background:radial-gradient(56% 62% at 50% 46%, rgba(21,105,255,.30), transparent 72%);
+    filter:blur(64px);
+    -webkit-mask-image:linear-gradient(180deg,transparent,#000 40%,#000 66%,transparent);
+    mask-image:linear-gradient(180deg,transparent,#000 40%,#000 66%,transparent);
+  }
+  /* filete superior con un destello que lo recorre despacio */
+  .ft-rail{position:absolute;top:0;left:0;right:0;height:1px;z-index:1;overflow:hidden}
+  .ft-rail i{
+    position:absolute;top:0;left:0;width:34%;height:1px;
+    background:linear-gradient(90deg,transparent,#1569ff,transparent);
+    animation:ftRail 9s linear infinite;
+  }
+  @keyframes ftRail{from{transform:translateX(-100%)}to{transform:translateX(394%)}}
+
+  .ft-inner{position:relative;z-index:2;max-width:1320px;margin:0 auto}
+
+  /* ---- identidad ---- */
+  .ft-top{
+    display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(16px,2.4vw,26px);
+    align-items:start;padding-bottom:clamp(34px,5vh,58px);
+    border-bottom:1px solid var(--hair);
+  }
+  .ft-mark{display:block;line-height:0;border-radius:4px;flex:none;
+    transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
+  .ft-mark svg{display:block;width:54px;height:54px;border-radius:4px}
+  .ft-mark .ring{transform-origin:50% 50%;transition:transform .6s var(--ease)}
+  .ft-mark:hover,.ft-mark:focus-visible{transform:translateY(-2px);
+    box-shadow:0 0 0 1px rgba(21,105,255,.5),0 10px 30px -10px rgba(21,105,255,.9)}
+  .ft-mark:hover .ring{transform:rotate(180deg)}
+  .ft-name{font-size:17px;font-weight:400;letter-spacing:.02em}
+  .ft-sub{margin-top:8px;max-width:44ch;font-size:14px;line-height:1.7;color:var(--ink-3)}
+  .ft-status{
+    margin-top:14px;display:inline-flex;align-items:center;gap:9px;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-4);
+  }
+  .ft-status b{color:var(--ink-3);font-weight:500;font-variant-numeric:tabular-nums}
+  .ft-status .led{width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;
+    box-shadow:0 0 9px 1px rgba(21,105,255,.8);animation:ping 2.8s var(--ease) infinite}
+
+  /* ---- columnas ---- */
+  .ft-cols{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:clamp(26px,3vw,44px);
+    padding:clamp(34px,5vh,58px) 0;border-bottom:1px solid var(--hair);
+  }
+  .ft-col h4{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink-4);font-weight:500;margin-bottom:18px;
+  }
+  .ft-col a{
+    position:relative;display:flex;align-items:baseline;gap:7px;
+    padding:7px 0;color:#aab2c2;text-decoration:none;font-size:14px;
+    transition:color .3s var(--ease),transform .3s var(--ease);
+  }
+  .ft-col a::after{
+    content:'';position:absolute;left:0;bottom:2px;height:1px;width:100%;
+    background:var(--blue);transform:scaleX(0);transform-origin:0 50%;
+    transition:transform .42s var(--ease);
+  }
+  .ft-col a:hover,.ft-col a:focus-visible{color:var(--ink);transform:translateX(3px)}
+  .ft-col a:hover::after,.ft-col a:focus-visible::after{transform:scaleX(1)}
+  .ft-col a em{font-style:normal;font-size:11px;color:var(--ink-4);transition:transform .34s var(--ease)}
+  .ft-col a:hover em{transform:translate(2px,-2px)}
+  .ft-col a .dot{width:5px;height:5px;border-radius:50%;background:#25d366;flex:none;
+    align-self:center;box-shadow:0 0 8px 1px rgba(37,211,102,.6)}
+  .ft-col a .soon{width:5px;height:5px;border-radius:50%;flex:none;align-self:center;
+    border:1px solid var(--ink-4)}
+
+  /* ---- correo ---- */
+  .ft-mails{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:14px clamp(26px,3vw,44px);
+    padding:clamp(30px,4.4vh,50px) 0;border-bottom:1px solid var(--hair);
+  }
+  .ft-mail{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:15px 16px;border:1px solid var(--hair);border-radius:2px;
+    transition:border-color .35s var(--ease),background .35s var(--ease);
+  }
+  .ft-mail:hover{border-color:rgba(21,105,255,.5);background:rgba(21,105,255,.06)}
+  .ft-mail a{color:#fff;text-decoration:none;font-size:15px;letter-spacing:.005em;
+    -webkit-font-smoothing:antialiased}
+  .ft-mail small{
+    display:block;margin-bottom:5px;
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-4);
+  }
+  .ft-copy{
+    appearance:none;border:1px solid var(--hair);background:transparent;cursor:pointer;
+    color:var(--ink-3);padding:7px 11px;border-radius:2px;flex:none;
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;
+    text-transform:uppercase;
+    transition:color .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease);
+  }
+  .ft-copy:hover{color:var(--ink);border-color:var(--ink-3)}
+  .ft-copy.ok{color:#25d366;border-color:rgba(37,211,102,.6)}
+
+  /* ---- linea final ---- */
+  .ft-end{
+    display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px 30px;
+    align-items:end;padding-top:clamp(26px,4vh,44px);
+  }
+  .ft-legal{font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+  .ft-up{
+    appearance:none;border:1px solid var(--hair);background:transparent;cursor:pointer;
+    color:var(--ink-3);padding:11px 16px;border-radius:2px;white-space:nowrap;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;
+    transition:color .3s var(--ease),border-color .3s var(--ease);
+  }
+  .ft-up em{font-style:normal;display:inline-block;transition:transform .38s var(--ease)}
+  .ft-up:hover{color:var(--ink);border-color:var(--blue)}
+  .ft-up:hover em{transform:translateY(-3px)}
+
+  /* ---- marca de agua: se desplaza con el scroll ---- */
+  .ft-word{
+    position:absolute;left:50%;bottom:-2.2vw;z-index:1;pointer-events:none;user-select:none;
+    transform:translateX(-50%);white-space:nowrap;
+    font-size:19vw;font-weight:200;letter-spacing:-.045em;line-height:.8;
+    color:#fff;opacity:.038;
+    -webkit-background-clip:text;background-clip:text;
+  }
+  /* un reflejo recorre la marca de agua cada 12s */
+  .ft-word::after{
+    content:'SECTORA';position:absolute;left:0;top:0;
+    background:linear-gradient(104deg,transparent 42%,rgba(120,180,255,.9) 50%,transparent 58%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:ftShine 12s cubic-bezier(.5,0,.2,1) infinite;
+  }
+  @keyframes ftShine{
+    0%{background-position:-140% 0}
+    55%,100%{background-position:240% 0}
+  }
+
+  @media (max-width:760px){
+    .ft-top{grid-template-columns:1fr}
+    .ft-end{grid-template-columns:1fr}
+    .ft-word{font-size:26vw;bottom:-3vw}
+  }
+
   .disclosure{
     border-top:1px solid var(--hair);
     padding:20px var(--pad) 40px;
@@ -1838,7 +2101,7 @@
   }
   @media (max-width:780px){
     .menu{display:none}
-    .utility .status span:not(.dot){display:none}
+    
   }
   @media (prefers-reduced-motion:reduce){
     html{scroll-behavior:auto}
@@ -1848,6 +2111,124 @@
     .eyebrow i{width:30px}
     .rule{width:74px}
   }
+
+/* ---------- cabecera de la intro en movil ----------
+   los dos rotulos van anclados a las esquinas con white-space:nowrap:
+   al estrecharse la pantalla se montaban uno sobre otro */
+@media (max-width:680px){
+  .intro-hud{font-size:8.5px;letter-spacing:.14em}
+  .intro-hud span{white-space:normal}
+  .intro-hud .tl{left:0;top:0;right:auto;max-width:46%}
+  .intro-hud .tr{right:0;top:0;left:auto;max-width:46%;text-align:right}
+  .intro-hud .bl{max-width:52%}
+  .intro-hud .br{max-width:44%;text-align:right}
+}
+@media (max-width:400px){
+  .intro-hud{font-size:7.5px;letter-spacing:.1em;inset:22px}
+  .intro-hud .tl,.intro-hud .tr{max-width:44%}
+}
+
+/* ---------- aviso de seguir bajando en la seccion del supply ----------
+   vive dentro del bloque fijo y se desvanece cuando la animacion avanza */
+.zoom-cue{position:absolute;left:50%;bottom:clamp(58px,9vh,86px);z-index:6;
+  transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:9px;
+  pointer-events:none;color:rgba(255,255,255,.55);
+  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;
+  text-transform:uppercase;transition:opacity .5s ease}
+.zoom-cue svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.4;
+  stroke-linecap:round;stroke-linejoin:round;animation:zoomCue 1.9s ease-in-out infinite}
+.zoom-cue.off{opacity:0;transition:opacity .8s ease}
+@keyframes zoomCue{
+  0%,100%{transform:translateY(-3px);opacity:.5}
+  50%{transform:translateY(4px);opacity:1}
+}
+@media (prefers-reduced-motion:reduce){ .zoom-cue svg{animation:none} }
+
+/* el fondo de .wipe-pin es blanco: el aviso en blanco no se veia.
+   Con modo diferencia se invierte contra cualquier fondo, igual que el titular. */
+.zoom-cue.cue-wipe{mix-blend-mode:difference;color:#fff}
+.zoom-cue.cue-wipe svg{stroke-width:1.7}
+
+/* primera transicion: el fondo cambia de claro a oscuro durante la escena,
+   asi que el aviso se invierte con modo diferencia igual que el titular */
+.zoom-cue.cue-iris{mix-blend-mode:difference;color:#fff}
+.zoom-cue.cue-iris svg{stroke-width:1.7}
+
+/* ---------- indice del whitepaper en el pie ---------- */
+
+
+
+.ft-wp-all{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--blue);text-decoration:none;
+  border-bottom:1px solid transparent;transition:border-color .25s ease}
+.ft-wp-all:hover{border-bottom-color:var(--blue)}
+
+
+
+
+
+@media (max-width:560px){
+  
+  
+}
+
+/* enlaces aun sin destino: conservan su forma pero no navegan, para que
+   la vista previa no salte a una pagina inexistente */
+a.pend{cursor:default;opacity:.55;pointer-events:none}
+
+/* tira de enlaces del pie, bajo el indice del whitepaper */
+.ft-social{display:flex;flex-wrap:wrap;gap:10px 26px;padding:clamp(24px,3.4vh,36px) 0;
+  border-bottom:1px solid rgba(255,255,255,.08)}
+.ft-social a{color:#aab2c2;text-decoration:none;font-size:13.5px;
+  display:inline-flex;align-items:baseline;gap:6px;transition:color .25s ease}
+.ft-social a:hover{color:#fff}
+.ft-social a em{font-style:normal;font-size:11px;opacity:.6}
+.ft-social a.ft-wp-all{color:var(--blue);font-family:'IBM Plex Mono',monospace;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;margin-left:auto}
+.ft-col a b{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;
+  color:var(--ink-4);font-weight:500;margin-right:9px;transition:color .25s ease}
+.ft-col a:hover b{color:var(--blue)}
+
+/* enlace al documento, encima de las columnas y alineado a la izquierda */
+a.ft-wp-all{display:inline-flex;align-items:center;gap:7px;margin-bottom:clamp(20px,2.6vh,30px);
+  color:var(--blue);text-decoration:none;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;border-bottom:1px solid transparent;
+  transition:border-color .25s ease}
+a.ft-wp-all:hover{border-bottom-color:var(--blue)}
+a.ft-wp-all em{font-style:normal;font-size:11px;opacity:.7}
+
+/* la escena termina abriendo a blanco: el aviso se invierte con el fondo */
+.zoom-cue.cue-jiris{mix-blend-mode:difference;color:#fff}
+.zoom-cue.cue-jiris svg{stroke-width:1.7}
+
+/* ---------- registro de la intro en movil ----------
+   se muestra con cuerpo menor y anclado por encima del estado, de modo
+   que las cuatro lineas y "Initializing" nunca compartan altura */
+@media (max-width:700px){
+  .intro-log{display:block;bottom:34px;font-size:8px;letter-spacing:.1em;
+    max-width:70%;line-height:1.45}
+  .intro-log span{position:static;display:block;white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis}
+}
+@media (max-width:400px){
+  .intro-log{bottom:30px;font-size:7px;letter-spacing:.08em;max-width:76%}
+}
+
+/* ---------- rotulos superiores de la intro ----------
+   antes cada uno se anclaba por separado con position:absolute y los
+   margenes no coincidian. En una sola fila quedan simetricos por
+   construccion: uno al principio y otro al final del mismo ancho. */
+.intro-top{position:absolute;left:0;right:0;top:0;display:flex;
+  align-items:flex-start;justify-content:space-between;gap:16px}
+.intro-hud .intro-top .tl,
+.intro-hud .intro-top .tr{position:static;left:auto;right:auto;top:auto;
+  max-width:47%;flex:0 1 auto}
+.intro-hud .intro-top .tl{text-align:left}
+.intro-hud .intro-top .tr{text-align:right}
+
+/* el rotulo de la intro no debe heredar el sangrado de la linea de tiempo */
+.intro-hud .tl{padding-left:0;padding-right:0;text-indent:0}
 </style>
 </head>
 <body>
@@ -1856,8 +2237,10 @@
   <canvas id="intro-grid"></canvas>
   <div class="intro-frame"><i></i><i></i><i></i><i></i></div>
   <div class="intro-hud">
-    <span class="tl">Sectora Foundation IL</span>
-    <span class="tr">Security layer · Build 1.0</span>
+        <div class="intro-top">
+      <span class="tl">Sectora Foundation IL</span>
+      <span class="tr">Security layer &middot; Build 1.0</span>
+    </div>
     <div class="intro-log" id="intro-log">
       <span data-t="0">Grid 54px · raster ok</span>
       <span data-t="1">Assembling mark · 360°</span>
@@ -2300,12 +2683,17 @@
         el.style.background = 'transparent';   // el azul lo pinta ya el lienzo
         ring.style.opacity = 0;                // el trazo cede a los fragmentos
         if(typeof window.SECT_IGNITE === 'function') window.SECT_IGNITE();
+        /* la portada arranca su entrada AHORA, bajo el azul que se deshace.
+           Si se espera al final, queda medio segundo de pantalla vacia antes
+           de que aparezca el titular, y se lee como una recarga. */
+        listo();
       }
       const k = cl((now - tSal) / T_EXIT);
       salir(k);
       if(word) word.style.opacity = (1 - cl(k*2.6)).toFixed(3);
-      el.querySelector('.intro-frame').style.opacity = (1-cl(k*2.0)).toFixed(3);
-      el.querySelector('.intro-hud').style.opacity   = (1-cl(k*2.0)).toFixed(3);
+      const fr = el.querySelector('.intro-frame'), hu = el.querySelector('.intro-hud');
+      if(fr) fr.style.opacity = (1-cl(k*2.0)).toFixed(3);
+      if(hu) hu.style.opacity = (1-cl(k*2.0)).toFixed(3);
       if(k >= 1){ fin(); return; }
     }
     requestAnimationFrame(ciclo);
@@ -2330,13 +2718,10 @@
 <div class="readout" id="readout" aria-hidden="true">00 · 00</div>
 
 <header class="top">
-  <div class="utility mono">
-    <span>Sectora Foundation · Illinois, United States</span>
-    <span class="status"><span class="dot"></span><span>Protocol status: operational</span></span>
-  </div>
+  
   <nav>
     <div class="brand">
-      <a href="#" aria-label="Sectora Foundation — inicio">
+      <a href="https://sectoraorg.com" aria-label="Sectora Foundation — inicio">
         <svg viewBox="0 0 100 100" role="img" aria-hidden="true">
           <rect width="100" height="100" rx="9" ry="9" fill="var(--blue)"/>
           <circle class="ring" cx="50" cy="50" r="27.2" fill="none" stroke="#fff" stroke-width="6.1"/>
@@ -2351,7 +2736,7 @@
       <a href="https://sectoraorg.com/#blog">Blog</a>
       <a href="https://sectoraorg.com/#contact">Contact</a>
     </div>
-    <a class="docs mono" href="#"><span>Legal documents</span></a>
+    <a class="docs mono" href="https://www.sectoraorg.com/legal"><span>Legal documents</span></a>
   </nav>
 </header>
 
@@ -2372,7 +2757,7 @@
           in Illinois, United States.
         </p>
         <div class="actions mono lift" style="--d:.72s">
-          <a class="btn btn-primary" href="https://sectoraorg.com/whitepaper/"><span>Download the whitepaper</span><span class="arrow">→</span></a>
+          <a class="btn btn-primary" href="https://sectoraorg.com/docs"><span>Download the whitepaper</span><span class="arrow">→</span></a>
           <!-- sustituir el href por el enlace del pool de Uniswap cuando lo tengas -->
           <a class="btn btn-ghost" href="https://app.uniswap.org" target="_blank" rel="noopener noreferrer"><span>Buy SECT on Uniswap</span><span class="arrow">↗</span></a>
         </div>
@@ -2419,7 +2804,7 @@
       <h2 class="iris-title">Sectora <b>Foundation IL</b></h2>
       <p class="iris-sub">Milestones and a New Era of Verifiable Security</p>
     </div>
-    <p class="iris-hint mono">Scroll</p>
+    <div class="zoom-cue cue-iris" id="iris-cue" aria-hidden="true"><span>Keep scrolling</span><svg viewBox="0 0 24 24"><path d="M12 4.5v14M6 13l6 6 6-6"/></svg></div>
   </div>
 </section>
 
@@ -2445,13 +2830,13 @@
         <span class="mono">01</span>
         <h3>Contract audit</h3>
         <p>The SECT contract has been reviewed by an independent security firm. The full report is published, including any findings and their resolution.</p>
-        <a class="m-link mono" href="#" target="_blank" rel="noopener noreferrer">Read the audit <i>↗</i></a>
+        <a class="m-link mono pend" aria-disabled="true">Read the audit <i>↗</i></a>
       </article>
       <article class="m-card reveal" style="--d:.18s">
         <span class="mono">02</span>
         <h3>Registered company</h3>
         <p>Sectora Foundation is a company incorporated in Illinois, United States. Its filing is a matter of public record and can be checked with the state registry.</p>
-        <a class="m-link mono" href="#" target="_blank" rel="noopener noreferrer">Check the registry <i>↗</i></a>
+        <a class="m-link mono" href="https://www.sectoraorg.com/legal" target="_blank" rel="noopener noreferrer">Check the registry <i>↗</i></a>
       </article>
       <article class="m-card reveal" style="--d:.26s">
         <span class="mono">03</span>
@@ -2486,6 +2871,8 @@
       <span class="wipe-rail"><i id="wipe-fill"></i></span>
       <span class="wipe-pct"><b id="wipe-pct">0</b>%</span>
     </div>
+  
+    <div class="zoom-cue cue-wipe" id="wipe-cue" aria-hidden="true"><span>Keep scrolling</span><svg viewBox="0 0 24 24"><path d="M12 4.5v14M6 13l6 6 6-6"/></svg></div>
   </div>
 </section>
 
@@ -2544,7 +2931,7 @@
         <span class="p-name">DEX</span>
         <div class="p-meta">
           <span class="p-desc">A decentralised exchange where the assets issued on the protocol can be traded and priced.</span>
-          <a class="p-live" href="#" target="_blank" rel="noopener noreferrer"><span class="led"></span>Click here — Testnet live <i>↗</i></a>
+          <a class="p-live pend" aria-disabled="true"><span class="led"></span>Click here — Testnet live <i>↗</i></a>
         </div>
       </div>
       <div class="p-row reveal" style="--d:0.30s">
@@ -2585,6 +2972,8 @@
       <h2 class="plate-name" id="plate-name">Security audit completion</h2>
       <p class="plate-sub" id="plate-sub">Contracts · Custody logic · Verification layer</p>
     </div>
+  
+    <div class="zoom-cue cue-plate" id="plate-cue" aria-hidden="true"><span>Keep scrolling</span><svg viewBox="0 0 24 24"><path d="M12 4.5v14M6 13l6 6 6-6"/></svg></div>
   </div>
 </section>
 
@@ -2663,6 +3052,10 @@
     <div class="zoom-note" id="zoom-note">
       <span>Reduction · December 2026</span>
       <span id="zoom-tag">50,000,000 · pre-reduction</span>
+    </div>
+    <div class="zoom-cue" id="zoom-cue" aria-hidden="true">
+      <span>Keep scrolling</span>
+      <svg viewBox="0 0 24 24"><path d="M12 4.5v14M6 13l6 6 6-6"/></svg>
     </div>
   </div>
 </section>
@@ -2753,14 +3146,21 @@
 </section>
 
 
+<div class="seam" aria-hidden="true">
+  <span>Market context</span>
+  <i></i>
+</div>
+
 <section class="rwa" id="rwa">
   <div class="rwa-pin" id="rwa-pin">
     <div class="rwa-grid" aria-hidden="true"></div>
     <div class="rwa-inner">
 
-      <div>
+      <div class="rwa-left">
+        <div>
         <p class="rwa-eyebrow">Market opportunity</p>
         <h2 class="rwa-title">RWA industry projected growth</h2>
+        </div>
 
         <div class="rwa-rows" id="rwa-rows">
         <div class="rwa-row" data-v="3.1"><span class="rwa-year">2025</span><span class="rwa-track"><i></i></span><span class="rwa-val">$3.1T</span></div>
@@ -2810,6 +3210,7 @@
       <p>The network is open</p>
       <h2>Join <b>Sectora</b></h2>
     </div>
+      <div class="zoom-cue cue-jiris" id="jiris-cue" aria-hidden="true"><span>Keep scrolling</span><svg viewBox="0 0 24 24"><path d="M12 4.5v14M6 13l6 6 6-6"/></svg></div>
   </div>
 </section>
 
@@ -2826,8 +3227,7 @@
     </p>
 
     <div class="join-cards">
-      <!-- el whitepaper ya vive en sectoraorg.com/whitepaper/ -->
-      <a class="jc key reveal" style="--d:.18s" href="https://sectoraorg.com/whitepaper/">
+      <a class="jc key reveal" style="--d:.18s" href="https://sectoraorg.com/docs">
         <span class="jc-i" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <span class="jc-num">01</span>
         <span class="jc-row">
@@ -2862,7 +3262,7 @@
       </a>
 
       <!-- sustituir por el enlace real de Telegram -->
-      <a class="jc reveal" style="--d:.30s" href="#" target="_blank" rel="noopener noreferrer">
+      <a class="jc reveal pend" aria-disabled="true" style="--d:.30s">
         <span class="jc-i" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <span class="jc-num">04</span>
         <span class="jc-row">
@@ -2878,11 +3278,95 @@
   </div>
 </section>
 
-<p class="disclosure">
-  Information on this page is provided for general purposes and does not constitute an offer to sell,
-  a solicitation to buy, or investment, legal or tax advice. Digital assets carry risk, including total
-  loss of capital. Availability may be restricted in certain jurisdictions.
-</p>
+<footer class="ft" id="footer">
+  <canvas id="ft-cells" aria-hidden="true"></canvas>
+  <div class="ft-aurora" aria-hidden="true"><span></span><span></span></div>
+  <div class="ft-dots" aria-hidden="true"></div>
+  <div class="ft-rings" aria-hidden="true"></div>
+  <div class="ft-glow" aria-hidden="true"></div>
+  <div class="ft-rail" aria-hidden="true"><i></i></div>
+  <div class="ft-marks" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+  <div class="ft-inner">
+
+    <div class="ft-top reveal">
+      <a class="ft-mark" href="https://sectoraorg.com" aria-label="Sectora Foundation">
+        <svg viewBox="0 0 100 100" role="img" aria-hidden="true">
+          <rect width="100" height="100" rx="9" ry="9" fill="var(--blue)"/>
+          <circle class="ring" cx="50" cy="50" r="27.2" fill="none" stroke="#fff" stroke-width="6.1"/>
+        </svg>
+      </a>
+      <div>
+        <p class="ft-name">Sectora Foundation</p>
+        <p class="ft-sub">Security infrastructure for tokenized real-world assets: contract auditing, custody controls and continuous on-chain monitoring.</p>
+        <p class="ft-status"><i class="led"></i>Illinois, United States · <b id="ft-time">--:--:--</b> CT</p>
+      </div>
+    </div>
+
+    <a class="ft-wp-all" href="https://sectoraorg.com/docs">Read the whitepaper in full <em>&#8599;</em></a>
+    <nav class="ft-cols" aria-label="Whitepaper index">
+      <div class="ft-col reveal" style="--d:.04s">
+        <h4>Protocol</h4>
+        <a href="https://sectoraorg.com/docs#s00"><b>00</b>Abstract</a>
+        <a href="https://sectoraorg.com/docs#s01"><b>01</b>Introduction</a>
+        <a href="https://sectoraorg.com/docs#s02"><b>02</b>The Sectora Network</a>
+        <a href="https://sectoraorg.com/docs#s03"><b>03</b>Verification &amp; Custody</a>
+        <a href="https://sectoraorg.com/docs#s04"><b>04</b>Hash Rate &amp; Validation</a>
+      </div>
+      <div class="ft-col reveal" style="--d:.10s">
+        <h4>Products</h4>
+        <a href="https://sectoraorg.com/docs#s05"><b>05</b>Sectora DEX</a>
+        <a href="https://sectoraorg.com/docs#s06"><b>06</b>RWA Tokenization</a>
+        <a href="https://sectoraorg.com/docs#s07"><b>07</b>$SECT Tokenomics</a>
+        <a href="https://sectoraorg.com/docs#s08"><b>08</b>Supply &amp; Buyback</a>
+      </div>
+      <div class="ft-col reveal" style="--d:.16s">
+        <h4>Economics</h4>
+        <a href="https://sectoraorg.com/docs#s09"><b>09</b>Supply &amp; Market Cap</a>
+        <a href="https://sectoraorg.com/docs#s10"><b>10</b>Token Contract</a>
+        <a href="https://sectoraorg.com/docs#s11"><b>11</b>Infrastructure</a>
+        <a href="https://sectoraorg.com/docs#s12"><b>12</b>Roadmap</a>
+        <a href="https://sectoraorg.com/docs#s13"><b>13</b>Governance &amp; Risk</a>
+      </div>
+      <div class="ft-col reveal" style="--d:.22s">
+        <h4>Company</h4>
+        <a href="https://sectoraorg.com/docs#s14"><b>14</b>Location &amp; Legal</a>
+        <a href="https://sectoraorg.com/docs#s15"><b>15</b>Conclusion</a>
+        <a href="https://sectoraorg.com/docs#s16"><b>16</b>Exchange Listings</a>
+        <a href="https://sectoraorg.com/docs#s17"><b>17</b>NYSE &amp; Public Markets</a>
+        <a href="https://sectoraorg.com/docs#s18"><b>18</b>Why Hold $SECT</a>
+      </div>
+    </nav>
+
+      
+
+    <div class="ft-mails reveal" style="--d:.06s">
+      <div class="ft-mail">
+        <div>
+          <small>Support</small>
+          <a href="mailto:support@sectoraorg.com">support@sectoraorg.com</a>
+        </div>
+        <button type="button" class="ft-copy" data-copy="support@sectoraorg.com">Copy</button>
+      </div>
+      <div class="ft-mail">
+        <div>
+          <small>Marketing</small>
+          <a href="mailto:marketing@sectoraorg.com">marketing@sectoraorg.com</a>
+        </div>
+        <button type="button" class="ft-copy" data-copy="marketing@sectoraorg.com">Copy</button>
+      </div>
+    </div>
+
+    <div class="ft-end reveal" style="--d:.06s">
+      <p class="ft-legal">© <span id="ft-year">2026</span> Sectora Foundation</p>
+      <button type="button" class="ft-up" id="ft-up">Back to top <em>&#8593;</em></button>
+    </div>
+
+  </div>
+
+  <div class="ft-word" aria-hidden="true" id="ft-word">SECTORA</div>
+</footer>
+
 
 <script>
 /* tope de densidad de pixeles: en telefonos, ocho lienzos a pantalla
@@ -2997,6 +3481,7 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
   const iris = document.getElementById('iris');
   const irisPanel = document.getElementById('iris-panel');
   const irisEdge = document.getElementById('iris-edge');
+  const irisCue = document.getElementById('iris-cue');
   let irisQueued = false;
 
   function paintIris(){
@@ -3011,6 +3496,9 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
 
       let p = (-r.top) / span;
       p = p < 0 ? 0 : p > 1 ? 1 : p;
+
+      // el aviso acompana toda la escena y se retira al entrar en la siguiente
+      if(irisCue) irisCue.classList.toggle('off', p > .93);
 
       let k = (p - .18) / .64;
       k = k < 0 ? 0 : k > 1 ? 1 : k;
@@ -3231,6 +3719,9 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
   });
 
   function draw(){
+    // si el lienzo medía 0 al iniciarse, resize() salio antes de reservar el
+    // bufer: sin esta guarda se lee heat[0] sobre null
+    if(!heat) return;
     ctx.clearRect(0,0,W,H);
     for(let r=0;r<rows;r++){
       for(let c=0;c<cols;c++){
@@ -3251,7 +3742,9 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
      enciende en un frente circular desde el centro, de modo que la energia
      de la intro no se corta, pasa a la pagina */
   let ignicion = -1;
-  window.SECT_IGNITE = () => { ignicion = performance.now(); };
+  /* la cascada diagonal de la cubierta corria bajo la intro y se agotaba
+     antes de verse: se reinicia justo cuando el azul empieza a deshacerse */
+  window.SECT_IGNITE = () => { ignicion = performance.now(); startT = 0; sweepStart = -1; };
 
   let last = 0, tabVisible = true, heroVisible = true;
   document.addEventListener('visibilitychange', () => { tabVisible = !document.hidden; });
@@ -3375,6 +3868,7 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
   }
 
   function draw(){
+    if(!heat) return;
     dx.clearRect(0,0,W,H); lx.clearRect(0,0,W,H);
     for(let r=0;r<rows;r++){
       for(let c=0;c<cols;c++){
@@ -3469,9 +3963,12 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     return p < 0 ? 0 : p > 1 ? 1 : p;
   }
 
+  const cueW = document.getElementById('wipe-cue');
+
   function paint(){
     if(!thr) return;
     const p0 = progress();
+    if(cueW) cueW.classList.toggle('off', p0 > .93);
     // el barrido ocupa el 15%-90% del recorrido: entra y sale con calma
     let p = (p0 - .15) / .75;
     p = p < 0 ? 0 : p > 1 ? 1 : p;
@@ -3566,7 +4063,7 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     rows.forEach((r, k) => r.classList.toggle('active', k === i));
     segs.forEach((sg, k) => sg.classList.toggle('on', k <= i));
     num.textContent = String(i + 1).padStart(2, '0');
-    const nm = rows[i].querySelector('.p-name');
+    const nm = rows[i] && rows[i].querySelector('.p-name');
     if(name && nm) name.textContent = nm.textContent;
   }
 
@@ -3715,9 +4212,12 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     ctx.restore();
   }
 
+  const cueP = document.getElementById('plate-cue');
+
   function paint(){
     if(!W) return;
     const p = progress();
+    if(cueP) cueP.classList.toggle('off', p > .93);
     const t = p * (N - 1);
     const k = Math.min(N-2, Math.floor(t));
     const raw = t - k;
@@ -3822,7 +4322,7 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     digitos = [...numEl.querySelectorAll('.d b')];
     tacha  = land.querySelector('.was i');
     barra  = land.querySelector('.scale .bar');
-    ticks  = [...land.querySelectorAll('.scale u')];
+    ticks  = [...land.querySelectorAll('.scale u')] || [];
     etiq   = land.querySelector('.scale em');
     filete = land.querySelector('.rule');
   }
@@ -3882,10 +4382,17 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     return p < 0 ? 0 : p > 1 ? 1 : p;
   }
 
+  const cue = document.getElementById('zoom-cue');
+
   function paint(){
     if(!W) return;
     const p = progress();
     const txt = p < SWAP ? BEFORE : AFTER;
+
+    /* el aviso acompana toda la escena y solo se retira al final, cuando
+       el paso a la seccion siguiente ya esta ocurriendo: quien no conoce
+       este tipo de scroll no sabe que la pagina sigue avanzando */
+    if(cue) cue.classList.toggle('off', p > .93);
 
     if(txt !== lastTxt){
       lastTxt = txt;
@@ -4131,13 +4638,15 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     const bar = barScale();
 
     rows.forEach(({el, a, self}) => {
-      el.querySelector('[data-price]').textContent = money(a.price);
-      el.querySelector('[data-sup]').textContent   = self ? a.sup : units(a.sup);
-      el.querySelector('[data-cap]').textContent   = big(a.cap);
-      el.querySelector('.cap-bar i').style.transform =
-        'scaleX(' + (fill ? bar(a.cap) : 0) + ')';
-      el.querySelector('[data-out]').textContent =
-        self ? '—' : money(a.cap * (pct/100) / SUPPLY);
+      // cada consulta puede no encontrar nada si el marcado cambia:
+      // sin la comprobacion, una sola ausencia rompe todo el render
+      const set = (sel, txt) => { const n = el.querySelector(sel); if(n) n.textContent = txt; };
+      set('[data-price]', money(a.price));
+      set('[data-sup]',   self ? a.sup : units(a.sup));
+      set('[data-cap]',   big(a.cap));
+      const b = el.querySelector('.cap-bar i');
+      if(b) b.style.transform = 'scaleX(' + (fill ? bar(a.cap) : 0) + ')';
+      set('[data-out]', self ? '—' : money(a.cap * (pct/100) / SUPPLY));
     });
   }
 
@@ -4285,9 +4794,10 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     // barras escalonadas: cada ano entra en su turno
     let alcanzado = 0;
     rows.forEach((row, i) => {
-      const k = clamp((p - .06 - i*.108) / .30);
+      const k = clamp((p - .015 - i*.104) / .30);
       const e = ease(k);
-      row.querySelector('i').style.transform = 'scaleX(' + (e * vals[i]/MAX).toFixed(4) + ')';
+      const b = row.querySelector('i');
+      if(b) b.style.transform = 'scaleX(' + (e * vals[i]/MAX).toFixed(4) + ')';
       row.classList.toggle('on', k > .12);
       if(k > .5) alcanzado = i;
     });
@@ -4298,8 +4808,9 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
     const v = vals[k] + (vals[k+1] - vals[k]) * ease(t - k);
     if(bigEl) bigEl.textContent = '$' + v.toFixed(1);
 
-    const yr = rows[alcanzado].querySelector('.rwa-year').textContent;
-    if(yrEl && yr !== lastYr){ lastYr = yr; yrEl.textContent = yr; }
+    const ye = rows[alcanzado] && rows[alcanzado].querySelector('.rwa-year');
+    const yr = ye ? ye.textContent : '';
+    if(yrEl && yr && yr !== lastYr){ lastYr = yr; yrEl.textContent = yr; }
   }
 
   function onScroll(){
@@ -4569,6 +5080,7 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
   const sec   = document.getElementById('jiris');
   const panel = document.getElementById('jiris-panel');
   const edge  = document.getElementById('jiris-edge');
+  const jCue  = document.getElementById('jiris-cue');
   if(!sec || !panel) return;
 
   let queued = false;
@@ -4584,6 +5096,8 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
 
       let p = (-r.top) / span;
       p = p < 0 ? 0 : p > 1 ? 1 : p;
+
+      if(jCue) jCue.classList.toggle('off', p > .93);
 
       // arranca en el 55%: primero se abren las cortinas de luz, y solo
       // despues el circulo blanco toma la pantalla
@@ -4649,6 +5163,251 @@ window.SECT_DPR = () => Math.min(window.devicePixelRatio || 1,
         reconstruir();
       }
     }, {rootMargin:'70% 0px'}).observe(sec);
+  });
+})();
+
+
+/* ===== amortiguado del scroll (solo escritorio) =====
+   la rueda del raton avanza a saltos grandes y las transiciones ligadas al
+   scroll se leen entrecortadas. Aqui cada golpe empuja un destino y la
+   posicion real lo persigue con suavizado, asi el recorrido es continuo.
+   En pantallas tactiles no se toca: la inercia del sistema ya lo resuelve. */
+(function(){
+  const fino   = window.matchMedia('(pointer: fine)').matches;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fino || reduce) return;
+
+  const FACTOR = 0.55;   // cuanto avanza cada golpe de rueda (1 = nativo)
+  const SUAVE  = 0.11;   // cuanto se acerca por fotograma (mas bajo = mas lento)
+
+  let destino = window.scrollY, actual = window.scrollY, raf = 0, propio = false;
+  const tope = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+
+  function paso(){
+    actual += (destino - actual) * SUAVE;
+    if(Math.abs(destino - actual) < .5){ actual = destino; raf = 0; }
+    else raf = requestAnimationFrame(paso);
+    propio = true;
+    /* pixel entero: con posiciones fraccionarias el navegador rasteriza la
+       pagina desplazada a subpixel y el texto pequeno pierde nitidez */
+    window.scrollTo({top: Math.round(actual), behavior: 'instant'});
+  }
+
+  window.addEventListener('wheel', e => {
+    if(e.ctrlKey) return;                    // el zoom del navegador se respeta
+    e.preventDefault();
+    destino = Math.round(Math.max(0, Math.min(tope(), destino + e.deltaY * FACTOR)));
+    if(!raf) raf = requestAnimationFrame(paso);
+  }, {passive:false});
+
+  // teclado, barra de desplazamiento y anclas: se vuelve a sincronizar
+  window.addEventListener('scroll', () => {
+    if(propio){ propio = false; return; }
+    destino = actual = window.scrollY;
+  }, {passive:true});
+
+  window.addEventListener('resize', () => { destino = actual = window.scrollY; });
+})();
+
+/* ===== pie =====
+   hora local de la entidad, copia de correo con confirmacion, vuelta
+   arriba compatible con el amortiguado, y la marca de agua acompañando
+   al scroll. Todo se detiene cuando el pie no esta a la vista. */
+(function(){
+  const ft = document.getElementById('footer');
+  if(!ft) return;
+
+  // ---- ano en curso ----
+  const y = document.getElementById('ft-year');
+  if(y) y.textContent = new Date().getFullYear();
+
+  // ---- hora de Illinois: el pie dice donde esta la fundacion ----
+  const t = document.getElementById('ft-time');
+  let reloj = null, visible = false;
+  function hora(){
+    if(!t) return;
+    try{
+      t.textContent = new Date().toLocaleTimeString('en-US',
+        {timeZone:'America/Chicago', hour12:false});
+    }catch(e){
+      t.textContent = new Date().toLocaleTimeString('en-US',{hour12:false});
+    }
+  }
+
+  // ---- marca de agua: se desplaza mientras el pie entra ----
+  const word = document.getElementById('ft-word');
+  let pend = false;
+  function mover(){
+    if(pend || !visible || !word) return;
+    pend = true;
+    requestAnimationFrame(() => {
+      pend = false;
+      const r = ft.getBoundingClientRect();
+      const p = Math.max(0, Math.min(1, 1 - r.top / window.innerHeight));
+      word.style.transform = 'translateX(-50%) translateY(' + ((1-p)*34).toFixed(1) + 'px)';
+      word.style.opacity = (.012 + p*.030).toFixed(3);
+    });
+  }
+  window.addEventListener('scroll', mover, {passive:true});
+
+  new IntersectionObserver(es => {
+    visible = es[0].isIntersecting;
+    if(visible){
+      hora(); if(!reloj) reloj = setInterval(hora, 1000);
+      mover();
+    } else if(reloj){ clearInterval(reloj); reloj = null; }
+  }, {rootMargin:'20% 0px'}).observe(ft);
+
+  // ---- copiar correo ----
+  ft.addEventListener('click', async e => {
+    const b = e.target.closest('.ft-copy');
+    if(!b) return;
+    const txt = b.dataset.copy;
+    let ok = false;
+    try{
+      await navigator.clipboard.writeText(txt);
+      ok = true;
+    }catch(err){
+      // sin permiso de portapapeles: se recurre al metodo antiguo
+      try{
+        const ta = document.createElement('textarea');
+        ta.value = txt; ta.setAttribute('readonly','');
+        ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+      }catch(e2){ ok = false; }
+    }
+    b.textContent = ok ? 'Copied' : 'Select';
+    b.classList.toggle('ok', ok);
+    clearTimeout(b._t);
+    b._t = setTimeout(() => { b.textContent = 'Copy'; b.classList.remove('ok'); }, 1800);
+  });
+
+
+  /* ---- rejilla viva del pie ----
+     mismas celdas de 54px que la cubierta, con caminantes y destellos
+     sueltos, pero a un tercio de intensidad: el pie tiene que respirar
+     sin robarle atencion a los enlaces. Solo dibuja si esta a la vista. */
+  (function(){
+    const cv = document.getElementById('ft-cells');
+    if(!cv) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ctx = cv.getContext('2d');
+    const CELL = 54;
+    let W=0, H=0, cols=0, rows=0, heat=null, tono=null, andantes=[];
+
+    function medir(){
+      const w = ft.clientWidth, h = ft.clientHeight;
+      if(w < 1 || h < 1) return;
+      W = w; H = h;
+      const dpr = window.SECT_DPR ? window.SECT_DPR() : 1.5;
+      cv.width = Math.round(W*dpr); cv.height = Math.round(H*dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      cols = Math.ceil(W/CELL); rows = Math.ceil(H/CELL);
+      heat = new Float32Array(cols*rows);
+      tono = new Float32Array(cols*rows);
+      for(let i=0;i<tono.length;i++) tono[i] = Math.abs(Math.sin(i*12.9898)*43758.5453 % 1);
+      const n = W < 700 ? 2 : 4;
+      andantes = [];
+      for(let i=0;i<n;i++) andantes.push({c:(Math.random()*cols)|0, r:(Math.random()*rows)|0,
+                                          dc:Math.random()<.5?1:-1, dr:0, next:0});
+    }
+    const idx = (c,r) => r*cols + c;
+
+    function pasos(t){
+      for(const w of andantes){
+        if(t < w.next) continue;
+        w.next = t + 240 + Math.random()*320;
+        if(Math.random() < .3){
+          if(w.dc !== 0){ w.dr = Math.random()<.5?1:-1; w.dc = 0; }
+          else          { w.dc = Math.random()<.5?1:-1; w.dr = 0; }
+        }
+        w.c += w.dc; w.r += w.dr;
+        if(w.c < 0){ w.c = 0; w.dc = 1; }
+        if(w.c >= cols){ w.c = cols-1; w.dc = -1; }
+        if(w.r < 0){ w.r = 0; w.dr = 1; }
+        if(w.r >= rows){ w.r = rows-1; w.dr = -1; }
+        heat[idx(w.c,w.r)] = .5;
+      }
+    }
+
+    let sigPop = 0;
+    function pops(t){
+      if(t < sigPop) return;
+      sigPop = t + 180 + Math.random()*260;
+      const n = 1 + ((Math.random()*2)|0);
+      for(let k=0;k<n;k++){
+        const i = idx((Math.random()*cols)|0, (Math.random()*rows)|0);
+        const v = .35 + Math.random()*.35;
+        if(heat[i] < v) heat[i] = v;
+      }
+    }
+
+    // barrido diagonal lento, como un repaso periodico
+    let barrido = -1;
+    function sweep(t){
+      if(barrido < 0){ barrido = t + 4000; return; }
+      const f = t - barrido;
+      if(f < 0) return;
+      if(f > 2400){ barrido = t + 9000; return; }
+      const frente = (f/2400) * (cols + rows);
+      for(let r=0;r<rows;r++){
+        const c0 = Math.round(frente - r);
+        for(let k=-1;k<=1;k++){
+          const c = c0 + k;
+          if(c >= 0 && c < cols){
+            const v = .22 * (1 - Math.abs(k)/1.6);
+            const i = idx(c,r);
+            if(heat[i] < v) heat[i] = v;
+          }
+        }
+      }
+    }
+
+    function pintar(){
+      ctx.clearRect(0,0,W,H);
+      for(let r=0;r<rows;r++){
+        for(let c=0;c<cols;c++){
+          const i = idx(c,r);
+          const v = heat[i];
+          if(v > .015){
+            const g = tono[i];
+            const R = (12 + 62*g)|0, G = (74 + 96*g)|0, B = (198 + 57*g)|0;
+            ctx.fillStyle = 'rgba('+R+','+G+','+B+','+(Math.min(v,1)*.30).toFixed(3)+')';
+            ctx.fillRect(c*CELL, r*CELL, CELL-1, CELL-1);
+          }
+        }
+      }
+    }
+
+    let raf = 0, last = 0;
+    function ciclo(t){
+      raf = visible ? requestAnimationFrame(ciclo) : 0;
+      if(!visible || document.hidden || !heat){ last = t; return; }
+      const dt = Math.min(t-last, 50); last = t;
+      pasos(t); pops(t); sweep(t);
+      const caida = Math.pow(.945, dt/16.7);
+      for(let i=0;i<heat.length;i++) heat[i] *= caida;
+      pintar();
+    }
+
+    let rt;
+    window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(medir, 140); });
+    medir();
+    if(reduce){ pintar(); return; }
+    // arranca y se detiene con la visibilidad del pie
+    const io = new IntersectionObserver(es => {
+      if(es[0].isIntersecting && !raf) raf = requestAnimationFrame(ciclo);
+    }, {rootMargin:'25% 0px'});
+    io.observe(ft);
+  })();
+
+  // ---- vuelta arriba ----
+  const up = document.getElementById('ft-up');
+  if(up) up.addEventListener('click', () => {
+    const suave = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({top:0, behavior: suave ? 'smooth' : 'auto'});
   });
 })();
 
